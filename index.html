@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
     <title>Simple Games WebApp</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <h1>Simple Games WebApp</h1>
         <input type="text" id="search-bar" placeholder="Search for a game...">
+        <div id="theme-toggle">
+            <img src="icons/sun.svg" alt="Light theme" id="sun-icon">
+            <img src="icons/moon.svg" alt="Dark theme" id="moon-icon">
+        </div>
     </header>
     <main id="games-container"></main>
+    <footer>
+        <p>&copy; 2025 Simple Games WebApp. All rights reserved.</p>
+    </footer>
     <script src="script.js"></script>
+</body>
 </body>
 </html>
