@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import type { Game } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -7,9 +8,9 @@ interface GameCardProps {
   game: Game;
 }
 
-export function GameCard({ game }: GameCardProps) {
+export default function GameCard({ game }: GameCardProps) {
   return (
-    <a href={game.gameUrl} target="_blank" rel="noopener noreferrer" className="group block h-full">
+    <Link href={game.gameUrl} className="group block h-full">
       <Card className="h-full bg-card hover:border-primary transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg overflow-hidden flex flex-col">
         <CardHeader className="p-0">
           <div className="relative aspect-video">
@@ -38,6 +39,6 @@ export function GameCard({ game }: GameCardProps) {
             </div>
         </CardContent>
       </Card>
-    </a>
+    </Link>
   );
 }

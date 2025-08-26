@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback, useTransition } from 'react';
 import { Search, BrainCircuit } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { GameCard } from '@/components/game-card';
+import GameCard from '@/components/game-card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getRecommendationsAction } from '@/app/actions';
 import type { Game } from '@/lib/types';
