@@ -3,6 +3,9 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { NextResponse } from 'next/server';
 
+// Required for static export
+export const dynamic = 'force-static';
+
 const gameDirectory = path.resolve(process.cwd(), 'public/games');
 
 async function getGameFolders() {
@@ -10,6 +13,15 @@ async function getGameFolders() {
   return dirents
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
+}
+
+// Generate static params for all game slugs at build time
+export async function generateStaticParams() {
+  const gameFolders = await getGameFolders();
+  return gameFolders.map(folder => {
+    const folderSlug = folder.replace(/^\d{2}-/, '').toLowerCase().replace(/-/g, '');
+    return { slug: folderSlug };
+  });
 }
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {

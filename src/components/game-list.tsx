@@ -5,7 +5,7 @@ import { Search, BrainCircuit } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import GameCard from '@/components/game-card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getRecommendationsAction } from '@/app/actions';
+// import { getRecommendationsAction } from '@/app/actions'; // Disabled for static export
 import type { Game } from '@/lib/types';
 
 const debounce = <F extends (...args: any[]) => void>(func: F, delay: number) => {
@@ -34,13 +34,14 @@ export function GameList({ allGames }: { allGames: Game[] }) {
   const handleGetRecommendations = async (history: string[]) => {
     if (history.length === 0) return;
     
-    startTransition(async () => {
-        const recs = await getRecommendationsAction(history);
-        const recommendedGameNames = allGames
-          .filter(game => recs.some(recName => game.name.toLowerCase().includes(recName.toLowerCase())))
-          .map(game => game.name);
-        setRecommendations(Array.from(new Set(recommendedGameNames)));
-    });
+    // AI recommendations disabled for static export compatibility
+    // startTransition(async () => {
+    //     const recs = await getRecommendationsAction(history);
+    //     const recommendedGameNames = allGames
+    //       .filter(game => recs.some(recName => game.name.toLowerCase().includes(recName.toLowerCase())))
+    //       .map(game => game.name);
+    //     setRecommendations(Array.from(new Set(recommendedGameNames)));
+    // });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
