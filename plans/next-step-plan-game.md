@@ -19,7 +19,7 @@
 
 - [x] Link all the game routes to the game cards in the landing page.
 
-- [] Test all the the games. Fix the errors when found.
+- [x] Test all the the games. Fix the errors when found.
 
 - [] Add a header with navigation to home page. Also add a footer to each game.  
 

@@ -145,8 +145,6 @@ const HangmanGame = () => {
         <p>You have already entered this letter</p>
       </div>
       <style jsx>{`
-        @import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
-
         :root {
           --primary-color: #1f2f61;
           --secondary-color: #224ca4;
@@ -292,7 +290,7 @@ const HangmanGame = () => {
         .notification-container p {
           margin: 0;
         }
-      `}}
+      `}</style>
     </>
   );
 };

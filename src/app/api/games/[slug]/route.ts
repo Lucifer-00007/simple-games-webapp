@@ -21,7 +21,13 @@ export async function GET(request: Request, { params }: { params: { slug: string
   });
 
   if (gameFolder) {
-    return NextResponse.json({ gamePath: `/games/${gameFolder}/index.html` });
+    const filePath = path.join(gameDirectory, gameFolder, 'index.html');
+    try {
+      const htmlContent = await fs.readFile(filePath, 'utf-8');
+      return new NextResponse(htmlContent, { headers: { 'Content-Type': 'text/html' } });
+    } catch (error) {
+      return NextResponse.json({ error: 'Could not read game file' }, { status: 500 });
+    }
   } else {
     return NextResponse.json({ error: 'Game not found' }, { status: 404 });
   }
