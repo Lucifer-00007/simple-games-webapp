@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
+import { METADATA_TITLE, METADATA_DESCRIPTION } from '@/constants';
 
 export const metadata: Metadata = {
-  title: 'GameVerse',
-  description: 'A game discovery platform to find your next favorite browser game.',
+  title: METADATA_TITLE,
+  description: METADATA_DESCRIPTION,
 };
 
 export default function RootLayout({

@@ -13,6 +13,8 @@
 
 ## Task List
 
+- [] Add lazy loading for all the page throughout the app wherever the loading is required.
+
 - [] Rename all the routes to the app to remove the numbers. Ex: `/games/02-Archery-Game` -> `/games/Archery-Game`
 
 - [] Link all the game routes to the game cards in the landing page.
@@ -24,3 +26,15 @@
 - [] Generate AI image of each games to add to the cards. Make a place holder image also.
 
 - [] Make all the important detailed Docs. Ex: `doc for steps by step guide how to add new game?`
+
+
+
+
+------------------------------------------------------------------------------
+- Now when i set `NEXT_PUBLIC_USE_GAME_LINKS=false` show all the games present in `src/app/games/` on the landing page 
+
+
+- 
+
+
+
