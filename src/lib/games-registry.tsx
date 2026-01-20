@@ -62,6 +62,39 @@ const gameComponents: Record<string, ComponentType<GameComponentProps>> = {
     'speed-typing': dynamic(() => import('@/games/speed-typing').then((mod) => mod.SpeedTyping), {
         loading: () => <GameLoadingPlaceholder />,
     }),
+    'tetris': dynamic(() => import('@/games/tetris').then((mod) => mod.Tetris), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'candy-crush': dynamic(() => import('@/games/candy-crush').then((mod) => mod.CandyCrush), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'breakout': dynamic(() => import('@/games/breakout').then((mod) => mod.Breakout), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'ping-pong': dynamic(() => import('@/games/ping-pong').then((mod) => mod.PingPong), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'flappy-bird': dynamic(() => import('@/games/flappy-bird').then((mod) => mod.FlappyBird), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'fruit-slicer': dynamic(() => import('@/games/fruit-slicer').then((mod) => mod.FruitSlicer), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'archery': dynamic(() => import('@/games/archery').then((mod) => mod.Archery), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'tower-blocks': dynamic(() => import('@/games/tower-blocks').then((mod) => mod.TowerBlocks), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'crossy-road': dynamic(() => import('@/games/crossy-road').then((mod) => mod.CrossyRoad), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'tilting-maze': dynamic(() => import('@/games/tilting-maze').then((mod) => mod.TiltingMaze), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'typing-game-alt': dynamic(() => import('@/games/typing-game-alt').then((mod) => mod.TypingGameAlt), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
     // Add more games here as they are implemented
 };
 

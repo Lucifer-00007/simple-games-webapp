@@ -35,18 +35,18 @@
 - [ ] Typing Game (`typing-game`) — *skipped: duplicate of Speed Typing*
 - [ ] Speak Number Guessing (`speak-number`) — *skipped: requires Speech API*
 
-#### Phase 4: Canvas Games (Not Started)
-- [ ] Tetris (`tetris`)
-- [ ] Candy Crush (`candy-crush`)
-- [ ] Breakout (`breakout`)
-- [ ] Ping Pong (`ping-pong`)
-- [ ] Flappy Bird (`flappy-bird`)
-- [ ] Fruit Slicer (`fruit-slicer`)
-- [ ] Archery (`archery`)
-- [ ] Tower Blocks (`tower-blocks`)
-- [ ] Crossy Road (`crossy-road`)
-- [ ] Tilting Maze (`tilting-maze`)
-- [ ] Typing Game Alt (`typing-game-alt`)
+#### Phase 4: Canvas Games (In Progress)
+- [x] Tetris (`tetris`)
+- [x] Candy Crush (`candy-crush`)
+- [x] Breakout (`breakout`)
+- [x] Ping Pong (`ping-pong`)
+- [x] Flappy Bird (`flappy-bird`)
+- [x] Fruit Slicer (`fruit-slicer`)
+- [x] Archery (`archery`)
+- [x] Tower Blocks (`tower-blocks`)
+- [x] Crossy Road (`crossy-road`)
+- [x] Tilting Maze (`tilting-maze`)
+- [x] Typing Game Alt (`typing-game-alt`)
 
 ---
 
@@ -58,8 +58,8 @@
 | Phase 1 | 1 | 1 | ✅ Done |
 | Phase 2 | 10 | 10 | ✅ Done |
 | Phase 3 | 4 | 2 | ⚠️ Partial (2 skipped) |
-| Phase 4 | 11 | 0 | ❌ Not Started |
-| **Total** | **30** | **17** | **57%** |
+| Phase 4 | 11 | 11 | ✅ Done |
+| **Total** | **30** | **28** | **93%** |
 
 ---
 
