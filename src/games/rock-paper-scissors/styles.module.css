@@ -14,63 +14,62 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1rem;
     width: 100%;
 }
 
 .scoreCard {
     flex: 1;
-    max-width: 150px;
-    background: linear-gradient(145deg, hsl(var(--card) / 0.8), hsl(var(--card) / 0.4));
-    border: 1px solid hsl(var(--border) / 0.3);
-    backdrop-filter: blur(15px);
-    border-radius: 1rem;
+    max-width: 100px;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.75rem;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .scoreCardContent {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1.25rem !important;
-    position: relative;
-}
-
-.scoreCardContent::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(280 80% 60%));
-    opacity: 0.7;
+    padding: 0.6rem 0.75rem !important;
+    background: linear-gradient(180deg, hsl(var(--primary) / 0.05), transparent);
 }
 
 .scoreLabel {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
     color: hsl(var(--muted-foreground));
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.1rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
+    font-weight: 600;
 }
 
 .scoreValue {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(280 80% 60%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #8b5cf6;
 }
 
 .vs {
-    font-size: 1rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: hsl(var(--muted-foreground));
-    padding: 0.5rem 1rem;
-    background: hsl(var(--muted) / 0.3);
-    border-radius: 2rem;
+    padding: 0.35rem 0.75rem;
+    background: hsl(var(--muted) / 0.4);
+    border-radius: 1rem;
+}
+
+/* Dark Mode for Scoreboard */
+:global(.dark) .scoreCard,
+:global([data-theme="dark"]) .scoreCard {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark) .scoreCardContent,
+:global([data-theme="dark"]) .scoreCardContent {
+    background: linear-gradient(180deg, hsl(var(--primary) / 0.1), transparent);
 }
 
 /* Battle Arena */
@@ -234,4 +233,32 @@
     .choiceIcon {
         font-size: 2.25rem;
     }
+}
+
+/* Dark Mode for Arena and Buttons */
+:global(.dark) .arena,
+:global([data-theme="dark"]) .arena {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .choiceDisplay,
+:global([data-theme="dark"]) .choiceDisplay {
+    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)));
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 2px 8px rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark) .choiceButton,
+:global([data-theme="dark"]) .choiceButton {
+    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--card) / 0.8));
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .choiceButton:hover:not(:disabled),
+:global([data-theme="dark"]) .choiceButton:hover:not(:disabled) {
+    border-color: hsl(var(--primary) / 0.5);
+    background: linear-gradient(145deg, hsl(var(--primary) / 0.15), hsl(var(--card)));
 }
