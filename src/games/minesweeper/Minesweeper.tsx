@@ -149,6 +149,11 @@ export function Minesweeper({ onScoreUpdate }: MinesweeperProps) {
                             {gameState.status === 'won' ? '🎉 You Won!' : '💥 Game Over!'}
                         </motion.div>
                     )}
+
+                    {/* Reset Button */}
+                    <button className={styles.resetButton} onClick={handleReset}>
+                        🔄 Reset
+                    </button>
                 </CardContent>
             </Card>
         </div>
