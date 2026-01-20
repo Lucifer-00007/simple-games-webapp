@@ -13,8 +13,28 @@ interface MemoryCardProps {
     onScoreUpdate?: (score: number) => void;
 }
 
+// Create a static initial state for SSR (cards in fixed order, not shuffled)
+function createSSRSafeInitialState(): GameState {
+    return {
+        cards: [],
+        flippedCards: [],
+        matchedPairs: 0,
+        moves: 0,
+        isLocked: false,
+        status: 'playing',
+    };
+}
+
 export function MemoryCard({ onScoreUpdate }: MemoryCardProps) {
-    const [gameState, setGameState] = React.useState<GameState>(createInitialState);
+    // Start with empty state to avoid hydration mismatch
+    const [gameState, setGameState] = React.useState<GameState>(createSSRSafeInitialState);
+    const [isClient, setIsClient] = React.useState(false);
+
+    // Initialize game on client only to avoid Math.random() SSR mismatch
+    React.useEffect(() => {
+        setIsClient(true);
+        setGameState(createInitialState());
+    }, []);
 
     const handleCardClick = (cardId: number) => {
         if (gameState.isLocked || gameState.status === 'won') return;
@@ -38,6 +58,43 @@ export function MemoryCard({ onScoreUpdate }: MemoryCardProps) {
         setGameState(createInitialState());
         onScoreUpdate?.(0);
     };
+
+    // Show loading state during SSR/hydration
+    if (!isClient || gameState.cards.length === 0) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.stats}>
+                    <Card className={styles.statCard}>
+                        <CardContent className={styles.statContent}>
+                            <span className={styles.statLabel}>Moves</span>
+                            <span className={styles.statValue}>0</span>
+                        </CardContent>
+                    </Card>
+                    <Card className={styles.statCard}>
+                        <CardContent className={styles.statContent}>
+                            <span className={styles.statLabel}>Pairs Found</span>
+                            <span className={styles.statValue}>0/{CARD_EMOJIS.length}</span>
+                        </CardContent>
+                    </Card>
+                </div>
+                <div className={styles.grid}>
+                    {Array.from({ length: 16 }).map((_, i) => (
+                        <div key={i} className={styles.cardContainer}>
+                            <div className={styles.card}>
+                                <div className={styles.cardFront}>
+                                    <span className={styles.cardQuestion}>?</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <Button variant="outline" className={styles.restartButton} disabled>
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Restart
+                </Button>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>
