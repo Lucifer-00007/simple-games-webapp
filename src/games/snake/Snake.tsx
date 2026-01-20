@@ -20,8 +20,15 @@ interface SnakeProps {
     onScoreUpdate?: (score: number) => void;
 }
 
+const SPEED_OPTIONS = [
+    { label: 'Slow', value: 200 },
+    { label: 'Medium', value: 120 },
+    { label: 'Fast', value: 80 },
+];
+
 export function Snake({ onScoreUpdate }: SnakeProps) {
     const [gameState, setGameState] = React.useState<GameState>(() => createInitialState());
+    const [selectedSpeed, setSelectedSpeed] = React.useState(120);
     const gameLoopRef = React.useRef<NodeJS.Timeout | null>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -69,7 +76,7 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
             if (e.key === ' ') {
                 e.preventDefault();
                 if (gameState.status === 'idle') {
-                    setGameState((prev) => startGame(prev));
+                    setGameState((prev) => startGame({ ...prev, speed: selectedSpeed }));
                 } else {
                     setGameState((prev) => togglePause(prev));
                 }
@@ -78,14 +85,14 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [gameState.status]);
+    }, [gameState.status, selectedSpeed]);
 
     const handleDirectionClick = (direction: Direction) => {
         setGameState((prev) => changeDirection(prev, direction));
     };
 
     const handleStart = () => {
-        setGameState((prev) => startGame(prev));
+        setGameState((prev) => startGame({ ...prev, speed: selectedSpeed }));
         containerRef.current?.focus();
     };
 
@@ -95,6 +102,13 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
 
     const handleRestart = () => {
         setGameState((prev) => resetGame(prev));
+        setSelectedSpeed(120); // Reset speed to default
+    };
+
+    const handleSpeedChange = (speed: number) => {
+        if (gameState.status === 'idle') {
+            setSelectedSpeed(speed);
+        }
     };
 
     const renderBoard = () => {
@@ -119,6 +133,8 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
         return cells;
     };
 
+    const canChangeSpeed = gameState.status === 'idle';
+
     return (
         <div className={styles.container} ref={containerRef} tabIndex={0}>
             <Card className={styles.gameCard}>
@@ -139,6 +155,23 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
                         <div className={styles.statItem}>
                             <span className={styles.statValue}>{gameState.highScore}</span>
                             <span className={styles.statLabel}>High Score</span>
+                        </div>
+                    </div>
+
+                    {/* Speed Control - only enabled before game starts */}
+                    <div className={styles.speedControl}>
+                        <span className={styles.speedLabel}>Speed:</span>
+                        <div className={styles.speedButtons}>
+                            {SPEED_OPTIONS.map((option) => (
+                                <button
+                                    key={option.value}
+                                    className={`${styles.speedButton} ${selectedSpeed === option.value ? styles.active : ''}`}
+                                    onClick={() => handleSpeedChange(option.value)}
+                                    disabled={!canChangeSpeed}
+                                >
+                                    {option.label}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
@@ -214,9 +247,9 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
                         )}
                     </div>
 
-                    {/* Mobile Direction Controls */}
-                    <div className={styles.mobileControls}>
-                        <div className={styles.mobileRow}>
+                    {/* Direction Controls - visible on all screens */}
+                    <div className={styles.directionControls}>
+                        <div className={styles.directionRow}>
                             <button
                                 className={styles.directionButton}
                                 onClick={() => handleDirectionClick('UP')}
@@ -224,7 +257,7 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
                                 <ChevronUp className="h-6 w-6" />
                             </button>
                         </div>
-                        <div className={styles.mobileRow}>
+                        <div className={styles.directionRow}>
                             <button
                                 className={styles.directionButton}
                                 onClick={() => handleDirectionClick('LEFT')}
