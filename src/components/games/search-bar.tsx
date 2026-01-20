@@ -34,7 +34,7 @@ export function SearchBar({
                     placeholder={placeholder}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
-                    className="pl-10 pr-10 py-5 bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="pl-10 pr-10 bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
                 {value && (
                     <Button
