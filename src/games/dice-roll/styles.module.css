@@ -1,0 +1,156 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.diceCard {
+    width: 100%;
+    background: hsl(var(--card) / 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.diceContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem !important;
+}
+
+.dice {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--muted)));
+    border: 3px solid hsl(var(--border));
+    border-radius: 1rem;
+    box-shadow:
+        0 4px 20px hsl(var(--primary) / 0.2),
+        inset 0 2px 4px hsl(var(--background) / 0.5);
+}
+
+.diceFace {
+    font-size: 5rem;
+    line-height: 1;
+}
+
+.diceEmpty {
+    font-size: 4rem;
+    opacity: 0.5;
+}
+
+.result {
+    font-size: 1.125rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.resultValue {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: hsl(var(--primary));
+}
+
+.rollButton {
+    min-width: 160px;
+    font-size: 1.125rem;
+}
+
+.stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.statCard {
+    background: hsl(var(--muted) / 0.3);
+    border-color: hsl(var(--border) / 0.5);
+}
+
+.statContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 2rem !important;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: hsl(var(--foreground));
+}
+
+.historyCard {
+    width: 100%;
+    background: hsl(var(--muted) / 0.2);
+}
+
+.historyHeader {
+    padding-bottom: 0.5rem !important;
+}
+
+.historyTitle {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+}
+
+.historyContent {
+    padding-top: 0 !important;
+}
+
+.historyScroll {
+    max-height: 150px;
+}
+
+.historyItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid hsl(var(--border) / 0.3);
+}
+
+.historyItem:last-child {
+    border-bottom: none;
+}
+
+.historyRoll {
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.historyValue {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.resetButton {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 400px) {
+    .dice {
+        width: 100px;
+        height: 100px;
+    }
+
+    .diceFace {
+        font-size: 4rem;
+    }
+}

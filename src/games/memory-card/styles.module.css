@@ -1,0 +1,150 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.stats {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.statCard {
+    flex: 1;
+    max-width: 150px;
+    background: hsl(var(--muted) / 0.3);
+    border-color: hsl(var(--border) / 0.5);
+}
+
+.statContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 1rem !important;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: hsl(var(--primary));
+}
+
+.winMessage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: hsl(142 76% 36% / 0.1);
+    border: 1px solid hsl(142 76% 36% / 0.3);
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.winIcon {
+    width: 3rem;
+    height: 3rem;
+    color: hsl(38 92% 50%);
+    margin-bottom: 0.5rem;
+}
+
+.winTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: hsl(142 76% 36%);
+    margin-bottom: 0.25rem;
+}
+
+.winText {
+    color: hsl(var(--muted-foreground));
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.cardContainer {
+    perspective: 1000px;
+}
+
+.cardContainer.matched {
+    opacity: 0.7;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    backface-visibility: hidden;
+    border: 2px solid hsl(var(--border));
+}
+
+.cardFront {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.8), hsl(280 80% 60% / 0.8));
+}
+
+.cardBack {
+    background: hsl(var(--card));
+    transform: rotateY(180deg);
+}
+
+.cardQuestion {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cardEmoji {
+    font-size: 2rem;
+}
+
+.restartButton {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 400px) {
+    .grid {
+        gap: 0.5rem;
+    }
+
+    .cardQuestion {
+        font-size: 1.25rem;
+    }
+
+    .cardEmoji {
+        font-size: 1.5rem;
+    }
+}
