@@ -1,0 +1,238 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
+    border: 1px solid hsl(var(--border) / 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 10px 40px hsl(var(--primary) / 0.1),
+        inset 0 1px 1px hsl(var(--background) / 0.5);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem !important;
+}
+
+/* Status */
+.status {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
+    border: 1px solid hsl(var(--border) / 0.3);
+}
+
+.statusRed {
+    background: linear-gradient(135deg, hsla(0, 84%, 60%, 0.2), hsla(0, 84%, 60%, 0.1));
+    border-color: hsla(0, 84%, 60%, 0.5);
+    color: hsl(0, 84%, 55%);
+}
+
+.statusYellow {
+    background: linear-gradient(135deg, hsla(45, 93%, 47%, 0.2), hsla(45, 93%, 47%, 0.1));
+    border-color: hsla(45, 93%, 47%, 0.5);
+    color: hsl(45, 93%, 42%);
+}
+
+.statusWon {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    animation: winPulse 1.5s ease-in-out infinite;
+}
+
+.statusDraw {
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.4), hsl(var(--muted) / 0.2));
+}
+
+/* Score Board */
+.scoreBoard {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.scoreItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
+    border: 1px solid hsl(var(--border) / 0.3);
+}
+
+.scoreDisc {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.redDisc {
+    background: linear-gradient(145deg, hsl(0 84% 60%), hsl(0 84% 50%));
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.yellowDisc {
+    background: linear-gradient(145deg, hsl(45 93% 47%), hsl(45 93% 40%));
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.scoreValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Board */
+.boardWrapper {
+    padding: 8px;
+    background: linear-gradient(145deg, hsl(220 90% 45%), hsl(220 90% 35%));
+    border-radius: 12px;
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.board {
+    display: grid;
+    gap: 6px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.column:hover:not(.disabled) {
+    transform: translateY(-2px);
+}
+
+.column.disabled {
+    cursor: default;
+}
+
+.cell {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, hsl(var(--background)), hsl(var(--muted)));
+    box-shadow:
+        inset 0 3px 6px rgba(0, 0, 0, 0.2),
+        0 1px 2px rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.cellRed {
+    background: linear-gradient(145deg, hsl(0 84% 60%), hsl(0 84% 50%));
+    box-shadow:
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        0 2px 8px hsla(0, 84%, 50%, 0.4);
+}
+
+.cellYellow {
+    background: linear-gradient(145deg, hsl(45 93% 47%), hsl(45 93% 40%));
+    box-shadow:
+        inset 0 3px 6px rgba(255, 255, 255, 0.3),
+        0 2px 8px hsla(45, 93%, 47%, 0.4);
+}
+
+.cellWinning {
+    animation: winCellPulse 0.75s ease-in-out infinite;
+}
+
+.cellWinning.cellRed {
+    box-shadow:
+        0 0 20px hsla(0, 84%, 50%, 0.8),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3);
+}
+
+.cellWinning.cellYellow {
+    box-shadow:
+        0 0 20px hsla(45, 93%, 47%, 0.8),
+        inset 0 3px 6px rgba(255, 255, 255, 0.3);
+}
+
+/* Controls */
+.restartButton {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+@keyframes winPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+}
+
+@keyframes winCellPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes dropIn {
+    0% {
+        transform: translateY(-300px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.cellAnimated {
+    animation: dropIn 0.3s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 450px) {
+    .cell {
+        width: 38px;
+        height: 38px;
+    }
+
+    .boardWrapper {
+        padding: 6px;
+    }
+
+    .board {
+        gap: 4px;
+    }
+
+    .column {
+        gap: 4px;
+    }
+}

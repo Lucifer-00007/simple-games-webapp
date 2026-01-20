@@ -1,0 +1,226 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    touch-action: none;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
+    border: 1px solid hsl(var(--border) / 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 10px 40px hsl(var(--primary) / 0.1),
+        inset 0 1px 1px hsl(var(--background) / 0.5);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem !important;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, hsl(38 92% 50%), hsl(28 90% 45%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.scores {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.scoreBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.5), hsl(var(--muted) / 0.3));
+    border: 1px solid hsl(var(--border) / 0.3);
+    min-width: 70px;
+}
+
+.scoreLabel {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: hsl(var(--muted-foreground));
+}
+
+.scoreValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+}
+
+/* Board */
+.boardWrapper {
+    position: relative;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 10px;
+    background: linear-gradient(145deg, #bbada0, #a99a8c);
+    border-radius: 8px;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.cell {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    transition: all 0.15s ease;
+}
+
+.cellEmpty {
+    background: rgba(238, 228, 218, 0.35);
+}
+
+.cellSmall {
+    font-size: 1.75rem;
+}
+
+.cellMedium {
+    font-size: 1.5rem;
+}
+
+.cellLarge {
+    font-size: 1.25rem;
+}
+
+.cellXlarge {
+    font-size: 1rem;
+}
+
+/* Overlay */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: rgba(238, 228, 218, 0.9);
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease;
+}
+
+.overlayTitle {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.wonText {
+    color: #edc22e;
+    text-shadow: 0 0 30px rgba(237, 194, 46, 0.5);
+}
+
+.lostText {
+    color: #776e65;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controlButton {
+    border-radius: 2rem;
+}
+
+/* Instructions */
+.instructions {
+    font-size: 0.8rem;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cellNew {
+    animation: pop 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .cell {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cellSmall {
+        font-size: 1.5rem;
+    }
+
+    .cellMedium {
+        font-size: 1.25rem;
+    }
+
+    .board {
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}

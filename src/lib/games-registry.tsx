@@ -23,6 +23,39 @@ const gameComponents: Record<string, ComponentType<GameComponentProps>> = {
     'memory-card': dynamic(() => import('@/games/memory-card').then((mod) => mod.MemoryCard), {
         loading: () => <GameLoadingPlaceholder />,
     }),
+    'number-guessing': dynamic(() => import('@/games/number-guessing').then((mod) => mod.NumberGuessing), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'snake': dynamic(() => import('@/games/snake').then((mod) => mod.Snake), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    '2048': dynamic(() => import('@/games/2048').then((mod) => mod.Game2048), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'connect-four': dynamic(() => import('@/games/connect-four').then((mod) => mod.ConnectFour), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'hangman': dynamic(() => import('@/games/hangman').then((mod) => mod.Hangman), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'quiz': dynamic(() => import('@/games/quiz').then((mod) => mod.Quiz), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'whack-a-mole': dynamic(() => import('@/games/whack-a-mole').then((mod) => mod.WhackAMole), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'simon-says': dynamic(() => import('@/games/simon-says').then((mod) => mod.SimonSays), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'emoji-catcher': dynamic(() => import('@/games/emoji-catcher').then((mod) => mod.EmojiCatcher), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'insect-catch': dynamic(() => import('@/games/insect-catch').then((mod) => mod.InsectCatch), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'shape-clicker': dynamic(() => import('@/games/shape-clicker').then((mod) => mod.ShapeClicker), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
     // Add more games here as they are implemented
 };
 

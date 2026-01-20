@@ -1,0 +1,205 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
+    border: 1px solid hsl(var(--border) / 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 10px 40px hsl(var(--primary) / 0.1),
+        inset 0 1px 1px hsl(var(--background) / 0.5);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem !important;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress {
+    font-size: 0.9rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.score {
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.1));
+    border: 1px solid hsl(var(--primary) / 0.3);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Progress Bar */
+.progressBar {
+    height: 6px;
+    background: hsl(var(--muted) / 0.3);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(280 70% 60%));
+    border-radius: 1rem;
+    transition: width 0.3s ease;
+}
+
+/* Question */
+.category {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.question {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: hsl(var(--foreground));
+}
+
+/* Options */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
+    border: 2px solid hsl(var(--border) / 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.option:hover:not(:disabled) {
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.5), hsl(var(--muted) / 0.3));
+    border-color: hsl(var(--primary) / 0.5);
+    transform: translateX(4px);
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.optionLetter {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: hsl(var(--background));
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.optionCorrect {
+    background: linear-gradient(135deg, hsl(142 76% 45% / 0.2), hsl(142 76% 45% / 0.1));
+    border-color: hsl(142 76% 45%);
+}
+
+.optionCorrect .optionLetter {
+    background: hsl(142 76% 45%);
+    color: white;
+}
+
+.optionWrong {
+    background: linear-gradient(135deg, hsl(0 84% 60% / 0.2), hsl(0 84% 60% / 0.1));
+    border-color: hsl(0 84% 60%);
+}
+
+.optionWrong .optionLetter {
+    background: hsl(0 84% 60%);
+    color: white;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+.nextButton {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+/* Results */
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.resultsTitle {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.emoji {
+    font-size: 4rem;
+}
+
+.finalScore {
+    font-size: 1.5rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.scoreHighlight {
+    font-weight: 700;
+    color: hsl(var(--primary));
+}
+
+.percentage {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(280 70% 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .question {
+        font-size: 1.1rem;
+    }
+
+    .option {
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+    }
+}

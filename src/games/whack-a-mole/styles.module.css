@@ -1,0 +1,194 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
+    border: 1px solid hsl(var(--border) / 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 10px 40px hsl(var(--primary) / 0.1),
+        inset 0 1px 1px hsl(var(--background) / 0.5);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem !important;
+}
+
+/* Stats */
+.statsBar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.75rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
+    border: 1px solid hsl(var(--border) / 0.3);
+    flex: 1;
+}
+
+.statValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.statLabel {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: hsl(var(--muted-foreground));
+}
+
+.timer {
+    background: linear-gradient(135deg, hsl(350 89% 60% / 0.2), hsl(350 89% 60% / 0.1));
+    border-color: hsl(350 89% 60% / 0.5);
+}
+
+.timer .statValue {
+    color: hsl(350 89% 60%);
+}
+
+/* Board */
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(145deg, hsl(25 60% 30%), hsl(25 50% 25%));
+    border-radius: 12px;
+    box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hole {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, hsl(25 40% 15%), hsl(25 40% 10%));
+    box-shadow:
+        inset 0 8px 16px rgba(0, 0, 0, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.1s ease;
+}
+
+.hole:active {
+    transform: scale(0.95);
+}
+
+.mole {
+    font-size: 3rem;
+    position: absolute;
+    transition: transform 0.15s ease;
+}
+
+.moleHidden {
+    transform: translateY(100%);
+}
+
+.moleVisible {
+    transform: translateY(0);
+    animation: molePopUp 0.15s ease-out;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.controlButton {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+/* Results overlay */
+.results {
+    text-align: center;
+}
+
+.resultsTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.resultsStat {
+    color: hsl(var(--muted-foreground));
+    font-size: 0.9rem;
+}
+
+@keyframes molePopUp {
+    0% {
+        transform: translateY(80%);
+    }
+
+    70% {
+        transform: translateY(-10%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes whack {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.2) rotate(-15deg);
+    }
+
+    100% {
+        transform: scale(0) rotate(30deg);
+    }
+}
+
+.moleWhacked {
+    animation: whack 0.2s ease-out forwards;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .hole {
+        width: 65px;
+        height: 65px;
+    }
+
+    .mole {
+        font-size: 2.5rem;
+    }
+
+    .board {
+        gap: 8px;
+        padding: 12px;
+    }
+}

@@ -1,0 +1,237 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Game Card */
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
+    border: 1px solid hsl(var(--border) / 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 10px 40px hsl(var(--primary) / 0.1),
+        inset 0 1px 1px hsl(var(--background) / 0.5);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem !important;
+}
+
+/* Stats Bar */
+.statsBar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
+    border: 1px solid hsl(var(--border) / 0.3);
+    flex: 1;
+}
+
+.statValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--muted-foreground)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.statLabel {
+    font-size: 0.65rem;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Game Board */
+.boardWrapper {
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.board {
+    display: grid;
+    gap: 1px;
+    background: hsl(var(--background) / 0.5);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.cell {
+    width: 16px;
+    height: 16px;
+    background: hsl(var(--muted) / 0.2);
+    transition: background-color 0.1s ease;
+}
+
+.cellSnake {
+    background: linear-gradient(135deg, hsl(142 76% 45%), hsl(142 76% 35%));
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.cellHead {
+    background: linear-gradient(135deg, hsl(142 90% 50%), hsl(142 76% 40%));
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.4),
+        0 0 10px hsl(142 76% 45% / 0.5);
+    border-radius: 4px;
+}
+
+.cellFood {
+    background: linear-gradient(135deg, hsl(350 89% 60%), hsl(350 89% 50%));
+    box-shadow:
+        0 0 15px hsl(350 89% 60% / 0.6),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: foodPulse 1s ease-in-out infinite;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controlButton {
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+}
+
+/* Mobile Controls */
+.mobileControls {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mobileRow {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.directionButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.5), hsl(var(--muted) / 0.3));
+    border: 1px solid hsl(var(--border) / 0.5);
+    color: hsl(var(--foreground));
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.directionButton:active {
+    transform: scale(0.95);
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.2));
+}
+
+/* Overlay */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: hsl(var(--background) / 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 0.5rem;
+}
+
+.overlayTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--muted-foreground)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.overlaySubtitle {
+    font-size: 0.9rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.gameOverText {
+    color: hsl(350 89% 60%);
+    background: linear-gradient(135deg, hsl(350 89% 60%), hsl(350 70% 50%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.boardContainer {
+    position: relative;
+}
+
+@keyframes foodPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 15px hsl(350 89% 60% / 0.6);
+    }
+
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 25px hsl(350 89% 60% / 0.8);
+    }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .cell {
+        width: 14px;
+        height: 14px;
+    }
+
+    .mobileControls {
+        display: flex;
+    }
+
+    .cardContent {
+        padding: 1rem !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .cell {
+        width: 12px;
+        height: 12px;
+    }
+}
