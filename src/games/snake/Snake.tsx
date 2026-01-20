@@ -102,7 +102,7 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
 
     const handleRestart = () => {
         setGameState((prev) => resetGame(prev));
-        setSelectedSpeed(120); // Reset speed to default
+        setSelectedSpeed(120);
     };
 
     const handleSpeedChange = (speed: number) => {
@@ -158,124 +158,132 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
                         </div>
                     </div>
 
-                    {/* Speed Control - only enabled before game starts */}
-                    <div className={styles.speedControl}>
-                        <span className={styles.speedLabel}>Speed:</span>
-                        <div className={styles.speedButtons}>
-                            {SPEED_OPTIONS.map((option) => (
-                                <button
-                                    key={option.value}
-                                    className={`${styles.speedButton} ${selectedSpeed === option.value ? styles.active : ''}`}
-                                    onClick={() => handleSpeedChange(option.value)}
-                                    disabled={!canChangeSpeed}
-                                >
-                                    {option.label}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+                    {/* Main Game Layout */}
+                    <div className={styles.gameLayout}>
+                        {/* Left - Game Board */}
+                        <div className={styles.leftPanel}>
+                            <div className={styles.boardWrapper}>
+                                <div className={styles.boardContainer}>
+                                    <div
+                                        className={styles.board}
+                                        style={{
+                                            gridTemplateColumns: `repeat(${DEFAULT_CONFIG.gridSize}, 1fr)`,
+                                            gridTemplateRows: `repeat(${DEFAULT_CONFIG.gridSize}, 1fr)`,
+                                        }}
+                                    >
+                                        {renderBoard()}
+                                    </div>
 
-                    {/* Game Board */}
-                    <div className={styles.boardWrapper}>
-                        <div className={styles.boardContainer}>
-                            <div
-                                className={styles.board}
-                                style={{
-                                    gridTemplateColumns: `repeat(${DEFAULT_CONFIG.gridSize}, 1fr)`,
-                                    gridTemplateRows: `repeat(${DEFAULT_CONFIG.gridSize}, 1fr)`,
-                                }}
-                            >
-                                {renderBoard()}
-                            </div>
-
-                            {/* Overlay for idle/paused/gameOver */}
-                            {gameState.status !== 'playing' && (
-                                <div className={styles.overlay}>
-                                    {gameState.status === 'idle' && (
-                                        <>
-                                            <div className={styles.overlayTitle}>🐍 Snake</div>
-                                            <div className={styles.overlaySubtitle}>Press Space or Start to play</div>
-                                        </>
-                                    )}
-                                    {gameState.status === 'paused' && (
-                                        <div className={styles.overlayTitle}>⏸️ Paused</div>
-                                    )}
-                                    {gameState.status === 'gameOver' && (
-                                        <>
-                                            <div className={`${styles.overlayTitle} ${styles.gameOverText}`}>
-                                                Game Over!
-                                            </div>
-                                            <div className={styles.overlaySubtitle}>Score: {gameState.score}</div>
-                                        </>
+                                    {/* Overlay for idle/paused/gameOver */}
+                                    {gameState.status !== 'playing' && (
+                                        <div className={styles.overlay}>
+                                            {gameState.status === 'idle' && (
+                                                <>
+                                                    <div className={styles.overlayTitle}>🐍 Snake</div>
+                                                    <div className={styles.overlaySubtitle}>Press Space or Start</div>
+                                                </>
+                                            )}
+                                            {gameState.status === 'paused' && (
+                                                <div className={styles.overlayTitle}>⏸️ Paused</div>
+                                            )}
+                                            {gameState.status === 'gameOver' && (
+                                                <>
+                                                    <div className={`${styles.overlayTitle} ${styles.gameOverText}`}>
+                                                        Game Over!
+                                                    </div>
+                                                    <div className={styles.overlaySubtitle}>Score: {gameState.score}</div>
+                                                </>
+                                            )}
+                                        </div>
                                     )}
                                 </div>
-                            )}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Controls */}
-                    <div className={styles.controls}>
-                        {gameState.status === 'idle' && (
-                            <Button onClick={handleStart} className={styles.controlButton}>
-                                <Play className="h-4 w-4 mr-2" />
-                                Start
-                            </Button>
-                        )}
-                        {gameState.status === 'playing' && (
-                            <Button onClick={handlePauseToggle} variant="outline" className={styles.controlButton}>
-                                <Pause className="h-4 w-4 mr-2" />
-                                Pause
-                            </Button>
-                        )}
-                        {gameState.status === 'paused' && (
-                            <Button onClick={handlePauseToggle} className={styles.controlButton}>
-                                <Play className="h-4 w-4 mr-2" />
-                                Resume
-                            </Button>
-                        )}
-                        {gameState.status === 'gameOver' && (
-                            <Button onClick={handleRestart} className={styles.controlButton}>
-                                <RotateCcw className="h-4 w-4 mr-2" />
-                                Play Again
-                            </Button>
-                        )}
-                        {gameState.status !== 'idle' && gameState.status !== 'gameOver' && (
-                            <Button onClick={handleRestart} variant="outline" className={styles.controlButton}>
-                                <RotateCcw className="h-4 w-4 mr-2" />
-                                Restart
-                            </Button>
-                        )}
-                    </div>
+                        {/* Right - Controls Panel */}
+                        <div className={styles.rightPanel}>
+                            {/* Speed Control */}
+                            <div className={styles.speedControl}>
+                                <span className={styles.speedLabel}>Speed</span>
+                                <div className={styles.speedButtons}>
+                                    {SPEED_OPTIONS.map((option) => (
+                                        <button
+                                            key={option.value}
+                                            className={`${styles.speedButton} ${selectedSpeed === option.value ? styles.active : ''}`}
+                                            onClick={() => handleSpeedChange(option.value)}
+                                            disabled={!canChangeSpeed}
+                                        >
+                                            {option.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
 
-                    {/* Direction Controls - visible on all screens */}
-                    <div className={styles.directionControls}>
-                        <div className={styles.directionRow}>
-                            <button
-                                className={styles.directionButton}
-                                onClick={() => handleDirectionClick('UP')}
-                            >
-                                <ChevronUp className="h-6 w-6" />
-                            </button>
-                        </div>
-                        <div className={styles.directionRow}>
-                            <button
-                                className={styles.directionButton}
-                                onClick={() => handleDirectionClick('LEFT')}
-                            >
-                                <ChevronLeft className="h-6 w-6" />
-                            </button>
-                            <button
-                                className={styles.directionButton}
-                                onClick={() => handleDirectionClick('DOWN')}
-                            >
-                                <ChevronDown className="h-6 w-6" />
-                            </button>
-                            <button
-                                className={styles.directionButton}
-                                onClick={() => handleDirectionClick('RIGHT')}
-                            >
-                                <ChevronRight className="h-6 w-6" />
-                            </button>
+                            {/* Direction Controls */}
+                            <div className={styles.directionControls}>
+                                <div className={styles.directionRow}>
+                                    <button
+                                        className={styles.directionButton}
+                                        onClick={() => handleDirectionClick('UP')}
+                                    >
+                                        <ChevronUp className="h-6 w-6" />
+                                    </button>
+                                </div>
+                                <div className={styles.directionRow}>
+                                    <button
+                                        className={styles.directionButton}
+                                        onClick={() => handleDirectionClick('LEFT')}
+                                    >
+                                        <ChevronLeft className="h-6 w-6" />
+                                    </button>
+                                    <button
+                                        className={styles.directionButton}
+                                        onClick={() => handleDirectionClick('DOWN')}
+                                    >
+                                        <ChevronDown className="h-6 w-6" />
+                                    </button>
+                                    <button
+                                        className={styles.directionButton}
+                                        onClick={() => handleDirectionClick('RIGHT')}
+                                    >
+                                        <ChevronRight className="h-6 w-6" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Game Controls */}
+                            <div className={styles.controls}>
+                                {gameState.status === 'idle' && (
+                                    <Button onClick={handleStart} className={styles.controlButton}>
+                                        <Play className="h-4 w-4 mr-2" />
+                                        Start
+                                    </Button>
+                                )}
+                                {gameState.status === 'playing' && (
+                                    <Button onClick={handlePauseToggle} variant="outline" className={styles.controlButton}>
+                                        <Pause className="h-4 w-4 mr-2" />
+                                        Pause
+                                    </Button>
+                                )}
+                                {gameState.status === 'paused' && (
+                                    <Button onClick={handlePauseToggle} className={styles.controlButton}>
+                                        <Play className="h-4 w-4 mr-2" />
+                                        Resume
+                                    </Button>
+                                )}
+                                {gameState.status === 'gameOver' && (
+                                    <Button onClick={handleRestart} className={styles.controlButton}>
+                                        <RotateCcw className="h-4 w-4 mr-2" />
+                                        Play Again
+                                    </Button>
+                                )}
+                                {gameState.status !== 'idle' && gameState.status !== 'gameOver' && (
+                                    <Button onClick={handleRestart} variant="outline" className={styles.controlButton}>
+                                        <RotateCcw className="h-4 w-4 mr-2" />
+                                        Restart
+                                    </Button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </CardContent>
