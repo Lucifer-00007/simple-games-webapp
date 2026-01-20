@@ -64,22 +64,22 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
 
                     {/* Content */}
                     <CardContent className="p-4">
-                        <div className="flex items-start justify-between gap-2 mb-2">
+                        <div className="flex items-center justify-between gap-2 mb-2">
                             <h3 className="font-semibold text-lg group-hover:text-primary transition-colors line-clamp-1">
                                 {game.title}
                             </h3>
+                            <Badge
+                                variant="outline"
+                                className="shrink-0"
+                                style={{
+                                    borderColor: category?.color.includes('purple')
+                                        ? 'rgb(168 85 247)'
+                                        : undefined,
+                                }}
+                            >
+                                {category?.icon} {category?.name}
+                            </Badge>
                         </div>
-                        <Badge
-                            variant="outline"
-                            className="mb-2"
-                            style={{
-                                borderColor: category?.color.includes('purple')
-                                    ? 'rgb(168 85 247)'
-                                    : undefined,
-                            }}
-                        >
-                            {category?.icon} {category?.name}
-                        </Badge>
                         <p className="text-sm text-muted-foreground line-clamp-2">
                             {game.description}
                         </p>
