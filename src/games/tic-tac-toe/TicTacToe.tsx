@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, GripHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { createInitialState, makeMove } from './game-logic';
-import { GameState, Cell } from './types';
+import { GameState } from './types';
 import styles from './styles.module.css';
 
 interface TicTacToeProps {
@@ -67,8 +67,8 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
           ${isEmpty && gameState.status === 'playing' ? styles.empty : ''}
         `}
                 onClick={() => handleCellClick(index)}
-                whileHover={isEmpty && gameState.status === 'playing' ? { scale: 1.02 } : {}}
-                whileTap={isEmpty && gameState.status === 'playing' ? { scale: 0.95 } : {}}
+                whileHover={isEmpty && gameState.status === 'playing' ? { scale: 0.95 } : {}}
+                whileTap={isEmpty && gameState.status === 'playing' ? { scale: 0.9 } : {}}
                 disabled={!isEmpty || gameState.status !== 'playing'}
             >
                 <AnimatePresence mode="wait">
@@ -91,50 +91,58 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
 
     return (
         <div className={styles.container}>
-            {/* Scoreboard */}
-            <div className={styles.scoreboard}>
-                <div className={`${styles.scoreItem} ${gameState.currentPlayer === 'X' ? styles.active : ''}`}>
-                    <span className={styles.x}>X</span>
-                    <span className={styles.scoreValue}>{scores.X}</span>
+            <Card className={styles.gameCard}>
+                <div className={styles.cardHandle}>
+                    <GripHorizontal className="w-6 h-6 text-muted-foreground/50" />
                 </div>
-                <div className={styles.scoreItem}>
-                    <span className={styles.drawLabel}>Draws</span>
-                    <span className={styles.scoreValue}>{scores.draws}</span>
-                </div>
-                <div className={`${styles.scoreItem} ${gameState.currentPlayer === 'O' ? styles.active : ''}`}>
-                    <span className={styles.o}>O</span>
-                    <span className={styles.scoreValue}>{scores.O}</span>
-                </div>
-            </div>
 
-            {/* Status */}
-            <motion.div
-                key={gameState.status + gameState.currentPlayer}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`${styles.status} ${gameState.status === 'won' ? styles.statusWon :
-                        gameState.status === 'draw' ? styles.statusDraw : ''
-                    }`}
-            >
-                {getStatusMessage()}
-            </motion.div>
+                <CardContent className={styles.cardContent}>
+                    {/* Scoreboard */}
+                    <div className={styles.scoreboard}>
+                        <div className={`${styles.scoreItem} ${gameState.currentPlayer === 'X' ? styles.active : ''}`}>
+                            <span className={styles.x}>X</span>
+                            <span className={styles.scoreValue}>{scores.X}</span>
+                        </div>
+                        <div className={styles.scoreItem}>
+                            <span className={styles.drawLabel}>Draws</span>
+                            <span className={styles.scoreValue}>{scores.draws}</span>
+                        </div>
+                        <div className={`${styles.scoreItem} ${gameState.currentPlayer === 'O' ? styles.active : ''}`}>
+                            <span className={styles.o}>O</span>
+                            <span className={styles.scoreValue}>{scores.O}</span>
+                        </div>
+                    </div>
 
-            {/* Game Board */}
-            <Card className={styles.boardContainer}>
-                <div className={styles.board}>
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => renderCell(index))}
-                </div>
+                    {/* Status */}
+                    <motion.div
+                        key={gameState.status + gameState.currentPlayer}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className={`${styles.status} ${gameState.status === 'won' ? styles.statusWon :
+                            gameState.status === 'draw' ? styles.statusDraw : ''
+                            }`}
+                    >
+                        {getStatusMessage()}
+                    </motion.div>
+
+                    {/* Game Board */}
+                    <div className={styles.boardWrapper}>
+                        <div className={styles.board}>
+                            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => renderCell(index))}
+                        </div>
+                    </div>
+
+                    {/* Restart Button */}
+                    <Button
+                        onClick={handleRestart}
+                        variant="outline"
+                        className={styles.restartButton}
+                    >
+                        <RotateCcw className="h-4 w-4 mr-2" />
+                        {gameState.status !== 'playing' ? 'Play Again' : 'Restart'}
+                    </Button>
+                </CardContent>
             </Card>
-
-            {/* Restart Button */}
-            <Button
-                onClick={handleRestart}
-                variant="outline"
-                className={styles.restartButton}
-            >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                {gameState.status !== 'playing' ? 'Play Again' : 'Restart'}
-            </Button>
         </div>
     );
 }
