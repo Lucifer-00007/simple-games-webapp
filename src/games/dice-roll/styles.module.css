@@ -1,12 +1,38 @@
 .container {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+.leftPanel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.75rem;
-    padding: 2rem;
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
+    gap: 1rem;
+}
+
+.rightPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .rightPanel {
+        order: -1;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 /* Dice Card */
@@ -80,10 +106,7 @@
 .resultValue {
     font-size: 1.75rem;
     font-weight: 800;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(280 80% 60%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: hsl(var(--primary));
 }
 
 /* Roll Button */
@@ -94,6 +117,7 @@
     padding: 1rem 2rem;
     border-radius: 2rem;
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(280 80% 55%));
+    color: white !important;
     box-shadow:
         0 6px 20px hsl(var(--primary) / 0.4),
         inset 0 1px 2px hsl(var(--background) / 0.3);
@@ -136,12 +160,9 @@
 }
 
 .statValue {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--muted-foreground)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: hsl(var(--primary));
 }
 
 /* History */
@@ -188,13 +209,13 @@
 }
 
 .historyRoll {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: hsl(var(--muted-foreground));
     font-weight: 500;
 }
 
 .historyValue {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }

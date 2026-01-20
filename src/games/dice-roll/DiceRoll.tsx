@@ -47,103 +47,112 @@ export function DiceRoll({ onScoreUpdate }: DiceRollProps) {
 
     return (
         <div className={styles.container}>
-            {/* Main Dice Display */}
-            <Card className={styles.diceCard}>
-                <CardContent className={styles.diceContent}>
-                    <motion.div
-                        className={styles.dice}
-                        animate={
-                            gameState.isRolling
-                                ? {
-                                    rotate: [0, 360, 720],
-                                    scale: [1, 1.1, 1],
-                                }
-                                : {}
-                        }
-                        transition={{
-                            duration: 0.8,
-                            ease: 'easeInOut',
+            {/* Left Panel - Dice */}
+            <div className={styles.leftPanel}>
+                {/* Main Dice Display */}
+                <Card className={styles.diceCard}>
+                    <CardContent className={styles.diceContent}>
+                        <motion.div
+                            className={styles.dice}
+                            animate={
+                                gameState.isRolling
+                                    ? {
+                                        rotate: [0, 360, 720],
+                                        scale: [1, 1.1, 1],
+                                    }
+                                    : {}
+                            }
+                            transition={{
+                                duration: 0.8,
+                                ease: 'easeInOut',
+                            }}
+                        >
+                            {displayValue ? (
+                                <span className={styles.diceFace}>{DICE_FACES[displayValue]}</span>
+                            ) : (
+                                <span className={styles.diceEmpty}>🎲</span>
+                            )}
+                        </motion.div>
+
+                        {displayValue && !gameState.isRolling && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className={styles.result}
+                            >
+                                You rolled a <span className={styles.resultValue}>{displayValue}</span>!
+                            </motion.div>
+                        )}
+                    </CardContent>
+                </Card>
+
+                {/* Roll Button */}
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Button
+                        size="lg"
+                        onClick={handleRoll}
+                        disabled={gameState.isRolling}
+                        className={styles.rollButton}
+                        style={{
+                            background: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+                            color: 'white',
+                            border: 'none'
                         }}
                     >
-                        {displayValue ? (
-                            <span className={styles.diceFace}>{DICE_FACES[displayValue]}</span>
-                        ) : (
-                            <span className={styles.diceEmpty}>🎲</span>
-                        )}
-                    </motion.div>
+                        <Dices className="h-5 w-5 mr-2" style={{ color: 'white' }} />
+                        {gameState.isRolling ? 'Rolling...' : 'Roll Dice'}
+                    </Button>
+                </motion.div>
+            </div>
 
-                    {displayValue && !gameState.isRolling && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className={styles.result}
-                        >
-                            You rolled a <span className={styles.resultValue}>{displayValue}</span>!
-                        </motion.div>
-                    )}
-                </CardContent>
-            </Card>
-
-            {/* Roll Button */}
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                    size="lg"
-                    onClick={handleRoll}
-                    disabled={gameState.isRolling}
-                    className={styles.rollButton}
-                >
-                    <Dices className="h-5 w-5 mr-2" />
-                    {gameState.isRolling ? 'Rolling...' : 'Roll Dice'}
-                </Button>
-            </motion.div>
-
-            {/* Stats */}
-            <div className={styles.stats}>
+            {/* Right Panel - Stats, History, Reset */}
+            <div className={styles.rightPanel}>
+                {/* Stats */}
                 <Card className={styles.statCard}>
                     <CardContent className={styles.statContent}>
                         <span className={styles.statLabel}>Total Rolls</span>
                         <span className={styles.statValue}>{gameState.totalRolls}</span>
                     </CardContent>
                 </Card>
+
+                {/* Roll History */}
+                {gameState.history.length > 0 && (
+                    <Card className={styles.historyCard}>
+                        <CardHeader className={styles.historyHeader}>
+                            <CardTitle className={styles.historyTitle}>
+                                <History className="h-4 w-4 mr-2" />
+                                Roll History
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className={styles.historyContent}>
+                            <ScrollArea className={styles.historyScroll}>
+                                <AnimatePresence>
+                                    {gameState.history.map((roll, index) => (
+                                        <motion.div
+                                            key={roll.rollNumber}
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: index * 0.05 }}
+                                            className={styles.historyItem}
+                                        >
+                                            <span className={styles.historyRoll}>Roll #{roll.rollNumber}</span>
+                                            <span className={styles.historyValue}>
+                                                {DICE_FACES[roll.value]} ({roll.value})
+                                            </span>
+                                        </motion.div>
+                                    ))}
+                                </AnimatePresence>
+                            </ScrollArea>
+                        </CardContent>
+                    </Card>
+                )}
+
+                {/* Reset Button */}
+                <Button onClick={handleReset} variant="outline" className={styles.resetButton}>
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Reset
+                </Button>
             </div>
-
-            {/* Roll History */}
-            {gameState.history.length > 0 && (
-                <Card className={styles.historyCard}>
-                    <CardHeader className={styles.historyHeader}>
-                        <CardTitle className={styles.historyTitle}>
-                            <History className="h-4 w-4 mr-2" />
-                            Roll History
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className={styles.historyContent}>
-                        <ScrollArea className={styles.historyScroll}>
-                            <AnimatePresence>
-                                {gameState.history.map((roll, index) => (
-                                    <motion.div
-                                        key={roll.rollNumber}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: index * 0.05 }}
-                                        className={styles.historyItem}
-                                    >
-                                        <span className={styles.historyRoll}>Roll #{roll.rollNumber}</span>
-                                        <span className={styles.historyValue}>
-                                            {DICE_FACES[roll.value]} ({roll.value})
-                                        </span>
-                                    </motion.div>
-                                ))}
-                            </AnimatePresence>
-                        </ScrollArea>
-                    </CardContent>
-                </Card>
-            )}
-
-            {/* Reset Button */}
-            <Button onClick={handleReset} variant="outline" className={styles.resetButton}>
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Reset
-            </Button>
         </div>
     );
 }
