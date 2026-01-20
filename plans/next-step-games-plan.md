@@ -34,6 +34,9 @@
 ### New features
 
 #### Priority Lv: P0
+- [] In all the 2-player games add a feature to play like - Player VS the Computer.
+
+- []
 - []
 - []
 - []

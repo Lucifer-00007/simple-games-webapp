@@ -108,7 +108,7 @@ export function MemoryCard({ onScoreUpdate }: MemoryCardProps) {
                 </Card>
                 <Card className={styles.statCard}>
                     <CardContent className={styles.statContent}>
-                        <span className={styles.statLabel}>Pairs Found</span>
+                        <span className={styles.statLabel}>Pairs</span>
                         <span className={styles.statValue}>
                             {gameState.matchedPairs}/{CARD_EMOJIS.length}
                         </span>
