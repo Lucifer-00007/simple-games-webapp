@@ -1,0 +1,184 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, hsl(var(--card) / 0.95), hsl(var(--card) / 0.7));
+    border: 1px solid hsl(var(--border) / 0.4);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem !important;
+}
+
+/* Stats Bar */
+.statsBar {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.4), hsl(var(--muted) / 0.2));
+    border-radius: 1rem;
+    border: 1px solid hsl(var(--border) / 0.4);
+    min-width: 80px;
+}
+
+.statValue {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: hsl(var(--foreground));
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: hsl(var(--muted-foreground));
+}
+
+/* Text Display */
+.textDisplay {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, hsl(var(--muted) / 0.2), hsl(var(--muted) / 0.1));
+    border-radius: 1rem;
+    border: 1px solid hsl(var(--border) / 0.4);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.charCorrect {
+    color: hsl(142 76% 40%);
+    background: hsl(142 76% 36% / 0.1);
+}
+
+.charIncorrect {
+    color: hsl(0 85% 55%);
+    background: hsl(0 85% 55% / 0.2);
+    text-decoration: underline;
+}
+
+.charCurrent {
+    background: hsl(var(--primary) / 0.3);
+    border-left: 2px solid hsl(var(--primary));
+    animation: blink 1s infinite;
+}
+
+.charPending {
+    color: hsl(var(--muted-foreground));
+}
+
+/* Hidden Input */
+.hiddenInput {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Start Screen */
+.startScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.startTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.startSubtitle {
+    color: hsl(var(--muted-foreground));
+}
+
+/* Results */
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.resultsTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.resultsEmoji {
+    font-size: 3rem;
+}
+
+/* Button */
+.controlButton {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2rem;
+}
+
+/* Instructions */
+.instructions {
+    font-size: 0.85rem;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+}
+
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0.3;
+    }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .textDisplay {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    .statsBar {
+        gap: 0.75rem;
+    }
+
+    .statItem {
+        min-width: 70px;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+}

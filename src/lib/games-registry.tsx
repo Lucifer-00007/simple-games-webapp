@@ -56,6 +56,12 @@ const gameComponents: Record<string, ComponentType<GameComponentProps>> = {
     'shape-clicker': dynamic(() => import('@/games/shape-clicker').then((mod) => mod.ShapeClicker), {
         loading: () => <GameLoadingPlaceholder />,
     }),
+    'minesweeper': dynamic(() => import('@/games/minesweeper').then((mod) => mod.Minesweeper), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'speed-typing': dynamic(() => import('@/games/speed-typing').then((mod) => mod.SpeedTyping), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
     // Add more games here as they are implemented
 };
 
