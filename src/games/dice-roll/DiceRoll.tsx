@@ -126,22 +126,32 @@ export function DiceRoll({ onScoreUpdate }: DiceRollProps) {
                         </CardHeader>
                         <CardContent className={styles.historyContent}>
                             <ScrollArea className={styles.historyScroll}>
-                                <AnimatePresence>
-                                    {gameState.history.map((roll, index) => (
-                                        <motion.div
-                                            key={roll.rollNumber}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.05 }}
-                                            className={styles.historyItem}
-                                        >
-                                            <span className={styles.historyRoll}>Roll #{roll.rollNumber}</span>
-                                            <span className={styles.historyValue}>
-                                                {DICE_FACES[roll.value]} ({roll.value})
-                                            </span>
-                                        </motion.div>
-                                    ))}
-                                </AnimatePresence>
+                                <table className={styles.historyTable}>
+                                    <thead>
+                                        <tr>
+                                            <th>Roll #</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <AnimatePresence>
+                                            {gameState.history.map((roll, index) => (
+                                                <motion.tr
+                                                    key={roll.rollNumber}
+                                                    initial={{ opacity: 0, x: -20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: index * 0.05 }}
+                                                    className={styles.historyRow}
+                                                >
+                                                    <td className={styles.historyRoll}>{roll.rollNumber}</td>
+                                                    <td className={styles.historyValue}>
+                                                        <span>{DICE_FACES[roll.value]} ({roll.value})</span>
+                                                    </td>
+                                                </motion.tr>
+                                            ))}
+                                        </AnimatePresence>
+                                    </tbody>
+                                </table>
                             </ScrollArea>
                         </CardContent>
                     </Card>

@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .rightPanel {
@@ -52,8 +52,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
-    padding: 2.5rem !important;
+    gap: 0.75rem;
+    padding: 1.5rem !important;
 }
 
 /* 3D Dice */
@@ -138,92 +138,194 @@
 }
 
 .statCard {
-    background: linear-gradient(145deg, hsl(var(--muted) / 0.4), hsl(var(--muted) / 0.2));
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--card) / 0.8));
+    border: 2px solid hsl(var(--primary) / 0.3);
     backdrop-filter: blur(10px);
     border-radius: 1rem;
+    overflow: hidden;
+    box-shadow:
+        0 4px 20px hsl(var(--primary) / 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.statCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(280 80% 60%));
 }
 
 .statContent {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem 2.5rem !important;
+    padding: 1rem 1.5rem !important;
 }
 
 .statLabel {
-    font-size: 0.7rem;
-    color: hsl(var(--muted-foreground));
+    font-size: 0.65rem;
+    color: hsl(var(--foreground) / 0.6);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    font-weight: 500;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
 }
 
 .statValue {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: hsl(var(--primary));
+    font-size: 2rem;
+    font-weight: 800;
+    color: #8b5cf6;
 }
 
 /* History */
 .historyCard {
     width: 100%;
-    background: linear-gradient(145deg, hsl(var(--muted) / 0.25), hsl(var(--muted) / 0.1));
-    border: 1px solid hsl(var(--border) / 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 1rem;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .historyHeader {
-    padding: 1rem 1.25rem 0.5rem !important;
+    padding: 0.6rem 0.75rem !important;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--primary) / 0.03));
+    border-bottom: 1px solid hsl(var(--border));
 }
 
 .historyTitle {
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: hsl(var(--muted-foreground));
+    gap: 0.4rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
 }
 
 .historyContent {
-    padding: 0 1.25rem 1rem !important;
+    padding: 0 !important;
 }
 
 .historyScroll {
     max-height: 160px;
 }
 
-.historyItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid hsl(var(--border) / 0.15);
+.historyTable {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.historyItem:last-child {
+.historyTable thead tr {
+    background: hsl(var(--muted) / 0.5);
+    border-bottom: 1px solid hsl(var(--border));
+}
+
+.historyTable th {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.75rem;
+    text-align: left;
+}
+
+.historyTable th:last-child {
+    text-align: right;
+}
+
+.historyRow {
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    transition: background 0.15s ease;
+}
+
+.historyRow:nth-child(even) {
+    background: hsl(var(--muted) / 0.2);
+}
+
+.historyRow:hover {
+    background: hsl(var(--primary) / 0.08);
+}
+
+.historyRow:last-child {
     border-bottom: none;
 }
 
 .historyRoll {
     font-size: 0.75rem;
-    color: hsl(var(--muted-foreground));
+    color: hsl(var(--foreground) / 0.8);
     font-weight: 500;
+    padding: 0.5rem 0.75rem;
 }
 
 .historyValue {
-    font-size: 1.1rem;
+    padding: 0.4rem 0.75rem;
+    text-align: right;
+}
+
+.historyValue span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
 }
 
 .resetButton {
     margin-top: 0.5rem;
     border-radius: 2rem;
     padding: 0.75rem 2rem;
+}
+
+/* Dark Mode Overrides for Roll History */
+:global(.dark) .historyCard,
+:global([data-theme="dark"]) .historyCard {
+    background: hsl(var(--card));
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark) .historyHeader,
+:global([data-theme="dark"]) .historyHeader {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05));
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .historyTable thead tr,
+:global([data-theme="dark"]) .historyTable thead tr {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(.dark) .historyRow,
+:global([data-theme="dark"]) .historyRow {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+:global(.dark) .historyRow:nth-child(even),
+:global([data-theme="dark"]) .historyRow:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+:global(.dark) .historyRow:hover,
+:global([data-theme="dark"]) .historyRow:hover {
+    background: hsl(var(--primary) / 0.15);
+}
+
+:global(.dark) .historyValue span,
+:global([data-theme="dark"]) .historyValue span {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(280 80% 75%);
 }
 
 @media (max-width: 400px) {
