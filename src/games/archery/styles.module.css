@@ -4,88 +4,112 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    justify-content: center;
+    min-height: 100vh;
+    background: #222;
+    padding: 2rem 1rem;
 }
 
-.gameCard {
-    background: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.8) 100%);
-    backdrop-filter: blur(10px);
-    border: 1px solid hsl(var(--border) / 0.5);
-    width: 100%;
-    max-width: 650px;
-}
-
-.cardContent {
-    padding: 1.5rem;
-}
-
-.statsBar {
+.stats {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1rem;
-    padding: 0.75rem;
-    background: hsl(var(--muted) / 0.5);
-    border-radius: 0.5rem;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .statItem {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.statValue {
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #22c55e, #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    gap: 0.25rem;
 }
 
 .statLabel {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
 }
 
-.canvasContainer {
-    position: relative;
-    margin-bottom: 1rem;
+.statValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #88ce02;
 }
 
-.canvas {
-    background: linear-gradient(180deg, #87CEEB 0%, #f0f8ff 100%);
-    border-radius: 0.5rem;
-    border: 2px solid hsl(var(--border));
+.svg {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    cursor: crosshair;
+}
+
+.messageText {
+    font-weight: 700;
+    animation: messagePopIn 0.5s ease-out;
+}
+
+@keyframes messagePopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-5deg);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.instruction {
+    color: rgba(255, 255, 255, 0.3);
+    font-family: sans-serif;
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-align: center;
 }
 
 .controls {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    flex-wrap: wrap;
+    margin-top: 1.5rem;
 }
 
 .controlButton {
-    min-width: 100px;
+    min-width: 140px;
+    background: #88ce02;
+    color: #222;
 }
 
-.powerBar {
-    margin: 1rem 0;
+.controlButton:hover {
+    background: #9be002;
 }
 
-.powerLabel {
-    text-align: center;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
-}
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem 0.5rem;
+    }
 
-@media (max-width: 640px) {
-    .canvas {
-        width: 100% !important;
-        height: auto !important;
-        aspect-ratio: 600 / 400;
+    .stats {
+        gap: 1.5rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+
+    .instruction {
+        font-size: 0.875rem;
     }
 }
