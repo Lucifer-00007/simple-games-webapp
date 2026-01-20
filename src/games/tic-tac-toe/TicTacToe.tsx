@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCcw, GripHorizontal } from 'lucide-react';
+import { RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { createInitialState, makeMove } from './game-logic';
@@ -92,27 +92,7 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
     return (
         <div className={styles.container}>
             <Card className={styles.gameCard}>
-                <div className={styles.cardHandle}>
-                    <GripHorizontal className="w-6 h-6 text-muted-foreground/50" />
-                </div>
-
                 <CardContent className={styles.cardContent}>
-                    {/* Scoreboard */}
-                    <div className={styles.scoreboard}>
-                        <div className={`${styles.scoreItem} ${gameState.currentPlayer === 'X' ? styles.active : ''}`}>
-                            <span className={styles.x}>X</span>
-                            <span className={styles.scoreValue}>{scores.X}</span>
-                        </div>
-                        <div className={styles.scoreItem}>
-                            <span className={styles.drawLabel}>Draws</span>
-                            <span className={styles.scoreValue}>{scores.draws}</span>
-                        </div>
-                        <div className={`${styles.scoreItem} ${gameState.currentPlayer === 'O' ? styles.active : ''}`}>
-                            <span className={styles.o}>O</span>
-                            <span className={styles.scoreValue}>{scores.O}</span>
-                        </div>
-                    </div>
-
                     {/* Status */}
                     <motion.div
                         key={gameState.status + gameState.currentPlayer}
