@@ -165,7 +165,7 @@
 .statValue {
     font-size: 1.75rem;
     font-weight: 800;
-    color: hsl(var(--primary));
+    color: #a257f7;
 }
 
 /* Dark Mode for Stats */
@@ -178,11 +178,6 @@
 :global(.dark) .statContent,
 :global([data-theme="dark"]) .statContent {
     background: linear-gradient(180deg, hsl(var(--primary) / 0.1), transparent);
-}
-
-:global(.dark) .statValue,
-:global([data-theme="dark"]) .statValue {
-    color: hsl(280 80% 75%);
 }
 
 /* History */
