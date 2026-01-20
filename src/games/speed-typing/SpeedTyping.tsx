@@ -161,6 +161,12 @@ export function SpeedTyping({ onScoreUpdate }: SpeedTypingProps) {
                         spellCheck="false"
                     />
 
+                    {/* Reset Button */}
+                    <Button onClick={handleRestart} variant="outline" className={styles.controlButton}>
+                        <RotateCcw className="h-4 w-4 mr-2" />
+                        Reset
+                    </Button>
+
                     <p className={styles.instructions}>Click the text area and start typing!</p>
                 </CardContent>
             </Card>
