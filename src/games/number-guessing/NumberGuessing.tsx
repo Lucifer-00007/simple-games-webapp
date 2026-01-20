@@ -62,7 +62,7 @@ export function NumberGuessing({ onScoreUpdate }: NumberGuessingProps) {
                 <CardContent className={styles.cardContent}>
                     {/* Range Display */}
                     <div className={styles.rangeDisplay}>
-                        Guess a number between {DEFAULT_CONFIG.minNumber} and {DEFAULT_CONFIG.maxNumber}
+                        Guess a number between {DEFAULT_CONFIG.minNumber} and {DEFAULT_CONFIG.maxNumber} !!
                     </div>
 
                     {/* Hint Display */}
@@ -90,7 +90,7 @@ export function NumberGuessing({ onScoreUpdate }: NumberGuessingProps) {
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="?"
+                            placeholder="Enter"
                             className={styles.numberInput}
                             disabled={gameState.status !== 'playing'}
                         />
