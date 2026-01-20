@@ -82,7 +82,7 @@ export default function GamesPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="flex flex-col sm:flex-row gap-4 mb-8"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
                 >
                     <SearchBar value={search} onChange={setSearch} />
                     <CategoryFilter
