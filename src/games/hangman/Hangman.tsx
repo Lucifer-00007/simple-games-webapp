@@ -80,9 +80,6 @@ export function Hangman({ onScoreUpdate }: HangmanProps) {
         <div className={styles.container}>
             <Card className={styles.gameCard}>
                 <CardContent className={styles.cardContent}>
-                    {/* Hangman Drawing */}
-                    {renderHangman()}
-
                     {/* Hint */}
                     <div className={styles.hint}>💡 {gameState.hint}</div>
 
