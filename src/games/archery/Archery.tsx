@@ -351,14 +351,29 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                     <path fill="#F4531C" d="M903.2,253.2c-2.9,2.9-6.7,3.6-8.3,1.7c-1.5-1.8-0.6-5.4,2-8c2.6-2.6,6.2-3.6,8-2 C906.8,246.5,906.1,250.2,903.2,253.2z" />
                 </g>
 
-                <g id="bow" fill="none" strokeLinecap="round">
-                    <polyline fill="none" stroke="#ddd" strokeLinecap="round" points="88,200 88,250 88,300" />
-                    <path fill="none" stroke="#88ce02" strokeWidth="3" strokeLinecap="round" d="M88,300 c0-10.1,12-25.1,12-50s-12-39.9-12-50" />
-                </g>
+                {/* 1. Curved bow (back layer) */}
+                <path
+                    id="bow-curve"
+                    fill="none"
+                    stroke="#88ce02"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    d="M88,300 c0-10.1,12-25.1,12-50s-12-39.9-12-50"
+                />
 
+                {/* 2. Arrow (middle layer - behind the string) */}
                 <g className="arrow-angle">
                     <use ref={currentArrowRef} x="100" y="250" xlinkHref="#arrow" opacity="0" />
                 </g>
+
+                {/* 3. Bow string (front layer - in front of arrow) */}
+                <polyline
+                    id="bow-string"
+                    fill="none"
+                    stroke="#ddd"
+                    strokeLinecap="round"
+                    points="88,200 88,250 88,300"
+                />
 
                 {/* Flying arrows */}
                 {flyingArrows.map((arrow) => (
