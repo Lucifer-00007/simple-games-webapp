@@ -268,126 +268,135 @@ export function CrossyRoad({ onScoreUpdate }: CrossyRoadProps) {
         <div className={styles.container} ref={containerRef} tabIndex={0}>
             <Card className={styles.gameCard}>
                 <CardContent className={styles.cardContent}>
-                    {/* Stats Bar */}
-                    <div className={styles.statsBar}>
-                        <div className={styles.statItem}>
-                            <motion.span
-                                key={gameState.score}
-                                initial={{ scale: 1.3 }}
-                                animate={{ scale: 1 }}
-                                className={styles.statValue}
-                            >
-                                {gameState.score}
-                            </motion.span>
-                            <span className={styles.statLabel}>Score</span>
-                        </div>
-                        <div className={styles.statItem}>
-                            <span className={styles.statValue}>{gameState.highScore}</span>
-                            <span className={styles.statLabel}>Best</span>
-                        </div>
-                    </div>
+                    <div className={styles.gameLayout}>
+                        {/* Canvas */}
+                        <div className={styles.canvasContainer}>
+                            <canvas
+                                ref={canvasRef}
+                                width={DEFAULT_CONFIG.canvasWidth}
+                                height={DEFAULT_CONFIG.canvasHeight}
+                                className={styles.canvas}
+                            />
 
-                    {/* Canvas */}
-                    <div className={styles.canvasContainer}>
-                        <canvas
-                            ref={canvasRef}
-                            width={DEFAULT_CONFIG.canvasWidth}
-                            height={DEFAULT_CONFIG.canvasHeight}
-                            className={styles.canvas}
-                        />
+                            {/* Overlay */}
+                            {gameState.status !== 'playing' && (
+                                <div className={styles.overlay}>
+                                    {gameState.status === 'idle' && (
+                                        <>
+                                            <div className={styles.overlayTitle}>🐔 Crossy Road</div>
+                                            <div className={styles.overlaySubtitle}>
+                                                Help the chicken cross!
+                                            </div>
+                                            <Button onClick={handleStart} className={styles.startButton}>
+                                                <Play className="h-4 w-4 mr-2" />
+                                                Start Game
+                                            </Button>
+                                        </>
+                                    )}
+                                    {gameState.status === 'gameOver' && (
+                                        <>
+                                            <div className={`${styles.overlayTitle} ${styles.gameOverText}`}>
+                                                Game Over!
+                                            </div>
+                                            <div className={styles.overlaySubtitle}>
+                                                Score: {gameState.score}
+                                            </div>
+                                            <Button onClick={handleRestart} className={styles.restartButton}>
+                                                <RotateCcw className="h-4 w-4 mr-2" />
+                                                Play Again
+                                            </Button>
+                                        </>
+                                    )}
+                                </div>
+                            )}
+                        </div>
 
-                        {/* Overlay */}
-                        {gameState.status !== 'playing' && (
-                            <div className={styles.overlay}>
-                                {gameState.status === 'idle' && (
-                                    <>
-                                        <div className={styles.overlayTitle}>🐔 Crossy Road</div>
-                                        <div className={styles.overlaySubtitle}>
-                                            Help the chicken cross!
-                                        </div>
-                                        <Button onClick={handleStart} className={styles.startButton}>
-                                            <Play className="h-4 w-4 mr-2" />
-                                            Start Game
+                        {/* Right Panel - Controls */}
+                        <div className={styles.controlsPanel}>
+                            {/* Stats */}
+                            <div className={styles.statsBar}>
+                                <div className={styles.statItem}>
+                                    <motion.span
+                                        key={gameState.score}
+                                        initial={{ scale: 1.3 }}
+                                        animate={{ scale: 1 }}
+                                        className={styles.statValue}
+                                    >
+                                        {gameState.score}
+                                    </motion.span>
+                                    <span className={styles.statLabel}>Score</span>
+                                </div>
+                                <div className={styles.statItem}>
+                                    <span className={styles.statValue}>{gameState.highScore}</span>
+                                    <span className={styles.statLabel}>Best</span>
+                                </div>
+                            </div>
+
+                            {/* D-Pad Controls */}
+                            <div className={styles.dpadContainer}>
+                                <div className={styles.dpadRow}>
+                                    <div className={styles.dpadSpacer} />
+                                    <Button
+                                        onClick={() => handleMove(0, 1)}
+                                        size="sm"
+                                        className={styles.dpadButton}
+                                        disabled={gameState.status !== 'playing'}
+                                    >
+                                        <ChevronUp className="h-5 w-5" />
+                                    </Button>
+                                    <div className={styles.dpadSpacer} />
+                                </div>
+                                <div className={styles.dpadRow}>
+                                    <Button
+                                        onClick={() => handleMove(-1, 0)}
+                                        size="sm"
+                                        className={styles.dpadButton}
+                                        disabled={gameState.status !== 'playing'}
+                                    >
+                                        <ChevronLeft className="h-5 w-5" />
+                                    </Button>
+                                    <Button
+                                        onClick={() => handleMove(0, -1)}
+                                        size="sm"
+                                        className={styles.dpadButton}
+                                        disabled={gameState.status !== 'playing'}
+                                    >
+                                        <ChevronDown className="h-5 w-5" />
+                                    </Button>
+                                    <Button
+                                        onClick={() => handleMove(1, 0)}
+                                        size="sm"
+                                        className={styles.dpadButton}
+                                        disabled={gameState.status !== 'playing'}
+                                    >
+                                        <ChevronRight className="h-5 w-5" />
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Traffic Density Controls */}
+                            <div className={styles.densityControls}>
+                                <span className={styles.controlLabel}>Traffic</span>
+                                <div className={styles.densityButtons}>
+                                    {(['low', 'medium', 'high'] as const).map((density) => (
+                                        <Button
+                                            key={density}
+                                            variant={gameState.trafficDensity === density ? "default" : "outline"}
+                                            size="sm"
+                                            onClick={() => handleDensityChange(density)}
+                                            className={styles.densityButton}
+                                            disabled={gameState.status === 'playing'}
+                                        >
+                                            {density.charAt(0).toUpperCase() + density.slice(1)}
                                         </Button>
-                                    </>
-                                )}
-                                {gameState.status === 'gameOver' && (
-                                    <>
-                                        <div className={`${styles.overlayTitle} ${styles.gameOverText}`}>
-                                            Game Over!
-                                        </div>
-                                        <div className={styles.overlaySubtitle}>
-                                            Score: {gameState.score}
-                                        </div>
-                                        <Button onClick={handleRestart} className={styles.restartButton}>
-                                            <RotateCcw className="h-4 w-4 mr-2" />
-                                            Play Again
-                                        </Button>
-                                    </>
-                                )}
+                                    ))}
+                                </div>
                             </div>
-                        )}
-                    </div>
 
-                    {/* D-Pad Controls */}
-                    {gameState.status === 'playing' && (
-                        <div className={styles.dpadContainer}>
-                            <div className={styles.dpadRow}>
-                                <div className={styles.dpadSpacer} />
-                                <Button
-                                    onClick={() => handleMove(0, 1)}
-                                    size="sm"
-                                    className={styles.dpadButton}
-                                >
-                                    <ChevronUp className="h-5 w-5" />
-                                </Button>
-                                <div className={styles.dpadSpacer} />
-                            </div>
-                            <div className={styles.dpadRow}>
-                                <Button
-                                    onClick={() => handleMove(-1, 0)}
-                                    size="sm"
-                                    className={styles.dpadButton}
-                                >
-                                    <ChevronLeft className="h-5 w-5" />
-                                </Button>
-                                <Button
-                                    onClick={() => handleMove(0, -1)}
-                                    size="sm"
-                                    className={styles.dpadButton}
-                                >
-                                    <ChevronDown className="h-5 w-5" />
-                                </Button>
-                                <Button
-                                    onClick={() => handleMove(1, 0)}
-                                    size="sm"
-                                    className={styles.dpadButton}
-                                >
-                                    <ChevronRight className="h-5 w-5" />
-                                </Button>
+                            <div className={styles.instructions}>
+                                Use Arrow Keys<br />or WASD to move
                             </div>
                         </div>
-                    )}
-
-                    {/* Traffic Density Controls */}
-                    <div className={styles.densityControls}>
-                        <span className={styles.controlLabel}>Traffic:</span>
-                        {(['low', 'medium', 'high'] as const).map((density) => (
-                            <Button
-                                key={density}
-                                variant={gameState.trafficDensity === density ? "default" : "outline"}
-                                size="sm"
-                                onClick={() => handleDensityChange(density)}
-                                className={styles.densityButton}
-                                disabled={gameState.status === 'playing'}
-                            >
-                                {density.charAt(0).toUpperCase() + density.slice(1)}
-                            </Button>
-                        ))}
-                    </div>
-
-                    <div className={styles.instructions}>
-                        Use Arrow Keys or WASD to move
                     </div>
                 </CardContent>
             </Card>
