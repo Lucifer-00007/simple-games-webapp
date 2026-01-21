@@ -2,4 +2,189 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    outline: none;
+}
+
+.gameCard {
+    max-width: 700px;
+    width: 100%;
+    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.8) 100%);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 10px 40px hsl(var(--primary) / 0.1);
+}
+
+.cardContent {
+    padding: 1.5rem;
+}
+
+.gameLayout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.canvasContainer {
+    position: relative;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.canvas {
+    display: block;
+    border-radius: 0.75rem;
+}
+
+.controlsPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-width: 180px;
+    padding: 1rem;
+    background: hsl(var(--muted) / 0.3);
+    border-radius: 0.75rem;
+    border: 1px solid hsl(var(--border));
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border-radius: 0.75rem;
+    backdrop-filter: blur(4px);
+}
+
+.overlayTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.overlaySubtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.wonText {
+    color: #22c55e;
+}
+
+.gameOverText {
+    color: #ef4444;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.startButton,
+.restartButton {
+    margin-top: 0.5rem;
+}
+
+.statsBar {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: hsl(var(--primary));
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.05em;
+}
+
+.dpadContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.dpadRow {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.dpadSpacer {
+    width: 44px;
+    height: 44px;
+}
+
+.dpadButton {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: hsl(var(--muted) / 0.5);
+    border-radius: 0.5rem;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.legendBall {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #60a5fa, #2563eb);
+}
+
+.legendGoal {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #22c55e;
+}
+
+.legendHole {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #0f0f0f;
+    border: 2px solid #1f1f1f;
+}
+
+.instructions {
+    text-align: center;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.4;
 }
