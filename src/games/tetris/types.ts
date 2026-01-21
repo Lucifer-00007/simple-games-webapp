@@ -35,8 +35,8 @@ export interface GameConfig {
 }
 
 export const DEFAULT_CONFIG: GameConfig = {
-    boardWidth: 10,
-    boardHeight: 20,
+    boardWidth: 14,
+    boardHeight: 18,
     initialSpeed: 1000,
     speedMultiplier: 0.9,
 };
