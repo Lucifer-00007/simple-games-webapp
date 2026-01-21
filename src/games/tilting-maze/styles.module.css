@@ -1,5 +1,219 @@
-.container {
+/* Full page beige background container */
+.pageContainer {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ede6e3;
+    padding: 2rem;
+}
+
+.gameWrapper {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+/* Maze Section */
+.mazeSection {
+    position: relative;
+    perspective: 600px;
+}
+
+.canvas {
+    display: block;
+    border-radius: 4px;
+    transition: transform 0.05s ease-out;
+}
+
+/* Win Overlay */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.overlayContent {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.trophyIcon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #fbbf24;
+    filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.4));
+}
+
+.winTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.winTime {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.restartBtn {
+    margin-top: 0.5rem;
+}
+
+/* Control Section (Joystick + Instructions) */
+.controlSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Joystick Container */
+.joystickContainer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Joystick Arrows - CSS triangles */
+.joystickArrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.arrowUp {
+    top: -15px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #210124;
+}
+
+.arrowDown {
+    bottom: -15px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #210124;
+}
+
+.arrowLeft {
+    left: -15px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #210124;
+}
+
+.arrowRight {
+    right: -15px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid #210124;
+}
+
+/* Joystick Base */
+.joystickBase {
+    width: 50px;
+    height: 50px;
+    background-color: #210124;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Joystick Head */
+.joystickHead {
+    width: 20px;
+    height: 20px;
+    background-color: #f06449;
+    border-radius: 50%;
+    cursor: grab;
+    transition: transform 0.05s ease-out;
+    position: relative;
+}
+
+.joystickHead.grabbing {
+    cursor: grabbing;
+}
+
+.joystickHead.pulsing {
+    animation: glow 0.6s ease-in-out infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes glow {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+/* Instructions */
+.instructions {
+    text-align: center;
+    max-width: 150px;
+}
+
+.instructionText {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #210124;
+    margin-bottom: 0.25rem;
+}
+
+.instructionSubtext {
+    font-size: 0.75rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.restartBtnSmall {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
 }

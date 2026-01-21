@@ -1,2 +1,3 @@
 export { CrossyRoad } from './CrossyRoad';
-export type { GameState, Player, Vehicle, GameStatus } from './types';
+export type { GameState, Player, GameObject, GameStatus } from './types';
+
