@@ -73,19 +73,39 @@
     border-radius: 0.75rem;
     border: 2px solid hsl(var(--border));
     box-shadow: inset 0 2px 10px hsl(0 0% 0% / 0.3);
+    position: relative;
 }
 
 .cell {
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: hsl(0 0% 0% / 0.2);
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.15s ease;
     user-select: none;
+}
+
+.cellHint {
+    background: hsl(50 100% 50% / 0.4);
+    box-shadow: 0 0 0 2px hsl(50 100% 60%),
+        0 0 16px hsl(50 100% 50% / 0.6);
+    animation: hintPulse 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes hintPulse {
+    from {
+        box-shadow: 0 0 0 2px hsl(50 100% 60%),
+            0 0 16px hsl(50 100% 50% / 0.4);
+    }
+
+    to {
+        box-shadow: 0 0 0 3px hsl(50 100% 70%),
+            0 0 24px hsl(50 100% 50% / 0.8);
+    }
 }
 
 .cell:hover {
@@ -102,8 +122,9 @@
 
 .candy {
     font-size: 1.75rem;
-    transition: transform 0.2s ease;
     filter: drop-shadow(0 2px 3px hsl(0 0% 0% / 0.3));
+    will-change: transform, opacity;
+    position: relative;
 }
 
 .cellSelected .candy {
@@ -163,10 +184,10 @@
 }
 
 /* Mobile responsiveness */
-@media (max-width: 400px) {
+@media (max-width: 500px) {
     .cell {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
     }
 
     .candy {

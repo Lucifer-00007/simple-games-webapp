@@ -320,3 +320,31 @@ export function resetGame(state: GameState, config: GameConfig = DEFAULT_CONFIG)
         highScore: state.highScore,
     };
 }
+
+// Find a hint - returns two positions that can be swapped for a match
+export function findHint(board: (Candy | null)[][]): [Position, Position] | null {
+    const rows = board.length;
+    const cols = board[0].length;
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            // Try swapping with right neighbor
+            if (col < cols - 1) {
+                const testBoard = swapCandies(board, { row, col }, { row, col: col + 1 });
+                if (findMatches(testBoard).length > 0) {
+                    return [{ row, col }, { row, col: col + 1 }];
+                }
+            }
+
+            // Try swapping with bottom neighbor
+            if (row < rows - 1) {
+                const testBoard = swapCandies(board, { row, col }, { row: row + 1, col });
+                if (findMatches(testBoard).length > 0) {
+                    return [{ row, col }, { row: row + 1, col }];
+                }
+            }
+        }
+    }
+
+    return null;
+}
