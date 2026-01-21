@@ -408,11 +408,21 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
             </div>
 
             {gameStatus === 'gameOver' && (
-                <div className={styles.controls}>
-                    <Button onClick={handleRestart} className={styles.controlButton}>
-                        <RotateCcw className="h-4 w-4 mr-2" />
-                        Play Again
-                    </Button>
+                <div className={styles.gameOverOverlay}>
+                    <div className={styles.gameOverBanner}>
+                        <h2 className={styles.gameOverTitle}>Game Over!</h2>
+                        <div className={styles.gameOverScore}>
+                            <span className={styles.gameOverLabel}>Final Score</span>
+                            <span className={styles.gameOverValue}>{score}</span>
+                        </div>
+                        {score > 0 && score === highScore && (
+                            <div className={styles.newHighScore}>🏆 New High Score!</div>
+                        )}
+                        <Button onClick={handleRestart} className={styles.controlButton}>
+                            <RotateCcw className="h-4 w-4 mr-2" />
+                            Play Again
+                        </Button>
+                    </div>
                 </div>
             )}
         </div>
