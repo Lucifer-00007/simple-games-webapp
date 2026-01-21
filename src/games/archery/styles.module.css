@@ -3,11 +3,11 @@
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     min-height: 100vh;
     background: #222;
-    padding: 2rem 1rem;
+    padding: 2rem 0;
 }
 
 .stats {
@@ -43,7 +43,6 @@
 
 .svg {
     width: 100%;
-    max-width: 1000px;
     height: auto;
     cursor: crosshair;
 }
@@ -94,10 +93,9 @@
     background: #9be002;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
     .container {
-        padding: 1rem 0.5rem;
+        padding: 1rem 0;
     }
 
     .stats {
