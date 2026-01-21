@@ -55,8 +55,8 @@ export interface GameConfig {
 }
 
 export const DEFAULT_CONFIG: GameConfig = {
-    canvasWidth: 400,
-    canvasHeight: 400,
+    canvasWidth: 600,
+    canvasHeight: 500,
     ballRadius: 12,
     friction: 0.98,
     acceleration: 0.4,
@@ -64,56 +64,67 @@ export const DEFAULT_CONFIG: GameConfig = {
     holeRadius: 14,
 };
 
-// Predefined maze levels
+// Maze grid size
+export const MAZE_SIZE = 10;
+export const CELL_SIZE = 40;
+
+// Predefined maze levels (grid-based)
 export const LEVELS: Level[] = [
     // Level 1 - Simple intro
     {
-        startX: 50,
-        startY: 50,
-        goal: { x: 350, y: 350, radius: DEFAULT_CONFIG.goalRadius },
+        startX: 1.5,
+        startY: 1.5,
+        goal: { x: 8.5, y: 8.5, radius: DEFAULT_CONFIG.goalRadius },
         walls: [
-            { x: 100, y: 0, width: 20, height: 250 },
-            { x: 200, y: 150, width: 20, height: 250 },
-            { x: 300, y: 0, width: 20, height: 200 },
+            { x: 2, y: 0, width: 1, height: 5 },
+            { x: 4, y: 3, width: 1, height: 7 },
+            { x: 6, y: 0, width: 1, height: 4 },
+            { x: 0, y: 5, width: 3, height: 1 },
+            { x: 5, y: 6, width: 4, height: 1 },
         ],
         holes: [
-            { x: 150, y: 200, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 3.5, y: 4.5, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 7.5, y: 3.5, radius: DEFAULT_CONFIG.holeRadius },
         ],
     },
     // Level 2 - More complex
     {
-        startX: 50,
-        startY: 350,
-        goal: { x: 350, y: 50, radius: DEFAULT_CONFIG.goalRadius },
+        startX: 1.5,
+        startY: 8.5,
+        goal: { x: 8.5, y: 1.5, radius: DEFAULT_CONFIG.goalRadius },
         walls: [
-            { x: 0, y: 100, width: 300, height: 20 },
-            { x: 100, y: 200, width: 300, height: 20 },
-            { x: 0, y: 300, width: 250, height: 20 },
+            { x: 0, y: 2, width: 6, height: 1 },
+            { x: 2, y: 4, width: 7, height: 1 },
+            { x: 0, y: 6, width: 5, height: 1 },
+            { x: 3, y: 0, width: 1, height: 3 },
+            { x: 7, y: 5, width: 1, height: 5 },
         ],
         holes: [
-            { x: 50, y: 150, radius: DEFAULT_CONFIG.holeRadius },
-            { x: 350, y: 150, radius: DEFAULT_CONFIG.holeRadius },
-            { x: 150, y: 250, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 1.5, y: 3.5, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 8.5, y: 3.5, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 3.5, y: 5.5, radius: DEFAULT_CONFIG.holeRadius },
         ],
     },
     // Level 3 - Challenging
     {
-        startX: 50,
-        startY: 50,
-        goal: { x: 200, y: 200, radius: DEFAULT_CONFIG.goalRadius },
+        startX: 1.5,
+        startY: 1.5,
+        goal: { x: 5, y: 5, radius: DEFAULT_CONFIG.goalRadius },
         walls: [
-            { x: 100, y: 0, width: 20, height: 150 },
-            { x: 100, y: 250, width: 20, height: 150 },
-            { x: 280, y: 0, width: 20, height: 150 },
-            { x: 280, y: 250, width: 20, height: 150 },
-            { x: 150, y: 150, width: 100, height: 20 },
-            { x: 150, y: 230, width: 100, height: 20 },
+            { x: 2, y: 0, width: 1, height: 3 },
+            { x: 2, y: 5, width: 1, height: 5 },
+            { x: 5, y: 0, width: 1, height: 3 },
+            { x: 5, y: 5, width: 1, height: 5 },
+            { x: 7, y: 0, width: 1, height: 3 },
+            { x: 7, y: 5, width: 1, height: 5 },
+            { x: 3, y: 3, width: 2, height: 1 },
+            { x: 3, y: 6, width: 2, height: 1 },
         ],
         holes: [
-            { x: 50, y: 350, radius: DEFAULT_CONFIG.holeRadius },
-            { x: 350, y: 50, radius: DEFAULT_CONFIG.holeRadius },
-            { x: 350, y: 350, radius: DEFAULT_CONFIG.holeRadius },
-            { x: 50, y: 200, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 1.5, y: 8.5, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 8.5, y: 1.5, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 8.5, y: 8.5, radius: DEFAULT_CONFIG.holeRadius },
+            { x: 1.5, y: 5, radius: DEFAULT_CONFIG.holeRadius },
         ],
     },
 ];

@@ -46,3 +46,4 @@ firestore-debug.log
 .firebase/
 .DS_Store
 static-code/
+.vscode/settings.json
