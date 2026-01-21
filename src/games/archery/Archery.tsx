@@ -109,11 +109,14 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
             bowString.setAttribute('points', `88,200 ${arrowX},250 88,300`);
         }
 
-        // Update arrow
+        // Update arrow - position it at the bow string's pulled-back position
         const arrowGroup = svgRef.current?.querySelector('.arrow-angle');
         if (arrowGroup && currentArrowRef.current) {
-            arrowGroup.setAttribute('transform', `rotate(${(angle - Math.PI) * (180 / Math.PI)} 100 250)`);
-            currentArrowRef.current.setAttribute('x', String(-distance));
+            const bowAngle = (angle - Math.PI) * (180 / Math.PI);
+            arrowGroup.setAttribute('transform', `rotate(${bowAngle} 100 250)`);
+            // The arrow needs to move backwards by the distance pulled
+            // In the reference, GSAP animates x: -distance which translates the element
+            currentArrowRef.current.setAttribute('transform', `translate(${-distance}, 0)`);
         }
 
         // Update and store arc path
@@ -132,8 +135,14 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
         }
     };
 
-    const handleMouseDown = (e: React.MouseEvent) => {
+    const handleMouseDown = (e: MouseEvent) => {
         if (gameStatus === 'gameOver' || arrowsLeft <= 0) return;
+
+        // Check if click is within SVG bounds
+        if (!svgRef.current) return;
+        const rect = svgRef.current.getBoundingClientRect();
+        if (e.clientX < rect.left || e.clientX > rect.right ||
+            e.clientY < rect.top || e.clientY > rect.bottom) return;
 
         isDragging.current = true;
         setGameStatus('drawing');
@@ -198,7 +207,7 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
         let hitDetected = false;
 
         const animate = () => {
-            t += 0.015;
+            t += 0.008; // Slower animation for better visibility (was 0.015)
 
             if (t >= 1 || hitDetected) {
                 setFlyingArrows(prev => prev.filter(a => a.id !== arrowId));
@@ -258,6 +267,7 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                 setScore(prev => prev + points);
                 setHighScore(prev => Math.max(prev, score + points));
 
+                // Keep arrow stuck in target for 2 seconds
                 setTimeout(() => {
                     setMessageType(null);
                     setFlyingArrows(prev => prev.filter(a => a.id !== arrowId));
@@ -267,7 +277,7 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                     } else {
                         setGameStatus('idle');
                     }
-                }, 2000);
+                }, 2500);
                 return;
             }
 
@@ -286,10 +296,12 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
     };
 
     React.useEffect(() => {
+        window.addEventListener('mousedown', handleMouseDown);
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('mouseup', handleMouseUp);
 
         return () => {
+            window.removeEventListener('mousedown', handleMouseDown);
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseup', handleMouseUp);
         };
@@ -317,7 +329,6 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                 className={styles.svg}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1000 500"
-                onMouseDown={handleMouseDown}
             >
                 <defs>
                     <linearGradient id="arcGradient">
