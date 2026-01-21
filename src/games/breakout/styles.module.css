@@ -144,3 +144,27 @@
         font-size: 1.25rem;
     }
 }
+
+/* Speed controls */
+.speedControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.controlLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    margin-right: 0.25rem;
+}
+
+.speedButton {
+    min-width: 60px;
+    height: 30px;
+    font-size: 0.75rem;
+}

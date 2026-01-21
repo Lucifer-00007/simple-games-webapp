@@ -64,6 +64,7 @@ export function createInitialState(config: GameConfig = DEFAULT_CONFIG): GameSta
         score: 0,
         highScore: 0,
         lives: config.initialLives,
+        speed: 1,
     };
 }
 
@@ -238,5 +239,29 @@ export function resetGame(state: GameState, config: GameConfig = DEFAULT_CONFIG)
     return {
         ...newState,
         highScore: state.highScore,
+    };
+}
+
+// Set game speed
+export function setSpeed(
+    state: GameState,
+    speedMultiplier: number,
+    config: GameConfig = DEFAULT_CONFIG
+): GameState {
+    // Calculate ratio based on current speed setting
+    // speedMultiplier is the new target speed (e.g. 1.5)
+    // state.speed is the current speed (e.g. 1.0)
+    const ratio = speedMultiplier / state.speed;
+
+    return {
+        ...state,
+        speed: speedMultiplier,
+        ball: {
+            ...state.ball,
+            velocity: {
+                dx: state.ball.velocity.dx * ratio,
+                dy: state.ball.velocity.dy * ratio,
+            },
+        },
     };
 }

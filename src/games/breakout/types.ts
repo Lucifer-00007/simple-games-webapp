@@ -44,6 +44,7 @@ export interface GameState {
     score: number;
     highScore: number;
     lives: number;
+    speed: number;
 }
 
 export interface GameConfig {

@@ -12,6 +12,7 @@ import {
     resetGame,
     movePaddle,
     tick,
+    setSpeed,
 } from './game-logic';
 import { GameState, DEFAULT_CONFIG } from './types';
 import styles from './styles.module.css';
@@ -185,6 +186,16 @@ export function Breakout({ onScoreUpdate }: BreakoutProps) {
         setGameState((prev) => resetGame(prev));
     };
 
+    const handleSpeedChange = (speed: number) => {
+        setGameState((prev) => setSpeed(prev, speed));
+        // Remove focus from button to prevent spacebar triggering it
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+        // Return focus to container for keyboard controls
+        containerRef.current?.focus();
+    };
+
     return (
         <div className={styles.container} ref={containerRef} tabIndex={0}>
             <Card className={styles.gameCard}>
@@ -263,6 +274,35 @@ export function Breakout({ onScoreUpdate }: BreakoutProps) {
                                 )}
                             </div>
                         )}
+                    </div>
+
+                    {/* Speed Controls */}
+                    <div className={styles.speedControls}>
+                        <span className={styles.controlLabel}>Speed:</span>
+                        <Button
+                            variant={gameState.speed === 0.75 ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => handleSpeedChange(0.75)}
+                            className={styles.speedButton}
+                        >
+                            Slow
+                        </Button>
+                        <Button
+                            variant={gameState.speed === 1 ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => handleSpeedChange(1)}
+                            className={styles.speedButton}
+                        >
+                            Normal
+                        </Button>
+                        <Button
+                            variant={gameState.speed === 1.5 ? "default" : "outline"}
+                            size="sm"
+                            onClick={() => handleSpeedChange(1.5)}
+                            className={styles.speedButton}
+                        >
+                            Fast
+                        </Button>
                     </div>
 
                     {/* Controls */}
