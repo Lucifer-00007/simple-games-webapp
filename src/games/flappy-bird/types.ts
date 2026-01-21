@@ -2,6 +2,8 @@
 
 export type GameStatus = 'idle' | 'playing' | 'gameOver';
 
+export type Difficulty = 'easy' | 'medium' | 'hard';
+
 export interface Bird {
     x: number;
     y: number;
@@ -26,6 +28,7 @@ export interface GameState {
     score: number;
     highScore: number;
     frameCount: number;
+    difficulty: Difficulty;
 }
 
 export interface GameConfig {
@@ -42,7 +45,7 @@ export interface GameConfig {
 }
 
 export const DEFAULT_CONFIG: GameConfig = {
-    canvasWidth: 400,
+    canvasWidth: 800,
     canvasHeight: 600,
     gravity: 0.5,
     jumpForce: -9,
@@ -52,4 +55,22 @@ export const DEFAULT_CONFIG: GameConfig = {
     pipeSpacing: 200,
     pipeSpeed: 3,
     minPipeHeight: 50,
+};
+
+export const DIFFICULTY_SETTINGS: Record<Difficulty, Partial<GameConfig>> = {
+    easy: {
+        pipeGap: 180,
+        pipeSpeed: 2.5,
+        gravity: 0.45,
+    },
+    medium: {
+        pipeGap: 150,
+        pipeSpeed: 3,
+        gravity: 0.5,
+    },
+    hard: {
+        pipeGap: 130,
+        pipeSpeed: 4,
+        gravity: 0.55,
+    },
 };

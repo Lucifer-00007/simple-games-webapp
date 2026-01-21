@@ -1,6 +1,6 @@
 // Flappy Bird game logic - pure functions, no React/DOM
 
-import { Bird, Pipe, GameState, GameConfig, DEFAULT_CONFIG } from './types';
+import { Bird, Pipe, GameState, GameConfig, DEFAULT_CONFIG, Difficulty, DIFFICULTY_SETTINGS } from './types';
 
 // Create initial bird
 export function createBird(config: GameConfig = DEFAULT_CONFIG): Bird {
@@ -46,6 +46,7 @@ export function createInitialState(config: GameConfig = DEFAULT_CONFIG): GameSta
         score: 0,
         highScore: 0,
         frameCount: 0,
+        difficulty: 'medium',
     };
 }
 
@@ -170,5 +171,22 @@ export function resetGame(state: GameState, config: GameConfig = DEFAULT_CONFIG)
     return {
         ...newState,
         highScore: state.highScore,
+        difficulty: state.difficulty,
+    };
+}
+
+// Set difficulty
+export function setDifficulty(state: GameState, difficulty: Difficulty): GameState {
+    return {
+        ...state,
+        difficulty,
+    };
+}
+
+// Get current config based on difficulty
+export function getConfig(difficulty: Difficulty): GameConfig {
+    return {
+        ...DEFAULT_CONFIG,
+        ...DIFFICULTY_SETTINGS[difficulty],
     };
 }

@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { createInitialState, jump, resetGame, tick } from './game-logic';
-import { GameState, DEFAULT_CONFIG } from './types';
+import { createInitialState, jump, resetGame, tick, setDifficulty } from './game-logic';
+import { GameState, DEFAULT_CONFIG, Difficulty } from './types';
 import styles from './styles.module.css';
 
 interface FlappyBirdProps {
@@ -180,6 +180,16 @@ export function FlappyBird({ onScoreUpdate }: FlappyBirdProps) {
         setGameState((prev) => resetGame(prev));
     };
 
+    const handleDifficultyChange = (difficulty: Difficulty) => {
+        setGameState((prev) => setDifficulty(prev, difficulty));
+        // Remove focus from button to prevent spacebar triggering it
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+        // Return focus to container for keyboard controls
+        containerRef.current?.focus();
+    };
+
     return (
         <div className={styles.container} ref={containerRef} tabIndex={0}>
             <Card className={styles.gameCard}>
@@ -246,6 +256,22 @@ export function FlappyBird({ onScoreUpdate }: FlappyBirdProps) {
                                 Play Again
                             </Button>
                         )}
+                    </div>
+
+                    {/* Difficulty Controls */}
+                    <div className={styles.difficultyControls}>
+                        <span className={styles.controlLabel}>Difficulty:</span>
+                        {(['easy', 'medium', 'hard'] as const).map((diff) => (
+                            <Button
+                                key={diff}
+                                variant={gameState.difficulty === diff ? "default" : "outline"}
+                                size="sm"
+                                onClick={() => handleDifficultyChange(diff)}
+                                className={styles.difficultyButton}
+                            >
+                                {diff.charAt(0).toUpperCase() + diff.slice(1)}
+                            </Button>
+                        ))}
                     </div>
 
                     <div className={styles.instructions}>

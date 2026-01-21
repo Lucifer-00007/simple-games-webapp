@@ -17,7 +17,8 @@
     border: 1px solid hsl(var(--border) / 0.5);
     box-shadow: 0 8px 32px hsl(var(--foreground) / 0.1);
     width: 100%;
-    max-width: 450px;
+    width: 100%;
+    max-width: 850px;
 }
 
 .cardContent {
@@ -110,6 +111,28 @@
     flex-wrap: wrap;
 }
 
+.difficultyControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.controlLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    margin-right: 0.25rem;
+}
+
+.difficultyButton {
+    min-width: 80px;
+    height: 32px;
+    font-size: 0.85rem;
+}
+
 .controlButton {
     min-width: 120px;
 }
@@ -126,7 +149,9 @@
     .canvas {
         width: 100% !important;
         height: auto !important;
-        aspect-ratio: 400 / 600;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 800 / 600;
     }
 
     .statsBar {
