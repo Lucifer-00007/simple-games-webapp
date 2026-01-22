@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { createInitialState, updateGame, checkInput, startGame, pauseGame, resumeGame, resetGame } from './game-logic';
 import { GameState } from './types';
+import styles from './styles.module.css';
 
 export function TypingGameAlt({ onScoreUpdate }: { onScoreUpdate?: (score: number) => void }) {
     const [gameState, setGameState] = React.useState<GameState>(() => createInitialState());
@@ -33,47 +34,38 @@ export function TypingGameAlt({ onScoreUpdate }: { onScoreUpdate?: (score: numbe
     }, [gameState.status, gameState.words]);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '1rem' }}>
-            <Card style={{ maxWidth: '500px', width: '100%' }}>
+        <div className={styles.container}>
+            <Card className={styles.card}>
                 <CardContent style={{ padding: '1.5rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                    <div className={styles.statsBar}>
                         <div>Score: <strong>{gameState.score}</strong></div>
                         <div>Lives: <strong>{'❤️'.repeat(gameState.lives)}</strong></div>
                         <div>Best: <strong>{gameState.highScore}</strong></div>
                     </div>
 
-                    <div style={{ position: 'relative', width: '100%', height: '400px', background: 'linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%)', border: '2px solid hsl(var(--border))', borderRadius: '0.5rem', overflow: 'hidden', marginBottom: '1rem' }}>
+                    <div className={styles.gameArea}>
                         {gameState.words.map(word => (
-                            <div key={word.id} style={{ 
-                                position: 'absolute', 
-                                top: word.y, 
-                                left: `${word.x}%`, 
-                                transform: 'translateX(-50%)', 
-                                fontSize: '1.25rem', // Slightly smaller to prevent overlap
-                                fontWeight: 700, 
-                                color: '#1f2937', 
-                                padding: '0.25rem 0.75rem', 
-                                background: 'rgba(255,255,255,0.9)', 
-                                borderRadius: '0.25rem', 
-                                border: '2px solid #3b82f6',
-                                whiteSpace: 'nowrap'
-                            }}>
+                            <div 
+                                key={word.id} 
+                                className={styles.word}
+                                style={{ top: word.y, left: `${word.x}%` }}
+                            >
                                 {word.text}
                             </div>
                         ))}
 
                         {gameState.status !== 'playing' && (
-                            <div style={{ position: 'absolute', inset: 0, background: 'hsl(0 0% 0% / 0.8)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
-                                <div style={{ color: 'white', fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>
+                            <div className={styles.overlay}>
+                                <div className={styles.overlayTitle}>
                                     {gameState.status === 'idle' ? '⌨️ Typing Game' : 
                                      gameState.status === 'paused' ? 'Paused' : 'Game Over!'}
                                 </div>
                                 {gameState.status === 'gameOver' && (
-                                    <div style={{ color: 'white', marginBottom: '1rem', fontSize: '1.25rem' }}>Final Score: {gameState.score}</div>
+                                    <div className={styles.overlayScore}>Final Score: {gameState.score}</div>
                                 )}
                                 
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(255,255,255,0.1)', padding: '0.5rem 1rem', borderRadius: '0.5rem' }}>
-                                    <span style={{ color: 'white', fontWeight: 500 }}>Speed: {gameState.speedLevel}</span>
+                                <div className={styles.speedControl}>
+                                    <span className={styles.speedLabel}>Speed: {gameState.speedLevel}</span>
                                     <div style={{ display: 'flex', gap: '0.25rem' }}>
                                         <Button 
                                             variant="secondary" 
@@ -97,7 +89,7 @@ export function TypingGameAlt({ onScoreUpdate }: { onScoreUpdate?: (score: numbe
                         )}
                     </div>
 
-                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <div className={styles.controls}>
                         <Input
                             ref={inputRef}
                             value={gameState.currentInput}
