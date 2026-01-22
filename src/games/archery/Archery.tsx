@@ -343,22 +343,26 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
             >
                 <defs>
                     <linearGradient id="arcGradient">
-                        <stop offset="0" stopColor="#fff" stopOpacity="0.2" />
-                        <stop offset="50%" stopColor="#fff" stopOpacity="0" />
+                        <stop offset="0" stopColor="var(--foreground)" stopOpacity="0.1" />
+                        <stop offset="50%" stopColor="var(--foreground)" stopOpacity="0" />
                     </linearGradient>
                     <g id="arrow">
-                        <line x2="60" fill="none" stroke="#888" strokeWidth="2" />
-                        <polygon fill="#888" points="64 0 58 2 56 0 58 -2" />
-                        <polygon fill="#88ce02" points="2 -3 -4 -3 -1 0 -4 3 2 3 5 0" />
+                        <line x2="60" fill="none" stroke="var(--muted-foreground)" strokeWidth="2" />
+                        <polygon fill="var(--muted-foreground)" points="64 0 58 2 56 0 58 -2" />
+                        <polygon fill="var(--primary)" points="2 -3 -4 -3 -1 0 -4 3 2 3 5 0" />
                     </g>
                 </defs>
 
                 <path id="arc" fill="none" stroke="url(#arcGradient)" strokeWidth="4" d="M100,250c250-400,550-400,800,0" opacity="0" />
 
                 <g id="target">
-                    <path fill="#FFF" d="M924.2,274.2c-21.5,21.5-45.9,19.9-52,3.2c-4.4-12.1,2.4-29.2,14.2-41c11.8-11.8,29-18.6,41-14.2 C944.1,228.3,945.7,252.8,924.2,274.2z" />
+                    {/* Outer White Ring */}
+                    <path fill="var(--background)" stroke="var(--border)" strokeWidth="2" d="M924.2,274.2c-21.5,21.5-45.9,19.9-52,3.2c-4.4-12.1,2.4-29.2,14.2-41c11.8-11.8,29-18.6,41-14.2 C944.1,228.3,945.7,252.8,924.2,274.2z" />
+                    {/* Orange Ring */}
                     <path fill="#F4531C" d="M915.8,265.8c-14.1,14.1-30.8,14.6-36,4.1c-4.1-8.3,0.5-21.3,9.7-30.5s22.2-13.8,30.5-9.7 C930.4,235,929.9,251.7,915.8,265.8z" />
-                    <path fill="#FFF" d="M908.9,258.9c-8,8-17.9,9.2-21.6,3.5c-3.2-4.9-0.5-13.4,5.6-19.5c6.1-6.1,14.6-8.8,19.5-5.6 C918.1,241,916.9,250.9,908.9,258.9z" />
+                    {/* Inner White Ring */}
+                    <path fill="var(--background)" stroke="var(--border)" strokeWidth="1" d="M908.9,258.9c-8,8-17.9,9.2-21.6,3.5c-3.2-4.9-0.5-13.4,5.6-19.5c6.1-6.1,14.6-8.8,19.5-5.6 C918.1,241,916.9,250.9,908.9,258.9z" />
+                    {/* Bullseye */}
                     <path fill="#F4531C" d="M903.2,253.2c-2.9,2.9-6.7,3.6-8.3,1.7c-1.5-1.8-0.6-5.4,2-8c2.6-2.6,6.2-3.6,8-2 C906.8,246.5,906.1,250.2,903.2,253.2z" />
                 </g>
 
@@ -366,8 +370,8 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                 <path
                     id="bow-curve"
                     fill="none"
-                    stroke="#88ce02"
-                    strokeWidth="3"
+                    stroke="var(--primary)"
+                    strokeWidth="4"
                     strokeLinecap="round"
                     d="M88,300 c0-10.1,12-25.1,12-50s-12-39.9-12-50"
                 />
@@ -381,7 +385,8 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                 <polyline
                     id="bow-string"
                     fill="none"
-                    stroke="#ddd"
+                    stroke="var(--foreground)"
+                    strokeOpacity="0.5"
                     strokeLinecap="round"
                     points="88,200 88,250 88,300"
                 />
@@ -403,12 +408,12 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                     </text>
                 )}
                 {messageType === 'hit' && (
-                    <text x="400" y="100" fontSize="48" fill="#ffcc00" textAnchor="middle" className={styles.messageText}>
+                    <text x="400" y="100" fontSize="48" fill="var(--primary)" textAnchor="middle" className={styles.messageText}>
                         HIT!
                     </text>
                 )}
                 {messageType === 'miss' && (
-                    <text x="400" y="100" fontSize="48" fill="#aaa" textAnchor="middle" className={styles.messageText}>
+                    <text x="400" y="100" fontSize="48" fill="var(--muted-foreground)" textAnchor="middle" className={styles.messageText}>
                         MISS!
                     </text>
                 )}
