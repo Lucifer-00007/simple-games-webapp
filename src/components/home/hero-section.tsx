@@ -39,20 +39,23 @@ export function HeroSection() {
                         key={i}
                         className="absolute text-4xl opacity-20"
                         initial={{
-                            x: Math.random() * 100 + '%',
-                            y: Math.random() * 100 + '%',
+                            x: ((i * 13) % 20) - 10, // Deterministic offset
+                            y: 0,
                         }}
                         animate={{
-                            y: ['-10%', '110%'],
+                            y: [-20, 20],
+                            rotate: [-10, 10],
                         }}
                         transition={{
-                            duration: 15 + Math.random() * 10,
+                            duration: 3 + (i % 4), // Deterministic duration based on index
                             repeat: Infinity,
-                            delay: i * 2,
-                            ease: 'linear',
+                            repeatType: "reverse",
+                            ease: "easeInOut",
+                            delay: i * 0.5,
                         }}
                         style={{
-                            left: `${(i / floatingIcons.length) * 100}%`,
+                            left: `${(i / floatingIcons.length) * 100 + 5}%`,
+                            top: `${((i * 23) % 60) + 10}%`, // Deterministic vertical position
                         }}
                     >
                         {icon}
