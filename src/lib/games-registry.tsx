@@ -95,6 +95,9 @@ const gameComponents: Record<string, ComponentType<GameComponentProps>> = {
     'typing-game-alt': dynamic(() => import('@/games/typing-game-alt').then((mod) => mod.TypingGameAlt), {
         loading: () => <GameLoadingPlaceholder />,
     }),
+    'chess': dynamic(() => import('@/games/chess/Chess').then((mod) => mod.Chess), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
     // Add more games here as they are implemented
 };
 

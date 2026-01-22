@@ -334,6 +334,17 @@ export const GAMES: Game[] = [
         thumbnail: '/thumbnails/simon-says.png',
         controls: ['Watch the pattern', 'Repeat by clicking colors'],
     },
+    {
+        id: 31,
+        slug: 'chess',
+        title: 'Chess',
+        description: 'Classic strategy game. Play against a friend or the computer.',
+        category: 'classic',
+        difficulty: 4,
+        thumbnail: '/thumbnails/chess.png',
+        controls: ['Click/tap to select piece', 'Click destination to move'],
+        featured: true,
+    },
 ];
 
 // Helper functions

@@ -1,0 +1,136 @@
+.container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background);
+    padding: 1rem;
+}
+
+.gameCard {
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+}
+
+.cardContent {
+    padding: 1.5rem;
+    position: relative;
+}
+
+.boardWrapper {
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 8px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--muted);
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.row {
+    display: flex;
+    flex: 1;
+}
+
+.square {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    font-size: clamp(1.5rem, 8vw, 3rem);
+    user-select: none;
+}
+
+.light {
+    background-color: #e2e8f0; /* slate-200 */
+}
+
+:global(.dark) .light {
+    background-color: #94a3b8; /* slate-400 */
+}
+
+.dark {
+    background-color: #64748b; /* slate-500 */
+}
+
+:global(.dark) .dark {
+    background-color: #475569; /* slate-600 */
+}
+
+.selected {
+    background-color: rgba(234, 179, 8, 0.6) !important; /* yellow-500 */
+}
+
+.lastMove {
+    background-color: rgba(234, 179, 8, 0.3) !important;
+}
+
+.check {
+    background-color: rgba(239, 68, 68, 0.6) !important; /* red-500 */
+}
+
+.marker {
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.captureMarker {
+    width: 80%;
+    height: 80%;
+    background-color: transparent;
+    border: 4px solid rgba(0, 0, 0, 0.2);
+}
+
+.piece {
+    z-index: 20;
+    line-height: 1;
+    cursor: grab;
+}
+
+.whitePiece {
+    color: white;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+}
+
+.blackPiece {
+    color: black;
+    /* filter: drop-shadow(0 2px 2px rgba(255,255,255,0.2)); */
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    border-radius: 0.5rem;
+}
+
+.resultCard {
+    background-color: var(--card);
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
