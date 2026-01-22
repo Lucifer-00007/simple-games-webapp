@@ -12,7 +12,8 @@ import {
     MAZE_WALLS,
     GOAL_POSITION,
     CORNER_DOTS,
-    COLORS,
+    COLORS_LIGHT,
+    COLORS_DARK,
 } from './types';
 import { GameState } from './types';
 import styles from './styles.module.css';
@@ -24,6 +25,34 @@ export function TiltingMaze({ onScoreUpdate }: { onScoreUpdate?: (score: number)
     const [gameState, setGameState] = React.useState<GameState>(() => createInitialState());
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const animationFrameRef = React.useRef<number>(0);
+    const [isDark, setIsDark] = React.useState(false);
+
+    // Track theme changes
+    React.useEffect(() => {
+        const checkTheme = () => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        };
+
+        // Initial check
+        checkTheme();
+
+        // Observer for class changes on html element
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    checkTheme();
+                }
+            }
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true, // Configure it to listen to attribute changes
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    const currentColors = isDark ? COLORS_DARK : COLORS_LIGHT;
 
     // Joystick state
     const [isDragging, setIsDragging] = React.useState(false);
@@ -38,17 +67,17 @@ export function TiltingMaze({ onScoreUpdate }: { onScoreUpdate?: (score: number)
         if (!canvas || !ctx) return;
 
         // 1. Clear and fill background
-        ctx.fillStyle = COLORS.background;
+        ctx.fillStyle = currentColors.background;
         ctx.fillRect(0, 0, DEFAULT_CONFIG.canvasWidth, DEFAULT_CONFIG.canvasHeight);
 
         // 2. Draw maze walls
-        ctx.fillStyle = COLORS.wall;
+        ctx.fillStyle = currentColors.wall;
         for (const wall of MAZE_WALLS) {
             ctx.fillRect(wall.x, wall.y, wall.width, wall.height);
         }
 
         // 3. Draw corner decorations (small red dots at all 4 corners)
-        ctx.fillStyle = COLORS.cornerDot;
+        ctx.fillStyle = currentColors.cornerDot;
         for (const dot of CORNER_DOTS) {
             ctx.beginPath();
             ctx.arc(dot.x, dot.y, 4, 0, Math.PI * 2);
@@ -56,7 +85,7 @@ export function TiltingMaze({ onScoreUpdate }: { onScoreUpdate?: (score: number)
         }
 
         // 4. Draw goal indicator (dotted circle) in CENTER
-        ctx.strokeStyle = COLORS.goalDash;
+        ctx.strokeStyle = currentColors.goalDash;
         ctx.lineWidth = 2;
         ctx.setLineDash([5, 4]);
         ctx.beginPath();
@@ -65,7 +94,7 @@ export function TiltingMaze({ onScoreUpdate }: { onScoreUpdate?: (score: number)
         ctx.setLineDash([]);
 
         // 5. Draw ball shadow
-        ctx.fillStyle = COLORS.ballShadow;
+        ctx.fillStyle = currentColors.ballShadow;
         ctx.beginPath();
         ctx.ellipse(
             gameState.ball.x + 2,
@@ -87,9 +116,16 @@ export function TiltingMaze({ onScoreUpdate }: { onScoreUpdate?: (score: number)
             gameState.ball.y,
             DEFAULT_CONFIG.ballRadius
         );
-        gradient.addColorStop(0, '#ff9a6c');
-        gradient.addColorStop(0.7, COLORS.ball);
-        gradient.addColorStop(1, '#e05a2a');
+        
+        if (isDark) {
+            gradient.addColorStop(0, '#ffbb8a');
+            gradient.addColorStop(0.7, currentColors.ball);
+            gradient.addColorStop(1, '#cc703d');
+        } else {
+            gradient.addColorStop(0, '#ff9a6c');
+            gradient.addColorStop(0.7, currentColors.ball);
+            gradient.addColorStop(1, '#e05a2a');
+        }
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
@@ -107,7 +143,7 @@ export function TiltingMaze({ onScoreUpdate }: { onScoreUpdate?: (score: number)
             Math.PI * 2
         );
         ctx.fill();
-    }, [gameState]);
+    }, [gameState, currentColors, isDark]);
 
     // Game loop - uses acceleration from joystick
     React.useEffect(() => {

@@ -44,7 +44,7 @@ export const DEFAULT_CONFIG = {
 };
 
 // Colors matching reference image
-export const COLORS = {
+export const COLORS_LIGHT = {
     background: '#ede6e3',
     wall: '#36382e',
     ball: '#f06449',
@@ -53,6 +53,18 @@ export const COLORS = {
     goalDash: '#7d82b8',
     cornerDot: '#f06449',
 };
+
+export const COLORS_DARK = {
+    background: '#1a1b26',
+    wall: '#565f89',
+    ball: '#ff9e64',
+    ballShadow: 'rgba(0, 0, 0, 0.5)',
+    goalStroke: '#bb9af7',
+    goalDash: '#bb9af7',
+    cornerDot: '#ff9e64',
+};
+
+export const COLORS = COLORS_LIGHT;
 
 // Wall metadata from reference - using column/row/horizontal/length format
 // Then converted to x, y, width, height

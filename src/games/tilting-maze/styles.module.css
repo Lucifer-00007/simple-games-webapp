@@ -7,6 +7,12 @@
     justify-content: center;
     background-color: #ede6e3;
     padding: 2rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Dark mode overrides using :global(.dark) since this is a module */
+:global(.dark) .pageContainer {
+    background-color: #1a1b26; /* Dark background matching the theme */
 }
 
 .gameWrapper {
@@ -41,6 +47,7 @@
     justify-content: center;
     border-radius: 4px;
     animation: fadeIn 0.3s ease-out;
+    z-index: 10;
 }
 
 @keyframes fadeIn {
@@ -63,6 +70,11 @@
     border-radius: 0.75rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     animation: scaleIn 0.3s ease-out;
+}
+
+:global(.dark) .overlayContent {
+    background: #24283b;
+    border: 1px solid #414868;
 }
 
 @keyframes scaleIn {
@@ -90,9 +102,17 @@
     color: #1f2937;
 }
 
+:global(.dark) .winTitle {
+    color: #e2e8f0;
+}
+
 .winTime {
     font-size: 0.875rem;
     color: #6b7280;
+}
+
+:global(.dark) .winTime {
+    color: #94a3b8;
 }
 
 .restartBtn {
@@ -131,11 +151,19 @@
     border-bottom: 8px solid #210124;
 }
 
+:global(.dark) .arrowUp {
+    border-bottom-color: #a9b1d6;
+}
+
 .arrowDown {
     bottom: -15px;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 8px solid #210124;
+}
+
+:global(.dark) .arrowDown {
+    border-top-color: #a9b1d6;
 }
 
 .arrowLeft {
@@ -145,11 +173,19 @@
     border-right: 8px solid #210124;
 }
 
+:global(.dark) .arrowLeft {
+    border-right-color: #a9b1d6;
+}
+
 .arrowRight {
     right: -15px;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-left: 8px solid #210124;
+}
+
+:global(.dark) .arrowRight {
+    border-left-color: #a9b1d6;
 }
 
 /* Joystick Base */
@@ -161,6 +197,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+:global(.dark) .joystickBase {
+    background-color: #414868;
 }
 
 /* Joystick Head */
@@ -172,6 +213,10 @@
     cursor: grab;
     transition: transform 0.05s ease-out;
     position: relative;
+}
+
+:global(.dark) .joystickHead {
+    background-color: #ff9e64;
 }
 
 .joystickHead.grabbing {
@@ -204,16 +249,36 @@
     font-weight: 600;
     color: #210124;
     margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
+}
+
+:global(.dark) .instructionText {
+    color: #c0caf5;
 }
 
 .instructionSubtext {
     font-size: 0.75rem;
     color: #666;
     line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+:global(.dark) .instructionSubtext {
+    color: #9aa5ce;
 }
 
 .restartBtnSmall {
     margin-top: 0.5rem;
     font-size: 0.75rem;
     padding: 0.5rem 0.75rem;
+}
+
+:global(.dark) .restartBtnSmall {
+    border-color: #414868;
+    color: #c0caf5;
+    background-color: transparent;
+}
+
+:global(.dark) .restartBtnSmall:hover {
+    background-color: #414868;
 }
