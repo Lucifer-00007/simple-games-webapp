@@ -69,7 +69,7 @@ function GameCard({ game }: { game: Game }) {
                                 {category?.name}
                             </Badge>
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+                        <p className="text-sm text-muted-foreground line-clamp-1">
                             {game.description}
                         </p>
                         <div className="flex items-center gap-1 mt-3">
