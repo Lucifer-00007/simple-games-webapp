@@ -190,8 +190,8 @@ export function Chess({ onScoreUpdate }: ChessProps) {
                             <div className="flex items-center gap-2 w-full sm:w-auto">
                                 <span className="text-xs text-muted-foreground whitespace-nowrap">Speed:</span>
                                 <Slider
-                                    value={[gameSpeed]}
-                                    onValueChange={(vals) => setGameSpeed(vals[0])}
+                                    value={[2100 - gameSpeed]}
+                                    onValueChange={(vals) => setGameSpeed(2100 - vals[0])}
                                     min={100}
                                     max={2000}
                                     step={100}
