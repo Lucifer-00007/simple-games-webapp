@@ -24,7 +24,7 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
             className="group"
         >
             <Link href={`/games/${game.slug}`}>
-                <Card className="h-full overflow-hidden bg-card/50 backdrop-blur border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1">
+                <Card className="h-full overflow-hidden bg-card/50 backdrop-blur border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1">
                     {/* Thumbnail */}
                     <div className="aspect-video relative bg-gradient-to-br from-muted to-muted/50 overflow-hidden">
                         <div

@@ -26,7 +26,7 @@ export function SearchBar({
     return (
         <div className="relative group w-full max-w-md">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-lg blur opacity-0 group-focus-within:opacity-100 transition duration-300" />
-            <div className="relative flex items-center bg-background rounded-lg border border-border/50 overflow-hidden">
+            <div className="relative flex items-center bg-background rounded-lg border border-border overflow-hidden">
                 <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
                 <Input
                     ref={inputRef}

@@ -35,7 +35,7 @@ function GameCard({ game }: { game: Game }) {
     return (
         <motion.div variants={itemVariants} className="group">
             <Link href={`/games/${game.slug}`}>
-                <Card className="overflow-hidden bg-card/50 backdrop-blur border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1">
+                <Card className="overflow-hidden bg-card/50 backdrop-blur border-border hover:border-primary transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1">
                     <div className="aspect-video relative bg-gradient-to-br from-muted to-muted/50 overflow-hidden">
                         {/* Placeholder gradient background - replace with actual thumbnails */}
                         <div className={`absolute inset-0 bg-gradient-to-br ${category?.color || 'from-gray-500 to-gray-700'} opacity-80`} />
