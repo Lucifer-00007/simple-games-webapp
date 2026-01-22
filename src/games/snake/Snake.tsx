@@ -15,6 +15,7 @@ import {
 } from './game-logic';
 import { GameState, Direction, DEFAULT_CONFIG } from './types';
 import styles from './styles.module.css';
+import { MobileControls } from '@/components/games/mobile-controls';
 
 interface SnakeProps {
     onScoreUpdate?: (score: number) => void;
@@ -198,6 +199,12 @@ export function Snake({ onScoreUpdate }: SnakeProps) {
                                     )}
                                 </div>
                             </div>
+                            
+                            {/* Mobile Controls */}
+                            <MobileControls
+                                onDirection={(dir) => handleDirectionClick(dir)}
+                                className="md:hidden"
+                            />
                         </div>
 
                         {/* Right - Controls Panel */}

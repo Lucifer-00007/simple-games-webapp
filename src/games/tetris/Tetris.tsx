@@ -18,6 +18,7 @@ import {
 } from './game-logic';
 import { GameState, DEFAULT_CONFIG } from './types';
 import styles from './styles.module.css';
+import { MobileControls } from '@/components/games/mobile-controls';
 
 interface TetrisProps {
     onScoreUpdate?: (score: number) => void;
@@ -278,6 +279,26 @@ export function Tetris({ onScoreUpdate }: TetrisProps) {
                                     )}
                                 </div>
                             </div>
+
+                            {/* Mobile Controls */}
+                            <MobileControls
+                                showAction
+                                actionLabel="Drop"
+                                onDirection={(dir) => {
+                                    if (gameState.status !== 'playing') return;
+                                    switch (dir) {
+                                        case 'UP': setGameState(prev => rotate(prev)); break;
+                                        case 'DOWN': setGameState(prev => movePiece(prev, 0, 1)); break;
+                                        case 'LEFT': setGameState(prev => movePiece(prev, -1, 0)); break;
+                                        case 'RIGHT': setGameState(prev => movePiece(prev, 1, 0)); break;
+                                    }
+                                }}
+                                onAction={() => {
+                                    if (gameState.status !== 'playing') return;
+                                    setGameState(prev => hardDrop(prev));
+                                }}
+                                className="md:hidden"
+                            />
                         </div>
 
                         {/* Right - Controls Panel */}
