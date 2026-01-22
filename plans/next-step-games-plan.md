@@ -44,7 +44,7 @@
 
 - [] Make all the games responsive and playable in mobile browser. Fix this following best practices.
 
-- [] 74 problems (31 errors, 43 warnings) 7 errors and 0 warnings potentially fixable with the `--fix` option. error: script "lint" exited with code 1
+- [x] 74 problems (31 errors, 43 warnings) 7 errors and 0 warnings potentially fixable with the `--fix` option. error: script "lint" exited with code 1
 
 - []
 - []
