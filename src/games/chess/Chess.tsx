@@ -174,48 +174,50 @@ export function Chess({ onScoreUpdate }: ChessProps) {
             <Card className={styles.gameCard}>
                 <CardContent className={styles.cardContent}>
                     {/* Controls */}
-                    <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                        <Select value={gameMode} onValueChange={(v) => { setGameMode(v as GameMode); handleRestart(); }}>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Select Mode" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="human-vs-human">Human vs Human</SelectItem>
-                                <SelectItem value="human-vs-cpu">Human vs Computer</SelectItem>
-                                <SelectItem value="cpu-vs-cpu">Computer vs Computer</SelectItem>
-                            </SelectContent>
-                        </Select>
+                    <div className="flex flex-col gap-4 mb-6">
+                        <div className="flex flex-wrap items-center justify-between gap-4 w-full">
+                            <Select value={gameMode} onValueChange={(v) => { setGameMode(v as GameMode); handleRestart(); }}>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Select Mode" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="human-vs-human">Human vs Human</SelectItem>
+                                    <SelectItem value="human-vs-cpu">Human vs Computer</SelectItem>
+                                    <SelectItem value="cpu-vs-cpu">Computer vs Computer</SelectItem>
+                                </SelectContent>
+                            </Select>
+
+                            <div className="flex items-center gap-2 flex-1 justify-center min-w-[140px]">
+                                <span className={`text-sm font-bold ${gameState.turn === 'white' ? 'text-primary' : 'text-muted-foreground'}`}>
+                                    {gameState.turn === 'white' ? "White's Turn" : "Black's Turn"}
+                                </span>
+                                {gameState.inCheck && <span className="text-red-500 font-bold animate-pulse">CHECK!</span>}
+                            </div>
+
+                            <div className="flex gap-2">
+                                <Button onClick={togglePause} variant="outline" size="icon" disabled={gameState.status !== 'playing' && gameState.status !== 'paused'}>
+                                    {gameState.status === 'paused' ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+                                </Button>
+                                <Button onClick={handleRestart} variant="outline" size="sm">
+                                    <RotateCcw className="w-4 h-4 mr-2" />
+                                    Restart
+                                </Button>
+                            </div>
+                        </div>
 
                         {gameMode === 'cpu-vs-cpu' && (
-                            <div className="flex items-center gap-2 w-full sm:w-auto">
-                                <span className="text-xs text-muted-foreground whitespace-nowrap">Speed:</span>
+                            <div className="flex items-center gap-4 w-full px-2">
+                                <span className="text-xs text-muted-foreground whitespace-nowrap min-w-[40px]">Speed</span>
                                 <Slider
                                     value={[2100 - gameSpeed]}
                                     onValueChange={(vals) => setGameSpeed(2100 - vals[0])}
                                     min={100}
                                     max={2000}
                                     step={100}
-                                    className="w-24"
+                                    className="flex-1"
                                 />
                             </div>
                         )}
-
-                        <div className="flex items-center gap-2">
-                            <span className={`text-sm font-bold ${gameState.turn === 'white' ? 'text-primary' : 'text-muted-foreground'}`}>
-                                {gameState.turn === 'white' ? "White's Turn" : "Black's Turn"}
-                            </span>
-                            {gameState.inCheck && <span className="text-red-500 font-bold animate-pulse">CHECK!</span>}
-                        </div>
-
-                        <div className="flex gap-2">
-                            <Button onClick={togglePause} variant="outline" size="icon" disabled={gameState.status !== 'playing' && gameState.status !== 'paused'}>
-                                {gameState.status === 'paused' ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
-                            </Button>
-                            <Button onClick={handleRestart} variant="outline" size="sm">
-                                <RotateCcw className="w-4 h-4 mr-2" />
-                                Restart
-                            </Button>
-                        </div>
                     </div>
 
                     {/* Board */}
