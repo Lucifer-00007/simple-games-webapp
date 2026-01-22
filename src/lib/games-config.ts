@@ -277,7 +277,7 @@ export const GAMES: Game[] = [
     {
         id: 24,
         slug: 'typing-game-alt',
-        title: 'Typing Challenge',
+        title: 'Typing Game Alt',
         description: 'Alternative typing game with unique challenges.',
         category: 'skill',
         difficulty: 3,
