@@ -24,7 +24,7 @@ export interface Move {
     promotion?: PieceType;
 }
 
-export type GameStatus = 'playing' | 'checkmate' | 'stalemate' | 'draw';
+export type GameStatus = 'playing' | 'paused' | 'checkmate' | 'stalemate' | 'draw';
 
 export interface GameState {
     board: Board;

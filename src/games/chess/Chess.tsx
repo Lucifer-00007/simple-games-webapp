@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion } from 'framer-motion';
-import { RotateCcw, Trophy } from 'lucide-react';
+import { RotateCcw, Trophy, Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -33,7 +33,11 @@ export function Chess({ onScoreUpdate }: ChessProps) {
             // Depth 2 provides a decent challenge without blocking the main thread too long
             const bestMove = getBestMove(gameState, 2);
             if (bestMove) {
-                setGameState(prev => makeMove(prev, bestMove.from, bestMove.to));
+                setGameState(prev => {
+                    // Check again if still playing inside the callback to avoid race conditions
+                    if (prev.status !== 'playing') return prev;
+                    return makeMove(prev, bestMove.from, bestMove.to);
+                });
             }
         };
 
@@ -95,6 +99,14 @@ export function Chess({ onScoreUpdate }: ChessProps) {
 
     const handleRestart = () => {
         setGameState(createInitialState());
+    };
+
+    const togglePause = () => {
+        setGameState(prev => {
+            if (prev.status === 'playing') return { ...prev, status: 'paused' };
+            if (prev.status === 'paused') return { ...prev, status: 'playing' };
+            return prev;
+        });
     };
 
     const isSelected = (r: number, c: number) => {
@@ -179,10 +191,15 @@ export function Chess({ onScoreUpdate }: ChessProps) {
                             {gameState.inCheck && <span className="text-red-500 font-bold animate-pulse">CHECK!</span>}
                         </div>
 
-                        <Button onClick={handleRestart} variant="outline" size="sm">
-                            <RotateCcw className="w-4 h-4 mr-2" />
-                            Restart
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button onClick={togglePause} variant="outline" size="icon" disabled={gameState.status !== 'playing' && gameState.status !== 'paused'}>
+                                {gameState.status === 'paused' ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+                            </Button>
+                            <Button onClick={handleRestart} variant="outline" size="sm">
+                                <RotateCcw className="w-4 h-4 mr-2" />
+                                Restart
+                            </Button>
+                        </div>
                     </div>
 
                     {/* Board */}
@@ -192,8 +209,21 @@ export function Chess({ onScoreUpdate }: ChessProps) {
                         </div>
                     </div>
 
-                    {/* Status Overlay */}
-                    {gameState.status !== 'playing' && (
+                    {/* Paused Overlay */}
+                    {gameState.status === 'paused' && (
+                        <div className={styles.overlay}>
+                            <div className={styles.resultCard}>
+                                <h2 className="text-2xl font-bold mb-4">Paused</h2>
+                                <Button onClick={togglePause}>
+                                    <Play className="w-4 h-4 mr-2" />
+                                    Resume
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Game Over Overlay */}
+                    {(gameState.status === 'checkmate' || gameState.status === 'stalemate' || gameState.status === 'draw') && (
                         <motion.div 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
