@@ -76,3 +76,84 @@ export function makeMove(state: GameState, index: number): GameState {
         winningLine,
     };
 }
+
+// AI Implementation (Minimax)
+export function getBestMove(board: Board, player: Player): number {
+    const opponent: Player = player === 'X' ? 'O' : 'X';
+    
+    // First, check if we can win in the next move
+    for (let i = 0; i < 9; i++) {
+        if (board[i] === null) {
+            board[i] = player;
+            if (checkWinner(board).winner === player) {
+                board[i] = null;
+                return i;
+            }
+            board[i] = null;
+        }
+    }
+
+    // Second, check if opponent could win and block them
+    for (let i = 0; i < 9; i++) {
+        if (board[i] === null) {
+            board[i] = opponent;
+            if (checkWinner(board).winner === opponent) {
+                board[i] = null;
+                return i;
+            }
+            board[i] = null;
+        }
+    }
+
+    // Otherwise use Minimax for best strategic move
+    let bestScore = -Infinity;
+    let move = -1;
+
+    // Optimization: If center is empty, take it (saves recursion depth)
+    if (board[4] === null) return 4;
+
+    for (let i = 0; i < 9; i++) {
+        if (board[i] === null) {
+            board[i] = player;
+            const score = minimax(board, 0, false, player, opponent);
+            board[i] = null;
+            if (score > bestScore) {
+                bestScore = score;
+                move = i;
+            }
+        }
+    }
+    
+    return move !== -1 ? move : board.findIndex(cell => cell === null);
+}
+
+function minimax(board: Board, depth: number, isMaximizing: boolean, aiPlayer: Player, humanPlayer: Player): number {
+    const { winner } = checkWinner(board);
+    if (winner === aiPlayer) return 10 - depth;
+    if (winner === humanPlayer) return depth - 10;
+    if (isBoardFull(board)) return 0;
+
+    if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < 9; i++) {
+            if (board[i] === null) {
+                board[i] = aiPlayer;
+                const score = minimax(board, depth + 1, false, aiPlayer, humanPlayer);
+                board[i] = null;
+                bestScore = Math.max(score, bestScore);
+            }
+        }
+        return bestScore;
+    } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < 9; i++) {
+            if (board[i] === null) {
+                board[i] = humanPlayer;
+                const score = minimax(board, depth + 1, true, aiPlayer, humanPlayer);
+                board[i] = null;
+                bestScore = Math.min(score, bestScore);
+            }
+        }
+        return bestScore;
+    }
+}

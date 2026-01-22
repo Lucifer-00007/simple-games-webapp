@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Bot, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { createInitialState, makeMove } from './game-logic';
+import { createInitialState, makeMove, getBestMove } from './game-logic';
 import { GameState } from './types';
 import styles from './styles.module.css';
 
@@ -16,8 +16,10 @@ interface TicTacToeProps {
 export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
     const [gameState, setGameState] = React.useState<GameState>(createInitialState);
     const [scores, setScores] = React.useState({ X: 0, O: 0, draws: 0 });
+    const [isVsComputer, setIsVsComputer] = React.useState(false);
+    const [isComputerThinking, setIsComputerThinking] = React.useState(false);
 
-    const handleCellClick = (index: number) => {
+    const processMove = (index: number) => {
         if (gameState.status !== 'playing' || gameState.board[index] !== null) {
             return;
         }
@@ -38,17 +40,46 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
         }
     };
 
+    // AI Turn Effect
+    React.useEffect(() => {
+        if (isVsComputer && gameState.status === 'playing' && gameState.currentPlayer === 'O' && !isComputerThinking) {
+            const timer = setTimeout(() => {
+                setIsComputerThinking(true);
+                const bestMove = getBestMove(gameState.board, 'O');
+                processMove(bestMove);
+                setIsComputerThinking(false);
+            }, 600); // Natural delay
+            return () => clearTimeout(timer);
+        }
+    }, [gameState.status, gameState.currentPlayer, isVsComputer, isComputerThinking, gameState.board]);
+
+    const handleCellClick = (index: number) => {
+        // Prevent interaction if it's computer's turn
+        if (isVsComputer && (gameState.currentPlayer === 'O' || isComputerThinking)) return;
+        processMove(index);
+    };
+
     const handleRestart = () => {
         setGameState(createInitialState());
+        setIsComputerThinking(false);
+    };
+
+    const toggleMode = () => {
+        setIsVsComputer(!isVsComputer);
+        handleRestart(); // Restart game when switching modes
     };
 
     const getStatusMessage = () => {
+        if (isComputerThinking) return "Computer is thinking...";
         switch (gameState.status) {
             case 'won':
-                return `🎉 Player ${gameState.winner} Wins!`;
+                return `🎉 ${isVsComputer && gameState.winner === 'O' ? 'Computer' : `Player ${gameState.winner}`} Wins!`;
             case 'draw':
                 return "🤝 It's a Draw!";
             default:
+                if (isVsComputer) {
+                    return gameState.currentPlayer === 'X' ? "Your Turn" : "Computer's Turn";
+                }
                 return `Player ${gameState.currentPlayer}'s Turn`;
         }
     };
@@ -57,6 +88,7 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
         const cell = gameState.board[index];
         const isWinningCell = gameState.winningLine?.includes(index);
         const isEmpty = cell === null;
+        const isClickable = isEmpty && gameState.status === 'playing' && !(isVsComputer && gameState.currentPlayer === 'O');
 
         return (
             <motion.button
@@ -67,9 +99,9 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
           ${isEmpty && gameState.status === 'playing' ? styles.empty : ''}
         `}
                 onClick={() => handleCellClick(index)}
-                whileHover={isEmpty && gameState.status === 'playing' ? { scale: 0.95 } : {}}
-                whileTap={isEmpty && gameState.status === 'playing' ? { scale: 0.9 } : {}}
-                disabled={!isEmpty || gameState.status !== 'playing'}
+                whileHover={isClickable ? { scale: 0.95 } : {}}
+                whileTap={isClickable ? { scale: 0.9 } : {}}
+                disabled={!isClickable}
             >
                 <AnimatePresence mode="wait">
                     {cell && (
@@ -93,9 +125,21 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
         <div className={styles.container}>
             <Card className={styles.gameCard}>
                 <CardContent className={styles.cardContent}>
+                    {/* Mode Toggle */}
+                    <div className="flex justify-center mb-4">
+                        <Button
+                            variant={isVsComputer ? "secondary" : "outline"}
+                            onClick={toggleMode}
+                            className="gap-2 text-xs h-8"
+                        >
+                            {isVsComputer ? <Bot className="w-4 h-4" /> : <Users className="w-4 h-4" />}
+                            {isVsComputer ? "Vs Computer" : "Vs Player"}
+                        </Button>
+                    </div>
+
                     {/* Status */}
                     <motion.div
-                        key={gameState.status + gameState.currentPlayer}
+                        key={gameState.status + gameState.currentPlayer + isComputerThinking}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className={`${styles.status} ${gameState.status === 'won' ? styles.statusWon :

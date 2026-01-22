@@ -47,3 +47,4 @@ firestore-debug.log
 .DS_Store
 static-code/
 .vscode/settings.json
+.gemini-clipboard/

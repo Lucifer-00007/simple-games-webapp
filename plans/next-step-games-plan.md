@@ -19,7 +19,7 @@
 ### Bugs
 
 #### Priority Lv: P0
-- [] Roll history card changes in Dice Roll:
+- [x] Roll history card changes in Dice Roll:
 - Add a border line to the roll history card. 
 - And add line separator bw each row. 
 - Also decrease the vertical gap bw the `Roll History` title headers and the values.
@@ -40,7 +40,7 @@
 ### New features
 
 #### Priority Lv: P0
-- [] In all the 2-player games add a feature to play like - Player VS the Computer.
+- [x] In all the 2-player games add a feature to play like - Player VS the Computer.
 
 - []
 - []

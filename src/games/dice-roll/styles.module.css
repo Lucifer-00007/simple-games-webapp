@@ -191,7 +191,7 @@
 }
 
 .historyHeader {
-    padding: 0.6rem 0.75rem !important;
+    padding: 0.4rem 0.75rem !important;
     background: linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--primary) / 0.03));
     border-bottom: 1px solid hsl(var(--border));
 }
@@ -231,7 +231,7 @@
     color: hsl(var(--muted-foreground));
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    padding: 0.4rem 0.75rem;
+    padding: 0.25rem 0.75rem;
     text-align: left;
 }
 
@@ -240,7 +240,7 @@
 }
 
 .historyRow {
-    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    border-bottom: 1px solid hsl(var(--border));
     transition: background 0.15s ease;
 }
 

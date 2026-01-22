@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { GameGrid } from '@/components/games/game-grid';
@@ -9,7 +10,7 @@ import { SearchBar } from '@/components/games/search-bar';
 import { GAMES, getGamesByCategory, searchGames } from '@/lib/games-config';
 import { GameCategory } from '@/types/game';
 
-export default function GamesPage() {
+function GamesContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -111,5 +112,13 @@ export default function GamesPage() {
                 />
             </div>
         </div>
+    );
+}
+
+export default function GamesPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen py-12 text-center">Loading...</div>}>
+            <GamesContent />
+        </Suspense>
     );
 }

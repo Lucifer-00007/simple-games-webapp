@@ -35,8 +35,8 @@ const wallW = 10; // Wall width
 const cellSize = pathW + wallW; // 35px per cell
 
 export const DEFAULT_CONFIG = {
-    canvasWidth: 350,  // 10 columns * 35
-    canvasHeight: 315, // 9 rows * 35
+    canvasWidth: 360,  // Increased to include right border (10 cols * 35 + 10 wall)
+    canvasHeight: 325, // Increased to include bottom border (9 rows * 35 + 10 wall)
     ballRadius: 8,     // Larger ball for visibility
     friction: 0.98,
     acceleration: 0.12,
@@ -234,7 +234,7 @@ function checkGoalReached(ballX: number, ballY: number): boolean {
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     // Win when ball is within the goal radius
-    return distance < GOAL_POSITION.radius / 2;
+    return distance < GOAL_POSITION.radius;
 }
 
 export function updateBall(state: GameState, tiltX: number, tiltY: number): GameState {

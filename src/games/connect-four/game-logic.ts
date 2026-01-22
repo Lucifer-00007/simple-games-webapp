@@ -153,3 +153,59 @@ export function resetGame(state: GameState, config: GameConfig = DEFAULT_CONFIG)
         scores: state.scores,
     };
 }
+
+// AI Implementation
+export function getBestMove(board: Board, player: Player, config: GameConfig = DEFAULT_CONFIG): number {
+    const opponent: Player = player === 'red' ? 'yellow' : 'red';
+    const validMoves: number[] = [];
+
+    // Find all valid moves
+    for (let c = 0; c < config.cols; c++) {
+        if (findLowestEmptyRow(board, c) !== -1) {
+            validMoves.push(c);
+        }
+    }
+
+    if (validMoves.length === 0) return -1;
+
+    // 1. Win immediately
+    for (const col of validMoves) {
+        const tempBoard = board.map(r => [...r]);
+        const row = findLowestEmptyRow(tempBoard, col);
+        tempBoard[row][col] = player;
+        if (checkWinner(tempBoard, row, col, config).winner) return col;
+    }
+
+    // 2. Block opponent win
+    for (const col of validMoves) {
+        const tempBoard = board.map(r => [...r]);
+        const row = findLowestEmptyRow(tempBoard, col);
+        tempBoard[row][col] = opponent;
+        if (checkWinner(tempBoard, row, col, config).winner) return col;
+    }
+
+    // 3. Simple Heuristic / Center bias
+    // Prefer center columns
+    validMoves.sort((a, b) => {
+        const center = Math.floor(config.cols / 2);
+        return Math.abs(a - center) - Math.abs(b - center);
+    });
+
+    // 4. Safe Move (Look ahead 1 step: don't enable opponent win)
+    const safeMoves = validMoves.filter(col => {
+        const tempBoard = board.map(r => [...r]);
+        const row = findLowestEmptyRow(tempBoard, col);
+        tempBoard[row][col] = player;
+
+        // Check if this enables opponent to win in the cell ABOVE
+        const rowAbove = row - 1;
+        if (rowAbove >= 0) {
+            tempBoard[rowAbove][col] = opponent;
+            if (checkWinner(tempBoard, rowAbove, col, config).winner) return false;
+        }
+        return true;
+    });
+
+    if (safeMoves.length > 0) return safeMoves[0]; // Center-most safe move
+    return validMoves[0]; // Forced to make a bad move
+}
