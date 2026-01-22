@@ -235,3 +235,25 @@ export function togglePause(state: GameState): GameState {
 export function resetGame(config: GameConfig = DEFAULT_CONFIG): GameState {
     return createInitialState(config);
 }
+
+export function getDifficultyConfig(difficulty: 'easy' | 'medium' | 'hard'): GameConfig {
+    switch (difficulty) {
+        case 'easy':
+            return {
+                ...DEFAULT_CONFIG,
+                ballSpeed: 4,
+                aiDifficulty: 0.5,
+                paddleSpeed: 7,
+            };
+        case 'hard':
+            return {
+                ...DEFAULT_CONFIG,
+                ballSpeed: 9,
+                aiDifficulty: 0.9,
+                paddleSpeed: 9,
+            };
+        case 'medium':
+        default:
+            return DEFAULT_CONFIG;
+    }
+}

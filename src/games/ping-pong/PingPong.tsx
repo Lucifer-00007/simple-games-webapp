@@ -13,6 +13,7 @@ import {
     movePlayerPaddle,
     movePlayerPaddleToPosition,
     tick,
+    getDifficultyConfig,
 } from './game-logic';
 import { GameState, DEFAULT_CONFIG } from './types';
 import styles from './styles.module.css';
@@ -23,10 +24,33 @@ interface PingPongProps {
 
 export function PingPong({ onScoreUpdate }: PingPongProps) {
     const [gameState, setGameState] = React.useState<GameState>(() => createInitialState());
+    const [difficulty, setDifficulty] = React.useState<'easy' | 'medium' | 'hard'>('medium');
+    const [isDark, setIsDark] = React.useState(false);
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const gameLoopRef = React.useRef<number | null>(null);
     const containerRef = React.useRef<HTMLDivElement>(null);
     const keysPressed = React.useRef<Set<string>>(new Set());
+
+    // Track theme changes
+    React.useEffect(() => {
+        const checkTheme = () => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        };
+
+        checkTheme();
+
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    checkTheme();
+                }
+            }
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
+
+        return () => observer.disconnect();
+    }, []);
 
     // Draw game
     const draw = React.useCallback(() => {
@@ -41,7 +65,7 @@ export function PingPong({ onScoreUpdate }: PingPongProps) {
 
         // Draw center line
         ctx.setLineDash([10, 10]);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.1)';
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(canvasWidth / 2, 0);
@@ -100,11 +124,18 @@ export function PingPong({ onScoreUpdate }: PingPongProps) {
             gameState.ball.y,
             gameState.ball.radius
         );
-        ballGradient.addColorStop(0, '#ffffff');
-        ballGradient.addColorStop(1, '#e2e8f0');
+        
+        if (isDark) {
+            ballGradient.addColorStop(0, '#ffffff');
+            ballGradient.addColorStop(1, '#e2e8f0');
+        } else {
+            ballGradient.addColorStop(0, '#333333');
+            ballGradient.addColorStop(1, '#000000');
+        }
+        
         ctx.fillStyle = ballGradient;
         ctx.fill();
-    }, [gameState]);
+    }, [gameState, isDark]);
 
     // Game loop
     React.useEffect(() => {
@@ -119,7 +150,8 @@ export function PingPong({ onScoreUpdate }: PingPongProps) {
                 }
 
                 setGameState((prev) => {
-                    const newState = tick(prev);
+                    const difficultyConfig = getDifficultyConfig(difficulty);
+                    const newState = tick(prev, difficultyConfig);
                     if (newState.status === 'gameOver' && prev.status === 'playing') {
                         onScoreUpdate?.(newState.playerScore);
                     }
@@ -135,7 +167,7 @@ export function PingPong({ onScoreUpdate }: PingPongProps) {
                 cancelAnimationFrame(gameLoopRef.current);
             }
         };
-    }, [gameState.status, onScoreUpdate]);
+    }, [gameState.status, onScoreUpdate, difficulty]);
 
     // Draw on state change
     React.useEffect(() => {
@@ -208,7 +240,14 @@ export function PingPong({ onScoreUpdate }: PingPongProps) {
     };
 
     const handleRestart = () => {
-        setGameState(resetGame());
+        const config = getDifficultyConfig(difficulty);
+        setGameState(resetGame(config));
+    };
+
+    const handleDifficultyChange = (newDifficulty: 'easy' | 'medium' | 'hard') => {
+        setDifficulty(newDifficulty);
+        const config = getDifficultyConfig(newDifficulty);
+        setGameState(resetGame(config));
     };
 
     return (
@@ -240,6 +279,34 @@ export function PingPong({ onScoreUpdate }: PingPongProps) {
                             </motion.span>
                             <span className={styles.scoreLabel}>AI</span>
                         </div>
+                    </div>
+
+                    {/* Difficulty Controls */}
+                    <div className="flex gap-2 justify-center mb-4">
+                        <Button 
+                            variant={difficulty === 'easy' ? 'default' : 'outline'} 
+                            size="sm" 
+                            onClick={() => handleDifficultyChange('easy')}
+                            className="h-8 text-xs"
+                        >
+                            Easy
+                        </Button>
+                        <Button 
+                            variant={difficulty === 'medium' ? 'default' : 'outline'} 
+                            size="sm" 
+                            onClick={() => handleDifficultyChange('medium')}
+                            className="h-8 text-xs"
+                        >
+                            Medium
+                        </Button>
+                        <Button 
+                            variant={difficulty === 'hard' ? 'default' : 'outline'} 
+                            size="sm" 
+                            onClick={() => handleDifficultyChange('hard')}
+                            className="h-8 text-xs"
+                        >
+                            Hard
+                        </Button>
                     </div>
 
                     {/* Canvas */}
