@@ -46,7 +46,7 @@
 - [x] Tower Blocks (`tower-blocks`)
 - [x] Crossy Road (`crossy-road`)
 - [x] Tilting Maze (`tilting-maze`)
-- [x] Typing Game Alt (`typing-game-alt`)
+- [x] Typing Game Alt (`typing-game-alt`) — *Note: Same as Speed Typing*
 
 ---
 

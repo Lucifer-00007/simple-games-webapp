@@ -1,1 +1,1 @@
-export { createInitialState, updateGame, typeCharacter, startGame, resetGame } from './types';
+export { createInitialState, updateGame, checkInput, startGame, pauseGame, resumeGame, resetGame } from './types';
