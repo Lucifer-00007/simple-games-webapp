@@ -189,9 +189,48 @@ export const CORNER_DOTS = [
     { x: DEFAULT_CONFIG.canvasWidth - wallW / 2, y: DEFAULT_CONFIG.canvasHeight - wallW / 2 }, // Bottom-right
 ];
 
+function getRandomPosition(): { x: number, y: number } {
+    const maxAttempts = 100;
+    const cols = 10;
+    const rows = 9;
+    const safeDistance = 60; // Minimum distance from goal
+
+    for (let i = 0; i < maxAttempts; i++) {
+        // Pick random cell
+        const col = Math.floor(Math.random() * cols);
+        const row = Math.floor(Math.random() * rows);
+
+        const x = col * cellSize + wallW + pathW / 2;
+        const y = row * cellSize + wallW + pathW / 2;
+
+        // Check if too close to goal
+        const dx = x - GOAL_POSITION.x;
+        const dy = y - GOAL_POSITION.y;
+        if (Math.sqrt(dx * dx + dy * dy) < safeDistance) continue;
+
+        // Check if collides with any wall
+        let collides = false;
+        for (const wall of MAZE_WALLS) {
+            const collision = checkBallWallCollision(x, y, DEFAULT_CONFIG.ballRadius + 2, wall); // Add margin
+            if (collision.collides) {
+                collides = true;
+                break;
+            }
+        }
+
+        if (!collides) {
+            return { x, y };
+        }
+    }
+
+    // Fallback to original start if no valid position found
+    return BALL_START;
+}
+
 export function createInitialState(): GameState {
+    const startPos = getRandomPosition();
     return {
-        ball: { x: BALL_START.x, y: BALL_START.y, vx: 0, vy: 0 },
+        ball: { x: startPos.x, y: startPos.y, vx: 0, vy: 0 },
         status: 'idle',
         time: 0,
         startTime: 0,
