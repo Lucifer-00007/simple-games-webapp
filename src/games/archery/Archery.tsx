@@ -361,8 +361,8 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                         <stop offset="50%" stopColor="var(--foreground)" stopOpacity="0" />
                     </linearGradient>
                     <g id="arrow">
-                        <line x2="60" fill="none" stroke="var(--muted-foreground)" strokeWidth="2" />
-                        <polygon fill="var(--muted-foreground)" points="64 0 58 2 56 0 58 -2" />
+                        <line x2="80" fill="none" stroke="var(--muted-foreground)" strokeWidth="2" />
+                        <polygon fill="var(--muted-foreground)" points="84 0 78 2 76 0 78 -2" />
                         <polygon fill="var(--primary)" points="2 -3 -4 -3 -1 0 -4 3 2 3 5 0" />
                     </g>
                 </defs>
