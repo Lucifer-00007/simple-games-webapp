@@ -75,7 +75,7 @@ export function updateGame(state: GameState): GameState {
 export function checkInput(state: GameState, newInput: string): GameState {
     if (state.status !== 'playing') return state;
 
-    let words = [...state.words];
+    const words = [...state.words];
     let score = state.score;
     let matched = false;
 

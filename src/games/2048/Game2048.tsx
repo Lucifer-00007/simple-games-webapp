@@ -18,6 +18,16 @@ export function Game2048({ onScoreUpdate }: Game2048Props) {
     const containerRef = React.useRef<HTMLDivElement>(null);
     const touchStartRef = React.useRef<{ x: number; y: number } | null>(null);
 
+    const handleMove = React.useCallback((direction: Direction) => {
+        setGameState((prev) => {
+            const newState = makeMove(prev, direction);
+            if (newState.score !== prev.score) {
+                onScoreUpdate?.(newState.bestScore);
+            }
+            return newState;
+        });
+    }, [onScoreUpdate]);
+
     // Keyboard controls
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -37,7 +47,7 @@ export function Game2048({ onScoreUpdate }: Game2048Props) {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [handleMove]);
 
     // Touch controls
     React.useEffect(() => {
@@ -78,17 +88,7 @@ export function Game2048({ onScoreUpdate }: Game2048Props) {
             container.removeEventListener('touchstart', handleTouchStart);
             container.removeEventListener('touchend', handleTouchEnd);
         };
-    }, []);
-
-    const handleMove = (direction: Direction) => {
-        setGameState((prev) => {
-            const newState = makeMove(prev, direction);
-            if (newState.score !== prev.score) {
-                onScoreUpdate?.(newState.bestScore);
-            }
-            return newState;
-        });
-    };
+    }, [handleMove]);
 
     const handleRestart = () => {
         setGameState((prev) => resetGame(prev));

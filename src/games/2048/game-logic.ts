@@ -51,7 +51,7 @@ export function createInitialState(config: GameConfig = DEFAULT_CONFIG): GameSta
 // Slide a row to the left (base operation)
 function slideRow(row: number[]): { newRow: number[]; score: number } {
     // Remove zeros
-    let filtered = row.filter(val => val !== 0);
+    const filtered = row.filter(val => val !== 0);
     let score = 0;
 
     // Merge adjacent equal values

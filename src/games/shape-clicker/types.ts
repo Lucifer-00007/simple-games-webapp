@@ -10,6 +10,7 @@ export interface Shape {
     y: number;
     size: number;
     color: string;
+    createdAt: number;
 }
 
 export interface GameState {

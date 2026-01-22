@@ -19,7 +19,7 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
     const [isVsComputer, setIsVsComputer] = React.useState(false);
     const [isComputerThinking, setIsComputerThinking] = React.useState(false);
 
-    const processMove = (index: number) => {
+    const processMove = React.useCallback((index: number) => {
         if (gameState.status !== 'playing' || gameState.board[index] !== null) {
             return;
         }
@@ -38,7 +38,7 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
             setScores((prev) => ({ ...prev, draws: prev.draws + 1 }));
             onScoreUpdate?.(scores.X + scores.O + scores.draws + 1);
         }
-    };
+    }, [gameState, scores, onScoreUpdate]);
 
     // AI Turn Effect
     React.useEffect(() => {
@@ -51,7 +51,7 @@ export function TicTacToe({ onScoreUpdate }: TicTacToeProps) {
             }, 600); // Natural delay
             return () => clearTimeout(timer);
         }
-    }, [gameState.status, gameState.currentPlayer, isVsComputer, isComputerThinking, gameState.board]);
+    }, [gameState.status, gameState.currentPlayer, isVsComputer, isComputerThinking, gameState.board, processMove]);
 
     const handleCellClick = (index: number) => {
         // Prevent interaction if it's computer's turn

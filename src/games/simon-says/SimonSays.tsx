@@ -23,25 +23,30 @@ interface SimonSaysProps {
 
 export function SimonSays({ onScoreUpdate }: SimonSaysProps) {
     const [gameState, setGameState] = React.useState<GameState>(() => createInitialState());
-    const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
     // Show sequence effect
     React.useEffect(() => {
+        let isCancelled = false;
+
         if (gameState.status === 'showingSequence') {
             const showSequence = async () => {
                 // Wait before starting
                 await new Promise((r) => setTimeout(r, 500));
+                if (isCancelled) return;
 
                 for (let i = 0; i < gameState.sequence.length; i++) {
+                    if (isCancelled) return;
                     // Show color
                     setGameState((prev) => setActiveColor(prev, gameState.sequence[i]));
                     await new Promise((r) => setTimeout(r, DEFAULT_CONFIG.showDelay));
-
+                    
+                    if (isCancelled) return;
                     // Hide color
                     setGameState((prev) => setActiveColor(prev, null));
                     await new Promise((r) => setTimeout(r, DEFAULT_CONFIG.pauseDelay));
                 }
 
+                if (isCancelled) return;
                 // Start player turn
                 setGameState((prev) => startPlayerTurn(prev));
             };
@@ -50,9 +55,9 @@ export function SimonSays({ onScoreUpdate }: SimonSaysProps) {
         }
 
         return () => {
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            isCancelled = true;
         };
-    }, [gameState.status, gameState.sequence.length]);
+    }, [gameState.status, gameState.sequence]);
 
     const handleStart = () => {
         setGameState((prev) => startGame(prev));

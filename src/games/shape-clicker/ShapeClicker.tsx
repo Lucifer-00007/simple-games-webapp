@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { createInitialState, startGame, spawnShape, clickShape, removeShape, tick, resetGame } from './game-logic';
+import { createInitialState, startGame, spawnShape, clickShape, tick, resetGame, removeExpiredShapes } from './game-logic';
 import { GameState, DEFAULT_CONFIG } from './types';
 import styles from './styles.module.css';
 
@@ -46,14 +46,12 @@ export function ShapeClicker({ onScoreUpdate }: ShapeClickerProps) {
     React.useEffect(() => {
         if (gameState.status !== 'playing') return;
 
-        const timeouts = gameState.shapes.map((shape) => {
-            return setTimeout(() => {
-                setGameState((prev) => removeShape(prev, shape.id));
-            }, DEFAULT_CONFIG.shapeLifetime);
-        });
+        const interval = setInterval(() => {
+            setGameState((prev) => removeExpiredShapes(prev, DEFAULT_CONFIG.shapeLifetime));
+        }, 100);
 
-        return () => timeouts.forEach(clearTimeout);
-    }, [gameState.shapes.length, gameState.status]);
+        return () => clearInterval(interval);
+    }, [gameState.status]);
 
     const handleStart = () => {
         setGameState((prev) => startGame(prev));

@@ -141,7 +141,7 @@ export function EmojiCatcher({ onScoreUpdate }: EmojiCatcherProps) {
                             >
                                 <div className={styles.results}>
                                     <span className={styles.overlayEmoji}>🏆</span>
-                                    <div className={styles.resultsTitle}>Time's Up!</div>
+                                    <div className={styles.resultsTitle}>Time&apos;s Up!</div>
                                     <div className={styles.resultsStat}>
                                         Caught: {gameState.caught} | Missed: {gameState.missed}
                                     </div>

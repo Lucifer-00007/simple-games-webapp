@@ -42,11 +42,24 @@ export function spawnShape(state: GameState, width: number, height: number): Gam
         y: Math.random() * (height - size),
         size,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        createdAt: Date.now(),
     };
 
     return {
         ...state,
         shapes: [...state.shapes, shape],
+    };
+}
+
+export function removeExpiredShapes(state: GameState, lifetime: number): GameState {
+    const now = Date.now();
+    const expiredShapes = state.shapes.filter(s => now - s.createdAt >= lifetime);
+    if (expiredShapes.length === 0) return state;
+
+    return {
+        ...state,
+        shapes: state.shapes.filter(s => now - s.createdAt < lifetime),
+        shapesMissed: state.shapesMissed + expiredShapes.length,
     };
 }
 

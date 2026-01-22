@@ -16,6 +16,54 @@ interface FlyingArrow {
     rotation: number;
 }
 
+interface LineSegment {
+    x1: number;
+    y1: number;
+    x2: number;
+    y2: number;
+}
+
+// Bezier curve calculation
+const calculateBezierPoint = (t: number, p0: { x: number, y: number }, p1: { x: number, y: number }, p2: { x: number, y: number }, p3: { x: number, y: number }) => {
+    const cx = 3 * (p1.x - p0.x);
+    const bx = 3 * (p2.x - p1.x) - cx;
+    const ax = p3.x - p0.x - cx - bx;
+    const cy = 3 * (p1.y - p0.y);
+    const by = 3 * (p2.y - p1.y) - cy;
+    const ay = p3.y - p0.y - cy - by;
+
+    const tSquared = t * t;
+    const tCubed = tSquared * t;
+
+    const x = (ax * tCubed) + (bx * tSquared) + (cx * t) + p0.x;
+    const y = (ay * tCubed) + (by * tSquared) + (cy * t) + p0.y;
+
+    return { x, y };
+};
+
+// Line intersection check
+const getIntersection = (seg1: LineSegment, seg2: LineSegment) => {
+    const dx1 = seg1.x2 - seg1.x1;
+    const dy1 = seg1.y2 - seg1.y1;
+    const dx2 = seg2.x2 - seg2.x1;
+    const dy2 = seg2.y2 - seg2.y1;
+    const cx = seg1.x1 - seg2.x1;
+    const cy = seg1.y1 - seg2.y1;
+    const denominator = dy2 * dx1 - dx2 * dy1;
+
+    if (denominator === 0) return null;
+
+    const ua = (dx2 * cy - dy2 * cx) / denominator;
+    const ub = (dx1 * cy - dy1 * cx) / denominator;
+
+    return {
+        x: seg1.x1 + ua * dx1,
+        y: seg1.y1 + ua * dy1,
+        segment1: ua >= 0 && ua <= 1,
+        segment2: ub >= 0 && ub <= 1
+    };
+};
+
 export function Archery({ onScoreUpdate }: ArcheryProps) {
     const svgRef = React.useRef<SVGSVGElement>(null);
     const [score, setScore] = React.useState(0);
@@ -30,61 +78,20 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
     const randomAngle = React.useRef(0);
     const arcPathRef = React.useRef<string>('');
 
-    const pivot = { x: 100, y: 250 };
-    const target = { x: 900, y: 249.5 };
-    const targetLineSegment = { x1: 875, y1: 280, x2: 925, y2: 220 };
+    const pivot = React.useMemo(() => ({ x: 100, y: 250 }), []);
+    const target = React.useMemo(() => ({ x: 900, y: 249.5 }), []);
+    const targetLineSegment = React.useMemo(() => ({ x1: 875, y1: 280, x2: 925, y2: 220 }), []);
 
-    const getMouseSVG = (e: MouseEvent | React.MouseEvent) => {
+    const getMouseSVG = React.useCallback((e: MouseEvent | React.MouseEvent) => {
         if (!svgRef.current) return { x: 0, y: 0 };
         const svg = svgRef.current;
         const pt = svg.createSVGPoint();
         pt.x = e.clientX;
         pt.y = e.clientY;
         return pt.matrixTransform(svg.getScreenCTM()!.inverse());
-    };
+    }, []);
 
-    // Bezier curve calculation
-    const calculateBezierPoint = (t: number, p0: { x: number, y: number }, p1: { x: number, y: number }, p2: { x: number, y: number }, p3: { x: number, y: number }) => {
-        const cx = 3 * (p1.x - p0.x);
-        const bx = 3 * (p2.x - p1.x) - cx;
-        const ax = p3.x - p0.x - cx - bx;
-        const cy = 3 * (p1.y - p0.y);
-        const by = 3 * (p2.y - p1.y) - cy;
-        const ay = p3.y - p0.y - cy - by;
-
-        const tSquared = t * t;
-        const tCubed = tSquared * t;
-
-        const x = (ax * tCubed) + (bx * tSquared) + (cx * t) + p0.x;
-        const y = (ay * tCubed) + (by * tSquared) + (cy * t) + p0.y;
-
-        return { x, y };
-    };
-
-    // Line intersection check
-    const getIntersection = (seg1: any, seg2: any) => {
-        const dx1 = seg1.x2 - seg1.x1;
-        const dy1 = seg1.y2 - seg1.y1;
-        const dx2 = seg2.x2 - seg2.x1;
-        const dy2 = seg2.y2 - seg2.y1;
-        const cx = seg1.x1 - seg2.x1;
-        const cy = seg1.y1 - seg2.y1;
-        const denominator = dy2 * dx1 - dx2 * dy1;
-
-        if (denominator === 0) return null;
-
-        const ua = (dx2 * cy - dy2 * cx) / denominator;
-        const ub = (dx1 * cy - dy1 * cx) / denominator;
-
-        return {
-            x: seg1.x1 + ua * dx1,
-            y: seg1.y1 + ua * dy1,
-            segment1: ua >= 0 && ua <= 1,
-            segment2: ub >= 0 && ub <= 1
-        };
-    };
-
-    const aim = (e: MouseEvent | React.MouseEvent) => {
+    const aim = React.useCallback((e: MouseEvent | React.MouseEvent) => {
         if (!isDragging.current || gameStatus === 'gameOver' || arrowsLeft <= 0) return;
 
         const point = getMouseSVG(e);
@@ -114,8 +121,6 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
         if (arrowGroup && currentArrowRef.current) {
             const bowAngle = (angle - Math.PI) * (180 / Math.PI);
             arrowGroup.setAttribute('transform', `rotate(${bowAngle} 100 250)`);
-            // The arrow needs to move backwards by the distance pulled
-            // In the reference, GSAP animates x: -distance which translates the element
             currentArrowRef.current.setAttribute('transform', `translate(${-distance}, 0)`);
         }
 
@@ -133,41 +138,9 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
             arc.setAttribute('opacity', String(distance / 60));
             arcPathRef.current = d;
         }
-    };
+    }, [arrowsLeft, gameStatus, getMouseSVG, pivot]);
 
-    const handleMouseDown = (e: MouseEvent) => {
-        if (gameStatus === 'gameOver' || arrowsLeft <= 0) return;
-
-        // Check if click is within SVG bounds
-        if (!svgRef.current) return;
-        const rect = svgRef.current.getBoundingClientRect();
-        if (e.clientX < rect.left || e.clientX > rect.right ||
-            e.clientY < rect.top || e.clientY > rect.bottom) return;
-
-        isDragging.current = true;
-        setGameStatus('drawing');
-        randomAngle.current = (Math.random() * Math.PI * 0.03) - 0.015;
-
-        if (currentArrowRef.current) {
-            currentArrowRef.current.setAttribute('opacity', '1');
-        }
-        aim(e);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-        aim(e);
-    };
-
-    const handleMouseUp = () => {
-        if (!isDragging.current) return;
-        isDragging.current = false;
-
-        if (gameStatus === 'drawing') {
-            shootArrow();
-        }
-    };
-
-    const shootArrow = () => {
+    const shootArrow = React.useCallback(() => {
         setGameStatus('flying');
         setArrowsLeft(prev => prev - 1);
 
@@ -207,7 +180,7 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
         let hitDetected = false;
 
         const animate = () => {
-            t += 0.008; // Slower animation for better visibility (was 0.015)
+            t += 0.008;
 
             if (t >= 1 || hitDetected) {
                 setFlyingArrows(prev => prev.filter(a => a.id !== arrowId));
@@ -264,16 +237,22 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                     points = 5;
                 }
 
-                setScore(prev => prev + points);
-                setHighScore(prev => Math.max(prev, score + points));
-
+                setScore(prev => {
+                    const newScore = prev + points;
+                    setHighScore(h => Math.max(h, newScore));
+                    return newScore;
+                });
+                
                 // Keep arrow stuck in target for 2 seconds
                 setTimeout(() => {
                     setMessageType(null);
                     setFlyingArrows(prev => prev.filter(a => a.id !== arrowId));
                     if (arrowsLeft <= 1) {
                         setGameStatus('gameOver');
-                        onScoreUpdate?.(Math.max(highScore, score + points));
+                        setHighScore(currentHigh => {
+                             onScoreUpdate?.(currentHigh);
+                             return currentHigh;
+                        });
                     } else {
                         setGameStatus('idle');
                     }
@@ -285,7 +264,39 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
         };
 
         requestAnimationFrame(animate);
-    };
+    }, [arrowsLeft, highScore, onScoreUpdate, target, targetLineSegment]);
+
+    const handleMouseDown = React.useCallback((e: MouseEvent) => {
+        if (gameStatus === 'gameOver' || arrowsLeft <= 0) return;
+
+        // Check if click is within SVG bounds
+        if (!svgRef.current) return;
+        const rect = svgRef.current.getBoundingClientRect();
+        if (e.clientX < rect.left || e.clientX > rect.right ||
+            e.clientY < rect.top || e.clientY > rect.bottom) return;
+
+        isDragging.current = true;
+        setGameStatus('drawing');
+        randomAngle.current = (Math.random() * Math.PI * 0.03) - 0.015;
+
+        if (currentArrowRef.current) {
+            currentArrowRef.current.setAttribute('opacity', '1');
+        }
+        aim(e);
+    }, [gameStatus, arrowsLeft, aim]);
+
+    const handleMouseMove = React.useCallback((e: MouseEvent) => {
+        aim(e);
+    }, [aim]);
+
+    const handleMouseUp = React.useCallback(() => {
+        if (!isDragging.current) return;
+        isDragging.current = false;
+
+        if (gameStatus === 'drawing') {
+            shootArrow();
+        }
+    }, [gameStatus, shootArrow]);
 
     const handleRestart = () => {
         setScore(0);
@@ -305,7 +316,7 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
             window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseup', handleMouseUp);
         };
-    }, [gameStatus]);
+    }, [handleMouseDown, handleMouseMove, handleMouseUp]);
 
     return (
         <div className={styles.container}>

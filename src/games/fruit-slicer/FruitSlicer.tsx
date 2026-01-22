@@ -101,7 +101,7 @@ export function FruitSlicer({ onScoreUpdate }: FruitSlicerProps) {
         draw();
     }, [draw]);
 
-    const handleSlice = (clientX: number, clientY: number) => {
+    const handleSlice = React.useCallback((clientX: number, clientY: number) => {
         if (gameState.status !== 'playing') return;
 
         const canvas = canvasRef.current;
@@ -118,7 +118,7 @@ export function FruitSlicer({ onScoreUpdate }: FruitSlicerProps) {
             state = addSlicePoint(state, x, y);
             return state;
         });
-    };
+    }, [gameState.status]);
 
     React.useEffect(() => {
         const canvas = canvasRef.current;
@@ -170,7 +170,7 @@ export function FruitSlicer({ onScoreUpdate }: FruitSlicerProps) {
             canvas.removeEventListener('touchmove', handleTouchMove);
             window.removeEventListener('touchend', handleTouchEnd);
         };
-    }, [gameState.status]);
+    }, [gameState.status, handleSlice]);
 
     const handleStart = () => {
         setGameState((prev) => startGame(prev));

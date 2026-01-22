@@ -107,8 +107,8 @@ export function tick(state: GameState, config: GameConfig = DEFAULT_CONFIG): Gam
     if (state.status !== 'playing') return state;
 
     // Update bird
-    let newVelocity = state.bird.velocity + config.gravity;
-    let newY = state.bird.y + newVelocity;
+    const newVelocity = state.bird.velocity + config.gravity;
+    const newY = state.bird.y + newVelocity;
 
     // Calculate rotation based on velocity
     const rotation = Math.min(Math.max(newVelocity * 3, -30), 90);

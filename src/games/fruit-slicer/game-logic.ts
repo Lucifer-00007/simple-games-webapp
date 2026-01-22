@@ -139,8 +139,8 @@ export function checkSlice(
     if (state.status !== 'playing') return state;
 
     let score = state.score;
-    let lives = state.lives;
-    let status = state.status;
+    const lives = state.lives;
+    const status = state.status;
 
     // Check bomb collision
     const hitBomb = state.bombs.find(bomb => {

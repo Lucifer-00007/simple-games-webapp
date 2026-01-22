@@ -19,20 +19,7 @@ export function Hangman({ onScoreUpdate }: HangmanProps) {
     const [gameState, setGameState] = React.useState<GameState>(() => createInitialState());
     const [wins, setWins] = React.useState(0);
 
-    // Keyboard listener
-    React.useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            const letter = e.key.toUpperCase();
-            if (ALPHABET.includes(letter)) {
-                handleGuess(letter);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [gameState.guessedLetters, gameState.status]);
-
-    const handleGuess = (letter: string) => {
+    const handleGuess = React.useCallback((letter: string) => {
         if (gameState.status !== 'playing') return;
         if (gameState.guessedLetters.has(letter)) return;
 
@@ -44,7 +31,20 @@ export function Hangman({ onScoreUpdate }: HangmanProps) {
             }
             return newState;
         });
-    };
+    }, [gameState.status, gameState.guessedLetters, wins, onScoreUpdate]);
+
+    // Keyboard listener
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            const letter = e.key.toUpperCase();
+            if (ALPHABET.includes(letter)) {
+                handleGuess(letter);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [handleGuess]);
 
     const handleRestart = () => {
         setGameState(resetGame());
@@ -80,6 +80,11 @@ export function Hangman({ onScoreUpdate }: HangmanProps) {
         <div className={styles.container}>
             <Card className={styles.gameCard}>
                 <CardContent className={styles.cardContent}>
+                    {/* Hangman Drawing */}
+                    <div className="flex justify-center mb-6">
+                        {renderHangman()}
+                    </div>
+
                     {/* Hint */}
                     <div className={styles.hint}>💡 {gameState.hint}</div>
 

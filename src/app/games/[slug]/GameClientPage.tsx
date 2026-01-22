@@ -22,7 +22,7 @@ export function GameClientPage({ game }: GameClientPageProps) {
         .filter((g) => g.id !== game.id)
         .slice(0, 3);
 
-    const GameComponent = getGameComponent(game.slug);
+    const gameComponent = getGameComponent(game.slug);
     const isImplemented = isGameImplemented(game.slug);
 
     return (
@@ -57,9 +57,9 @@ export function GameClientPage({ game }: GameClientPageProps) {
 
                         {/* Game Container */}
                         <Card className="overflow-hidden">
-                            {isImplemented && GameComponent ? (
+                            {isImplemented && gameComponent ? (
                                 <div className="p-4 bg-gradient-to-br from-muted/30 to-muted/10">
-                                    <GameComponent />
+                                    {React.createElement(gameComponent)}
                                 </div>
                             ) : (
                                 <div

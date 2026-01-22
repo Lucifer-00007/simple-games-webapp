@@ -114,7 +114,7 @@ export function updateBall(state: GameState, config: GameConfig = DEFAULT_CONFIG
     let newDx = newBall.velocity.dx;
     let newDy = newBall.velocity.dy;
     let newScore = state.score;
-    let newBricks = [...state.bricks];
+    const newBricks = [...state.bricks];
     let newLives = state.lives;
     let newStatus: GameState['status'] = state.status;
 

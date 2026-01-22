@@ -131,7 +131,7 @@ export function WhackAMole({ onScoreUpdate }: WhackAMoleProps) {
                             animate={{ opacity: 1, y: 0 }}
                             className={styles.results}
                         >
-                            <div className={styles.resultsTitle}>🎯 Time's Up!</div>
+                            <div className={styles.resultsTitle}>🎯 Time&apos;s Up!</div>
                             <div className={styles.resultsStat}>
                                 Hits: {gameState.hits} | Misses: {gameState.misses}
                             </div>

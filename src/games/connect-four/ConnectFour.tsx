@@ -18,7 +18,7 @@ export function ConnectFour({ onScoreUpdate }: ConnectFourProps) {
     const [isVsComputer, setIsVsComputer] = React.useState(false);
     const [isComputerThinking, setIsComputerThinking] = React.useState(false);
 
-    const processMove = (col: number) => {
+    const processMove = React.useCallback((col: number) => {
         if (gameState.status !== 'playing') return;
 
         setGameState((prev) => {
@@ -28,7 +28,7 @@ export function ConnectFour({ onScoreUpdate }: ConnectFourProps) {
             }
             return newState;
         });
-    };
+    }, [gameState.status, onScoreUpdate]);
 
     // AI Turn Effect
     React.useEffect(() => {
@@ -41,7 +41,7 @@ export function ConnectFour({ onScoreUpdate }: ConnectFourProps) {
             }, 800); // Slightly longer delay for "thinking" feel
             return () => clearTimeout(timer);
         }
-    }, [gameState.status, gameState.currentPlayer, isVsComputer, isComputerThinking, gameState.board]);
+    }, [gameState.status, gameState.currentPlayer, isVsComputer, isComputerThinking, gameState.board, processMove]);
 
     const handleColumnClick = (col: number) => {
         // Prevent interaction if it's computer's turn
