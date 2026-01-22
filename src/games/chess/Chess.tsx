@@ -6,6 +6,7 @@ import { RotateCcw, Trophy, Play, Pause } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import { createInitialState, getBestMove, getLegalMoves, makeMove } from './game-logic';
 import { GameMode, GameState } from './types';
 import styles from './styles.module.css';
@@ -22,6 +23,7 @@ const PIECE_SYMBOLS: Record<string, string> = {
 export function Chess({ onScoreUpdate }: ChessProps) {
     const [gameState, setGameState] = React.useState<GameState>(createInitialState);
     const [gameMode, setGameMode] = React.useState<GameMode>('human-vs-cpu');
+    const [gameSpeed, setGameSpeed] = React.useState(500);
 
     // AI Turn
     React.useEffect(() => {
@@ -42,13 +44,13 @@ export function Chess({ onScoreUpdate }: ChessProps) {
         };
 
         if (gameMode === 'cpu-vs-cpu') {
-            timer = setTimeout(makeAIMove, 500);
+            timer = setTimeout(makeAIMove, gameSpeed);
         } else if (gameMode === 'human-vs-cpu' && gameState.turn === 'black') {
             timer = setTimeout(makeAIMove, 500);
         }
 
         return () => clearTimeout(timer);
-    }, [gameState, gameMode]);
+    }, [gameState, gameMode, gameSpeed]);
 
     const handleSquareClick = (row: number, col: number) => {
         if (gameState.status !== 'playing') return;
@@ -183,6 +185,20 @@ export function Chess({ onScoreUpdate }: ChessProps) {
                                 <SelectItem value="cpu-vs-cpu">Computer vs Computer</SelectItem>
                             </SelectContent>
                         </Select>
+
+                        {gameMode === 'cpu-vs-cpu' && (
+                            <div className="flex items-center gap-2 w-full sm:w-auto">
+                                <span className="text-xs text-muted-foreground whitespace-nowrap">Speed:</span>
+                                <Slider
+                                    value={[gameSpeed]}
+                                    onValueChange={(vals) => setGameSpeed(vals[0])}
+                                    min={100}
+                                    max={2000}
+                                    step={100}
+                                    className="w-24"
+                                />
+                            </div>
+                        )}
 
                         <div className="flex items-center gap-2">
                             <span className={`text-sm font-bold ${gameState.turn === 'white' ? 'text-primary' : 'text-muted-foreground'}`}>
