@@ -103,25 +103,28 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
         const distance = Math.min(Math.sqrt(dx * dx + dy * dy), 50);
         const scale = Math.min(Math.max(distance / 30, 1), 2);
 
-        // Update bow
-        const bow = svgRef.current?.querySelector('#bow');
-        if (bow) {
-            bow.setAttribute('transform', `rotate(${(angle - Math.PI) * (180 / Math.PI)} 100 250) scale(${scale} 1)`);
+        // Update bow rotation and scale (entire group)
+        const bowGroup = svgRef.current?.querySelector('#bow');
+        if (bowGroup) {
+            bowGroup.setAttribute('transform', `rotate(${(angle - Math.PI) * (180 / Math.PI)} 100 250) scale(${scale} 1)`);
         }
 
-        // Update bow string
-        const bowString = svgRef.current?.querySelector('#bow polyline');
+        // Update bow string (pull back)
+        const bowString = svgRef.current?.querySelector('#bow-string');
         if (bowString) {
-            const arrowX = Math.min(pivot.x - distance / scale, 88);
+            // Local X position for the pulled string relative to bow center (100, 250)
+            // The string starts at x=88. Pulling it back moves it towards 0 or negative.
+            // distance is positive (0 to 50).
+            // We want the arrow nock (and string center) to move left.
+            const arrowX = 88 - distance; 
             bowString.setAttribute('points', `88,200 ${arrowX},250 88,300`);
         }
 
-        // Update arrow - position it at the bow string's pulled-back position
-        const arrowGroup = svgRef.current?.querySelector('.arrow-angle');
-        if (arrowGroup && currentArrowRef.current) {
-            const bowAngle = (angle - Math.PI) * (180 / Math.PI);
-            arrowGroup.setAttribute('transform', `rotate(${bowAngle} 100 250)`);
-            currentArrowRef.current.setAttribute('transform', `translate(${-distance}, 0)`);
+        // Update arrow position (move back with string)
+        const arrowGroup = svgRef.current?.querySelector('#arrow-group');
+        if (arrowGroup) {
+             // Arrow also moves back by distance
+             arrowGroup.setAttribute('transform', `translate(${-distance}, 0)`);
         }
 
         // Update and store arc path
@@ -145,19 +148,25 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
         setArrowsLeft(prev => prev - 1);
 
         // Reset bow
-        const bow = svgRef.current?.querySelector('#bow');
-        if (bow) {
-            bow.setAttribute('transform', 'rotate(0 100 250) scale(1 1)');
+        const bowGroup = svgRef.current?.querySelector('#bow');
+        if (bowGroup) {
+            bowGroup.setAttribute('transform', 'rotate(0 100 250) scale(1 1)');
         }
 
-        const bowString = svgRef.current?.querySelector('#bow polyline');
+        const bowString = svgRef.current?.querySelector('#bow-string');
         if (bowString) {
             bowString.setAttribute('points', '88,200 88,250 88,300');
         }
 
-        // Hide current arrow
+        // Hide current arrow (it's now "flying")
         if (currentArrowRef.current) {
             currentArrowRef.current.setAttribute('opacity', '0');
+        }
+        
+        // Reset arrow group position
+        const arrowGroup = svgRef.current?.querySelector('#arrow-group');
+        if (arrowGroup) {
+             arrowGroup.setAttribute('transform', `translate(0, 0)`);
         }
 
         const arc = svgRef.current?.querySelector('#arc');
@@ -176,11 +185,17 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
 
         // Animate arrow along path
         const arrowId = `arrow-${Date.now()}`;
-        let t = 0;
         let hitDetected = false;
+        const startTime = performance.now();
+        const duration = 600; // Faster flight (was effectively ~2000ms with t+=0.008)
 
-        const animate = () => {
-            t += 0.008;
+        // Initial Arrow State
+        const initialRotation = Math.atan2(p1.y - p0.y, p1.x - p0.x) * (180 / Math.PI);
+        setFlyingArrows(prev => [...prev, { id: arrowId, x: p0.x, y: p0.y, rotation: initialRotation }]);
+
+        const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const t = Math.min(elapsed / duration, 1);
 
             if (t >= 1 || hitDetected) {
                 setFlyingArrows(prev => prev.filter(a => a.id !== arrowId));
@@ -202,7 +217,7 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
             }
 
             const pos = calculateBezierPoint(t, p0, p1, p2, p3);
-            const nextPos = calculateBezierPoint(Math.min(t + 0.01, 1), p0, p1, p2, p3);
+            const nextPos = calculateBezierPoint(Math.min(t + 0.05, 1), p0, p1, p2, p3);
             const rotation = Math.atan2(nextPos.y - pos.y, nextPos.x - pos.x) * (180 / Math.PI);
 
             setFlyingArrows(prev => {
@@ -292,11 +307,10 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
     const handleMouseUp = React.useCallback(() => {
         if (!isDragging.current) return;
         isDragging.current = false;
-
-        if (gameStatus === 'drawing') {
-            shootArrow();
-        }
-    }, [gameStatus, shootArrow]);
+        
+        // We only care if we were dragging, gameStatus check might be stale or unnecessary if we rely on isDragging
+        shootArrow();
+    }, [shootArrow]);
 
     const handleRestart = () => {
         setScore(0);
@@ -366,30 +380,33 @@ export function Archery({ onScoreUpdate }: ArcheryProps) {
                     <path fill="#F4531C" d="M903.2,253.2c-2.9,2.9-6.7,3.6-8.3,1.7c-1.5-1.8-0.6-5.4,2-8c2.6-2.6,6.2-3.6,8-2 C906.8,246.5,906.1,250.2,903.2,253.2z" />
                 </g>
 
-                {/* 1. Curved bow (back layer) */}
-                <path
-                    id="bow-curve"
-                    fill="none"
-                    stroke="var(--primary)"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    d="M88,300 c0-10.1,12-25.1,12-50s-12-39.9-12-50"
-                />
+                {/* Bow Group - Rotates around center */}
+                <g id="bow" transform="rotate(0 100 250)">
+                    {/* 1. Curved bow (back layer) */}
+                    <path
+                        id="bow-curve"
+                        fill="none"
+                        stroke="var(--primary)"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        d="M88,300 c0-10.1,12-25.1,12-50s-12-39.9-12-50"
+                    />
 
-                {/* 2. Arrow (middle layer - behind the string) */}
-                <g className="arrow-angle">
-                    <use ref={currentArrowRef} x="100" y="250" xlinkHref="#arrow" opacity="0" />
+                    {/* 2. Arrow (middle layer - behind the string) */}
+                    <g id="arrow-group">
+                        <use ref={currentArrowRef} x="88" y="250" xlinkHref="#arrow" opacity="0" />
+                    </g>
+
+                    {/* 3. Bow string (front layer - in front of arrow) */}
+                    <polyline
+                        id="bow-string"
+                        fill="none"
+                        stroke="var(--foreground)"
+                        strokeOpacity="0.5"
+                        strokeLinecap="round"
+                        points="88,200 88,250 88,300"
+                    />
                 </g>
-
-                {/* 3. Bow string (front layer - in front of arrow) */}
-                <polyline
-                    id="bow-string"
-                    fill="none"
-                    stroke="var(--foreground)"
-                    strokeOpacity="0.5"
-                    strokeLinecap="round"
-                    points="88,200 88,250 88,300"
-                />
 
                 {/* Flying arrows */}
                 {flyingArrows.map((arrow) => (
