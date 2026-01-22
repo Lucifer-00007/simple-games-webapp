@@ -164,7 +164,7 @@ export function TiltingMaze({ onScoreUpdate }: { onScoreUpdate?: (score: number)
             setMazeRotation({ x: rotationX, y: rotationY });
 
             // Calculate acceleration based on rotation angle
-            const gravity = 0.15;
+            const gravity = 2;
             accelerationRef.current = {
                 x: gravity * Math.sin((rotationY / 180) * Math.PI),
                 y: gravity * Math.sin((-rotationX / 180) * Math.PI),

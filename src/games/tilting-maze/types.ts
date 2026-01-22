@@ -39,7 +39,6 @@ export const DEFAULT_CONFIG = {
     canvasHeight: 325, // Increased to include bottom border (9 rows * 35 + 10 wall)
     ballRadius: 8,     // Larger ball for visibility
     friction: 0.98,
-    acceleration: 0.12,
     goalRadius: 32,
     wallThickness: wallW,
 };
@@ -243,8 +242,8 @@ export function updateBall(state: GameState, tiltX: number, tiltY: number): Game
     const maxVelocity = 1.5;
 
     // Apply acceleration based on tilt
-    let newVx = state.ball.vx + tiltX * DEFAULT_CONFIG.acceleration;
-    let newVy = state.ball.vy + tiltY * DEFAULT_CONFIG.acceleration;
+    let newVx = state.ball.vx + tiltX;
+    let newVy = state.ball.vy + tiltY;
 
     // Clamp velocity
     newVx = Math.max(-maxVelocity, Math.min(maxVelocity, newVx));
