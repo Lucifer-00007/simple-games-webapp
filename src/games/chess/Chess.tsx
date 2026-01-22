@@ -209,22 +209,9 @@ export function Chess({ onScoreUpdate }: ChessProps) {
                         </div>
                     </div>
 
-                    {/* Paused Overlay */}
-                    {gameState.status === 'paused' && (
-                        <div className={styles.overlay}>
-                            <div className={styles.resultCard}>
-                                <h2 className="text-2xl font-bold mb-4">Paused</h2>
-                                <Button onClick={togglePause}>
-                                    <Play className="w-4 h-4 mr-2" />
-                                    Resume
-                                </Button>
-                            </div>
-                        </div>
-                    )}
-
                     {/* Game Over Overlay */}
                     {(gameState.status === 'checkmate' || gameState.status === 'stalemate' || gameState.status === 'draw') && (
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             className={styles.overlay}
@@ -232,7 +219,7 @@ export function Chess({ onScoreUpdate }: ChessProps) {
                             <div className={styles.resultCard}>
                                 <Trophy className="w-12 h-12 text-yellow-500 mb-2" />
                                 <h2 className="text-2xl font-bold mb-1">
-                                    {gameState.status === 'checkmate' 
+                                    {gameState.status === 'checkmate'
                                         ? `${gameState.winner === 'white' ? 'White' : 'Black'} Wins!`
                                         : 'Draw!'}
                                 </h2>
