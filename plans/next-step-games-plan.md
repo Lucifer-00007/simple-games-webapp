@@ -41,8 +41,7 @@
 
 #### Priority Lv: P0
 - [x] In all the 2-player games add a feature to play like - Player VS the Computer.
-
-- []
+- [] Make all the games responsive and playable in mobile browser. Fix this following best practices.
 - []
 - []
 - []
