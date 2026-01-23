@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,8 +12,8 @@
 
 .gameCard {
     width: 100%;
-    background: linear-gradient(145deg, hsl(var(--card) / 0.95), hsl(var(--card) / 0.7));
-    border: 1px solid hsl(var(--border) / 0.4);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), transparent 5%), color-mix(in srgb, var(--card), transparent 30%));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 60%);
     backdrop-filter: blur(20px);
     border-radius: 1.5rem;
 }
@@ -39,23 +40,23 @@
     align-items: center;
     gap: 0.25rem;
     padding: 0.75rem 1.25rem;
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.4), hsl(var(--muted) / 0.2));
+    background: linear-gradient(135deg, color-mix(in srgb, var(--muted), transparent 60%), color-mix(in srgb, var(--muted), transparent 80%));
     border-radius: 1rem;
-    border: 1px solid hsl(var(--border) / 0.4);
+    border: 1px solid color-mix(in srgb, var(--border), transparent 60%);
     min-width: 80px;
 }
 
 .statValue {
     font-size: 1.75rem;
     font-weight: 800;
-    color: hsl(var(--foreground));
+    color: var(--foreground);
 }
 
 .statLabel {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
 }
 
 /* Text Display */
@@ -64,13 +65,14 @@
     font-size: 1.2rem;
     line-height: 1.8;
     padding: 1.5rem;
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.2), hsl(var(--muted) / 0.1));
+    background: linear-gradient(135deg, color-mix(in srgb, var(--muted), transparent 80%), color-mix(in srgb, var(--muted), transparent 90%));
     border-radius: 1rem;
-    border: 1px solid hsl(var(--border) / 0.4);
+    border: 1px solid color-mix(in srgb, var(--border), transparent 60%);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     white-space: pre-wrap;
     word-break: break-word;
     min-height: 200px;
+    color: var(--foreground); /* Ensure base text color is visible */
 }
 
 .charCorrect {
@@ -85,13 +87,13 @@
 }
 
 .charCurrent {
-    background: hsl(var(--primary) / 0.3);
-    border-left: 2px solid hsl(var(--primary));
+    background: color-mix(in srgb, var(--primary), transparent 70%);
+    border-left: 2px solid var(--primary);
     animation: blink 1s infinite;
 }
 
 .charPending {
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
 }
 
 /* Hidden Input */
@@ -117,10 +119,11 @@
 .startTitle {
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--foreground);
 }
 
 .startSubtitle {
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
 }
 
 /* Results */
@@ -135,6 +138,7 @@
 .resultsTitle {
     font-size: 1.75rem;
     font-weight: 700;
+    color: var(--foreground);
 }
 
 .resultsEmoji {
@@ -153,7 +157,7 @@
 /* Instructions */
 .instructions {
     font-size: 0.85rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     text-align: center;
 }
 
