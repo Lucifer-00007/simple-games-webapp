@@ -140,26 +140,23 @@ export function SpeedTyping({ onScoreUpdate }: SpeedTypingProps) {
                     </div>
 
                     {/* Text Display */}
-                    <div
-                        className={styles.textDisplay}
-                        onClick={() => inputRef.current?.focus()}
-                    >
+                    <div className={styles.textDisplay}>
                         {renderText()}
+                        
+                        {/* Hidden Input Overlay */}
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={gameState.typedText}
+                            onChange={handleChange}
+                            className={styles.hiddenInput}
+                            autoFocus
+                            autoComplete="off"
+                            autoCorrect="off"
+                            autoCapitalize="off"
+                            spellCheck="false"
+                        />
                     </div>
-
-                    {/* Hidden Input */}
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        value={gameState.typedText}
-                        onChange={handleChange}
-                        className={styles.hiddenInput}
-                        autoFocus
-                        autoComplete="off"
-                        autoCorrect="off"
-                        autoCapitalize="off"
-                        spellCheck="false"
-                    />
 
                     {/* Reset Button */}
                     <Button onClick={handleRestart} variant="outline" className={styles.controlButton}>

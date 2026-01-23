@@ -60,6 +60,7 @@
 
 /* Text Display */
 .textDisplay {
+    position: relative; /* Context for absolute input */
     font-size: 1.2rem;
     line-height: 1.8;
     padding: 1.5rem;
@@ -69,6 +70,7 @@
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     white-space: pre-wrap;
     word-break: break-word;
+    min-height: 200px;
 }
 
 .charCorrect {
@@ -95,8 +97,12 @@
 /* Hidden Input */
 .hiddenInput {
     position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
-    pointer-events: none;
+    cursor: default;
+    z-index: 10;
 }
 
 /* Start Screen */

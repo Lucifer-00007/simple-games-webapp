@@ -32,6 +32,7 @@ export function startGame(state: GameState): GameState {
 export function calculateWPM(text: string, startTime: number, endTime: number): number {
     const words = text.trim().split(/\s+/).length;
     const minutes = (endTime - startTime) / 1000 / 60;
+    if (minutes <= 0) return 0;
     return Math.round(words / minutes);
 }
 
