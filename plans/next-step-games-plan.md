@@ -49,7 +49,8 @@
 - [] Enhance the UI in Light mode matching the light mode theme in the following games:
 - minesweeper         
 - memory-card         
-- rock-paper-scissors 
+
+- rock-paper-scissors
 - number-guessing     
 - tic-tac-toe         
 - snake        
