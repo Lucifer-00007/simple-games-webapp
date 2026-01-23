@@ -110,7 +110,8 @@ export function resetCars(density: TrafficDensity, trackLength: number): Traffic
     if (z < 3000 || z > trackLength - 3000) continue; 
     
     const lane = Math.random() > 0.5 ? 0.5 : -0.5; // Two lanes approx
-    const speed = settings.speedMin + Math.random() * (settings.speedMax - settings.speedMin);
+    // Negative speed for oncoming traffic
+    const speed = -(settings.speedMin + Math.random() * (settings.speedMax - settings.speedMin));
     const color = ['#3b82f6', '#22c55e', '#eab308', '#a855f7', '#ffffff'][Math.floor(Math.random() * 5)];
     
     cars.push({

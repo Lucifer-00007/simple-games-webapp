@@ -50,50 +50,91 @@ function renderBackground(ctx: CanvasRenderingContext2D, width: number, height: 
 
 // Helper to render a generic car (player or traffic)
 function renderCar(ctx: CanvasRenderingContext2D, x: number, y: number, scale: number, color: string, isPlayer: boolean) {
-  const carW = 100 * scale;
-  const carH = 50 * scale;
+  // scale translates World Units to Pixels. 
+  // Standard car width ~500 units.
+  const carW = 500 * scale;
+  const carH = 250 * scale; 
   const carX = x - carW / 2;
   const carY = y - carH;
 
   // Shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.5)';
-  ctx.fillRect(carX + 10 * scale, carY + carH - 5 * scale, carW - 20 * scale, 10 * scale);
-
-  // Car Body
-  ctx.fillStyle = color;
-  ctx.fillRect(carX, carY, carW, carH);
-
-  // Roof (darker shade)
-  ctx.fillStyle = adjustColor(color);
-  ctx.fillRect(carX + 10 * scale, carY - 20 * scale, carW - 20 * scale, 20 * scale);
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.beginPath();
+  ctx.ellipse(x, y - carH * 0.1, carW * 0.55, carH * 0.15, 0, 0, Math.PI * 2);
+  ctx.fill();
 
   // Wheels
-  ctx.fillStyle = '#000000';
-  ctx.fillRect(carX + 5 * scale, carY + carH - 10 * scale, 15 * scale, 15 * scale); // FL
-  ctx.fillRect(carX + carW - 20 * scale, carY + carH - 10 * scale, 15 * scale, 15 * scale); // FR
+  ctx.fillStyle = '#111111';
+  const wheelW = carW * 0.18;
+  const wheelH = carH * 0.4;
+  const wheelY = carY + carH - wheelH * 0.5;
+  ctx.fillRect(carX + carW * 0.1, wheelY, wheelW, wheelH); // FL
+  ctx.fillRect(carX + carW * 0.72, wheelY, wheelW, wheelH); // FR
+
+  // Car Body (Lower)
+  ctx.fillStyle = color;
+  // Main chassis with rounded corners
+  ctx.beginPath();
+  ctx.roundRect(carX, carY + carH * 0.3, carW, carH * 0.6, carH * 0.1);
+  ctx.fill();
+
+  // Car Body (Upper/Cabin) - Trapezoid
+  ctx.fillStyle = adjustColor(color);
+  const cabinW = carW * 0.6;
+  const cabinX = x - cabinW / 2;
+  const cabinH = carH * 0.35;
+  ctx.beginPath();
+  ctx.moveTo(cabinX, carY + carH * 0.35);
+  ctx.lineTo(cabinX + cabinW * 0.1, carY); // Roof left
+  ctx.lineTo(cabinX + cabinW * 0.9, carY); // Roof right
+  ctx.lineTo(cabinX + cabinW, carY + carH * 0.35);
+  ctx.closePath();
+  ctx.fill();
+
+  // Rear Window / Windshield (Dark)
+  ctx.fillStyle = '#111827';
+  ctx.beginPath();
+  ctx.moveTo(cabinX + cabinW * 0.15, carY + carH * 0.05);
+  ctx.lineTo(cabinX + cabinW * 0.85, carY + carH * 0.05);
+  ctx.lineTo(cabinX + cabinW * 0.92, carY + carH * 0.32);
+  ctx.lineTo(cabinX + cabinW * 0.08, carY + carH * 0.32);
+  ctx.closePath();
+  ctx.fill();
 
   // Lights
   if (isPlayer) {
-      // Rear lights (player sees back of their car... wait, usually racing games are chase cam)
-      // Actually standard Outrun cam is behind player, so we see REAR of player car.
-      // And we see REAR of traffic cars if we overtake them.
-      // If traffic comes towards us? No, standard traffic is same direction.
-      ctx.fillStyle = '#FF0000'; // Brake lights
-      ctx.fillRect(carX + 5 * scale, carY + 10 * scale, 10 * scale, 5 * scale);
-      ctx.fillRect(carX + carW - 15 * scale, carY + 10 * scale, 10 * scale, 5 * scale);
+      // Rear lights
+      ctx.fillStyle = '#ef4444'; // Brake lights
+      ctx.shadowColor = '#ef4444';
+      ctx.shadowBlur = 10 * scale;
+      ctx.fillRect(carX + carW * 0.08, carY + carH * 0.5, carW * 0.15, carH * 0.1);
+      ctx.fillRect(carX + carW * 0.77, carY + carH * 0.5, carW * 0.15, carH * 0.1);
+      ctx.shadowBlur = 0;
+      
+      // Exhaust
+      ctx.fillStyle = '#333';
+      ctx.beginPath();
+      ctx.arc(carX + carW * 0.2, carY + carH * 0.85, carW * 0.04, 0, Math.PI * 2);
+      ctx.arc(carX + carW * 0.8, carY + carH * 0.85, carW * 0.04, 0, Math.PI * 2);
+      ctx.fill();
   } else {
-      // Traffic cars: We mostly see their REAR if we are faster. 
-      // So render them same as player for now.
-      ctx.fillStyle = '#FF0000';
-      ctx.fillRect(carX + 5 * scale, carY + 10 * scale, 10 * scale, 5 * scale);
-      ctx.fillRect(carX + carW - 15 * scale, carY + 10 * scale, 10 * scale, 5 * scale);
+      // Traffic cars (Oncoming - Headlights)
+      ctx.fillStyle = '#fef08a'; // Yellow/White headlights
+      ctx.shadowColor = '#fef08a';
+      ctx.shadowBlur = 15 * scale;
+      ctx.fillRect(carX + carW * 0.08, carY + carH * 0.5, carW * 0.15, carH * 0.15);
+      ctx.fillRect(carX + carW * 0.77, carY + carH * 0.5, carW * 0.15, carH * 0.15);
+      ctx.shadowBlur = 0;
+      
+      // Grill
+      ctx.fillStyle = '#111';
+      ctx.fillRect(carX + carW * 0.3, carY + carH * 0.6, carW * 0.4, carH * 0.15);
   }
 }
 
 // Simple color adjuster
 function adjustColor(color: string) {
-    // Very basic hex adjustment (this is a placeholder, a real lib would be better)
-    // For now just returning color or a hardcoded shadow for simplicity in canvas
+    // Return a slightly darker shade for the roof
     return color === '#ef4444' ? '#b91c1c' : // Red -> Dark Red
            color === '#3b82f6' ? '#1d4ed8' : // Blue -> Dark Blue
            color === '#22c55e' ? '#15803d' : // Green -> Dark Green
@@ -132,18 +173,26 @@ export function CarRacing({ onScoreUpdate }: { onScoreUpdate?: (score: number) =
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.code) {
-        case 'ArrowUp': input.current.up = true; break;
-        case 'ArrowDown': input.current.down = true; break;
-        case 'ArrowLeft': input.current.left = true; break;
-        case 'ArrowRight': input.current.right = true; break;
+        case 'ArrowUp':
+        case 'KeyW': input.current.up = true; break;
+        case 'ArrowDown':
+        case 'KeyS': input.current.down = true; break;
+        case 'ArrowLeft':
+        case 'KeyA': input.current.left = true; break;
+        case 'ArrowRight':
+        case 'KeyD': input.current.right = true; break;
       }
     };
     const handleKeyUp = (e: KeyboardEvent) => {
       switch (e.code) {
-        case 'ArrowUp': input.current.up = false; break;
-        case 'ArrowDown': input.current.down = false; break;
-        case 'ArrowLeft': input.current.left = false; break;
-        case 'ArrowRight': input.current.right = false; break;
+        case 'ArrowUp':
+        case 'KeyW': input.current.up = false; break;
+        case 'ArrowDown':
+        case 'KeyS': input.current.down = false; break;
+        case 'ArrowLeft':
+        case 'KeyA': input.current.left = false; break;
+        case 'ArrowRight':
+        case 'KeyD': input.current.right = false; break;
       }
     };
 
@@ -293,10 +342,11 @@ export function CarRacing({ onScoreUpdate }: { onScoreUpdate?: (score: number) =
       const carsOnSegment = carsBySegment.get(segment.index);
       if (carsOnSegment) {
           for (const car of carsOnSegment) {
-              const carScale = segment.p1.screen.scale; // Use segment scale for simplicity
-              const carX = segment.p1.screen.x + (car.lane * ROAD_WIDTH * carScale / 2);
+              // Calculate sprite scale relative to screen width
+              const spriteScale = segment.p1.screen.scale * width / 2;
+              const carX = segment.p1.screen.x + (car.lane * ROAD_WIDTH * spriteScale);
               const carY = segment.p1.screen.y;
-              renderCar(ctx, carX, carY, carScale * 4, car.color, false);
+              renderCar(ctx, carX, carY, spriteScale, car.color, false);
           }
       }
 
@@ -308,7 +358,7 @@ export function CarRacing({ onScoreUpdate }: { onScoreUpdate?: (score: number) =
         ctx, 
         width / 2, 
         height - 20, 
-        width / 480 * 0.75, // Scaled down slightly
+        (width / 640) * 0.3, // Adjusted scale for new renderCar (approx 150px width)
         state.player.carColor, 
         true
     );
@@ -385,8 +435,8 @@ export function CarRacing({ onScoreUpdate }: { onScoreUpdate?: (score: number) =
         </div>
         
         <div className="flex flex-col items-center">
-             <div className="text-4xl font-black italic tracking-tighter text-slate-800">
-                {(uiStats.speed / 100).toFixed(0)} <span className="text-sm not-italic font-normal text-slate-500">km/h</span>
+             <div className="text-4xl font-black italic tracking-tighter text-slate-800 dark:text-slate-100">
+                {(uiStats.speed / 100).toFixed(0)} <span className="text-sm not-italic font-normal text-slate-500 dark:text-slate-400">km/h</span>
              </div>
         </div>
 
@@ -511,9 +561,9 @@ export function CarRacing({ onScoreUpdate }: { onScoreUpdate?: (score: number) =
       </div>
 
        <div className="flex items-center gap-6 text-sm font-medium text-slate-400 bg-slate-50 px-6 py-3 rounded-full border border-slate-100 shadow-sm">
-         <span className="flex items-center gap-2"><kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">↑</kbd> Accel</span>
-         <span className="flex items-center gap-2"><kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">↓</kbd> Brake</span>
-         <span className="flex items-center gap-2"><kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">←</kbd> <kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">→</kbd> Steer</span>
+         <span className="flex items-center gap-2"><kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">W</kbd> Accel</span>
+         <span className="flex items-center gap-2"><kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">S</kbd> Brake</span>
+         <span className="flex items-center gap-2"><kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">A</kbd> <kbd className="bg-white px-2 py-1 rounded border shadow-sm text-slate-700">D</kbd> Steer</span>
        </div>
     </div>
   );
