@@ -1,3 +1,4 @@
+
 .container {
     display: grid;
     grid-template-columns: 1fr 200px;
@@ -38,14 +39,14 @@
 /* Dice Card */
 .diceCard {
     width: 100%;
-    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
     backdrop-filter: blur(20px);
     border-radius: 1.5rem;
     overflow: hidden;
     box-shadow:
-        0 10px 40px hsl(var(--primary) / 0.1),
-        inset 0 1px 1px hsl(var(--background) / 0.5);
+        0 10px 40px rgba(0, 0, 0, 0.05),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .diceContent {
@@ -63,50 +64,39 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(145deg, hsl(var(--background)), hsl(var(--muted)));
-    border: 4px solid hsl(var(--border) / 0.5);
+    background: linear-gradient(145deg, var(--background), var(--muted));
+    border: 4px solid var(--border);
     border-radius: 1.5rem;
     box-shadow:
-        0 15px 50px hsl(var(--primary) / 0.25),
-        0 5px 15px rgba(0, 0, 0, 0.1),
-        inset 0 2px 10px hsl(var(--background) / 0.8),
-        inset 0 -2px 10px hsl(var(--primary) / 0.1);
+        0 15px 50px color-mix(in srgb, var(--primary), transparent 85%),
+        0 5px 15px rgba(0, 0, 0, 0.05),
+        inset 0 2px 10px color-mix(in srgb, var(--background), transparent 20%);
     position: relative;
-}
-
-.dice::before {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: 8px;
-    height: 20%;
-    background: linear-gradient(180deg, hsl(var(--background) / 0.4), transparent);
-    border-radius: 1rem 1rem 50% 50%;
-    pointer-events: none;
 }
 
 .diceFace {
     font-size: 5.5rem;
     line-height: 1;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    color: var(--foreground);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 .diceEmpty {
     font-size: 4.5rem;
     opacity: 0.4;
+    color: var(--muted-foreground);
 }
 
 .result {
     font-size: 1.25rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     font-weight: 500;
 }
 
 .resultValue {
     font-size: 1.75rem;
     font-weight: 800;
-    color: hsl(var(--primary));
+    color: var(--primary);
 }
 
 /* Roll Button */
@@ -116,19 +106,17 @@
     font-weight: 600;
     padding: 1rem 2rem;
     border-radius: 2rem;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(280 80% 55%));
-    color: white !important;
+    background: linear-gradient(135deg, var(--primary), hsl(280 80% 55%));
+    color: var(--primary-foreground) !important;
     box-shadow:
-        0 6px 20px hsl(var(--primary) / 0.4),
-        inset 0 1px 2px hsl(var(--background) / 0.3);
+        0 6px 20px color-mix(in srgb, var(--primary), transparent 70%),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
     transition: all 0.25s ease;
 }
 
 .rollButton:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow:
-        0 10px 30px hsl(var(--primary) / 0.5),
-        inset 0 1px 2px hsl(var(--background) / 0.3);
+    filter: brightness(1.1);
 }
 
 /* Stats */
@@ -138,8 +126,8 @@
 }
 
 .statCard {
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 0.75rem;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -150,12 +138,12 @@
     flex-direction: column;
     align-items: center;
     padding: 0.75rem 1.25rem !important;
-    background: linear-gradient(180deg, hsl(var(--primary) / 0.05), transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--primary), transparent 95%), transparent);
 }
 
 .statLabel {
     font-size: 0.6rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-weight: 600;
@@ -165,26 +153,14 @@
 .statValue {
     font-size: 1.75rem;
     font-weight: 800;
-    color: #a257f7;
-}
-
-/* Dark Mode for Stats */
-:global(.dark) .statCard,
-:global([data-theme="dark"]) .statCard {
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-:global(.dark) .statContent,
-:global([data-theme="dark"]) .statContent {
-    background: linear-gradient(180deg, hsl(var(--primary) / 0.1), transparent);
+    color: var(--primary);
 }
 
 /* History */
 .historyCard {
     width: 100%;
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 0.75rem;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -192,8 +168,8 @@
 
 .historyHeader {
     padding: 0.4rem 0.75rem !important;
-    background: linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--primary) / 0.03));
-    border-bottom: 1px solid hsl(var(--border));
+    background: color-mix(in srgb, var(--muted), transparent 50%);
+    border-bottom: 1px solid var(--border);
 }
 
 .historyTitle {
@@ -202,7 +178,7 @@
     gap: 0.4rem;
     font-size: 0.65rem;
     font-weight: 700;
-    color: hsl(var(--foreground));
+    color: var(--foreground);
     text-transform: uppercase;
     letter-spacing: 0.06em;
 }
@@ -221,14 +197,14 @@
 }
 
 .historyTable thead tr {
-    background: hsl(var(--muted) / 0.5);
-    border-bottom: 1px solid hsl(var(--border));
+    background: color-mix(in srgb, var(--muted), transparent 30%);
+    border-bottom: 1px solid var(--border);
 }
 
 .historyTable th {
     font-size: 0.6rem;
     font-weight: 600;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     padding: 0.25rem 0.75rem;
@@ -240,16 +216,16 @@
 }
 
 .historyRow {
-    border-bottom: 1px solid hsl(var(--border));
+    border-bottom: 1px solid var(--border);
     transition: background 0.15s ease;
 }
 
 .historyRow:nth-child(even) {
-    background: hsl(var(--muted) / 0.2);
+    background: color-mix(in srgb, var(--muted), transparent 80%);
 }
 
 .historyRow:hover {
-    background: hsl(var(--primary) / 0.08);
+    background: color-mix(in srgb, var(--primary), transparent 90%);
 }
 
 .historyRow:last-child {
@@ -258,7 +234,7 @@
 
 .historyRoll {
     font-size: 0.75rem;
-    color: hsl(var(--foreground) / 0.8);
+    color: var(--foreground);
     font-weight: 500;
     padding: 0.5rem 0.75rem;
 }
@@ -274,8 +250,8 @@
     gap: 0.25rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: hsl(var(--primary));
-    background: hsl(var(--primary) / 0.1);
+    color: var(--primary);
+    background: color-mix(in srgb, var(--primary), transparent 90%);
     padding: 0.2rem 0.5rem;
     border-radius: 1rem;
 }
@@ -284,47 +260,6 @@
     margin-top: 0.5rem;
     border-radius: 2rem;
     padding: 0.75rem 2rem;
-}
-
-/* Dark Mode Overrides for Roll History */
-:global(.dark) .historyCard,
-:global([data-theme="dark"]) .historyCard {
-    background: hsl(var(--card));
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-:global(.dark) .historyHeader,
-:global([data-theme="dark"]) .historyHeader {
-    background: linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.05));
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-
-:global(.dark) .historyTable thead tr,
-:global([data-theme="dark"]) .historyTable thead tr {
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-}
-
-:global(.dark) .historyRow,
-:global([data-theme="dark"]) .historyRow {
-    border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-:global(.dark) .historyRow:nth-child(even),
-:global([data-theme="dark"]) .historyRow:nth-child(even) {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-:global(.dark) .historyRow:hover,
-:global([data-theme="dark"]) .historyRow:hover {
-    background: hsl(var(--primary) / 0.15);
-}
-
-:global(.dark) .historyValue span,
-:global([data-theme="dark"]) .historyValue span {
-    background: hsl(var(--primary) / 0.2);
-    color: hsl(280 80% 75%);
 }
 
 @media (max-width: 400px) {

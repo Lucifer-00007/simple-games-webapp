@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,14 +12,12 @@
 
 .gameCard {
     width: 100%;
-    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
     backdrop-filter: blur(20px);
     border-radius: 1.5rem;
     overflow: hidden;
-    box-shadow:
-        0 10px 40px hsl(var(--primary) / 0.1),
-        inset 0 1px 1px hsl(var(--background) / 0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .cardContent {
@@ -48,13 +47,15 @@
 .statValue {
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--foreground);
 }
 
 .statLabel {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
+    font-weight: 600;
 }
 
 /* Game Board */
@@ -63,10 +64,11 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     padding: 20px;
-    background: linear-gradient(145deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
+    background: color-mix(in srgb, var(--muted), transparent 70%);
     border-radius: 50%;
     width: 280px;
     height: 280px;
+    border: 4px solid var(--border);
 }
 
 .colorButton {
@@ -82,22 +84,22 @@
 }
 
 .colorRed {
-    background: linear-gradient(145deg, hsl(0 70% 45%), hsl(0 70% 35%));
+    background: linear-gradient(145deg, #ef4444, #dc2626);
     border-radius: 100% 0 0 0;
 }
 
 .colorGreen {
-    background: linear-gradient(145deg, hsl(120 60% 35%), hsl(120 60% 25%));
+    background: linear-gradient(145deg, #22c55e, #16a34a);
     border-radius: 0 100% 0 0;
 }
 
 .colorBlue {
-    background: linear-gradient(145deg, hsl(220 70% 45%), hsl(220 70% 35%));
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
     border-radius: 0 0 0 100%;
 }
 
 .colorYellow {
-    background: linear-gradient(145deg, hsl(50 90% 45%), hsl(50 90% 35%));
+    background: linear-gradient(145deg, #eab308, #ca8a04);
     border-radius: 0 0 100% 0;
 }
 
@@ -108,19 +110,19 @@
 }
 
 .colorRed.active {
-    box-shadow: 0 0 40px hsl(0 70% 50%), inset 0 0 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 40px #ef4444, inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .colorGreen.active {
-    box-shadow: 0 0 40px hsl(120 60% 40%), inset 0 0 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 40px #22c55e, inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .colorBlue.active {
-    box-shadow: 0 0 40px hsl(220 70% 50%), inset 0 0 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 40px #3b82f6, inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .colorYellow.active {
-    box-shadow: 0 0 40px hsl(50 90% 50%), inset 0 0 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 40px #eab308, inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .colorButton:hover:not(:disabled):not(.active) {
@@ -133,15 +135,16 @@
     font-weight: 600;
     padding: 0.5rem 1.25rem;
     border-radius: 2rem;
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border: 1px solid color-mix(in srgb, var(--border), transparent 70%);
     text-align: center;
+    color: var(--foreground);
 }
 
 .statusGameOver {
-    background: linear-gradient(135deg, hsl(0 84% 60% / 0.2), hsl(0 84% 60% / 0.1));
-    border-color: hsl(0 84% 60% / 0.5);
-    color: hsl(0 84% 60%);
+    background: linear-gradient(135deg, color-mix(in srgb, #ef4444, transparent 90%), color-mix(in srgb, #ef4444, transparent 95%));
+    border-color: color-mix(in srgb, #ef4444, transparent 70%);
+    color: #ef4444;
 }
 
 /* Controls */

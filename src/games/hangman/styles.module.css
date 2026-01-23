@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,11 +12,12 @@
 
 .gameCard {
     width: 100%;
-    background: linear-gradient(145deg, hsl(var(--card) / 0.95), hsl(var(--card) / 0.7));
-    border: 1px solid hsl(var(--border) / 0.4);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
     backdrop-filter: blur(20px);
     border-radius: 1.25rem;
     overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .cardContent {
@@ -33,14 +35,14 @@
 }
 
 .hangmanPart {
-    stroke: hsl(var(--foreground));
+    stroke: var(--foreground);
     stroke-width: 3;
     stroke-linecap: round;
     fill: none;
 }
 
 .gallows {
-    stroke: hsl(var(--muted-foreground));
+    stroke: var(--muted-foreground);
     stroke-width: 4;
 }
 
@@ -51,7 +53,6 @@
     gap: 0.5rem;
     font-size: 1rem;
     font-weight: 600;
-    color: hsl(var(--foreground));
     padding: 0.75rem 1.5rem;
     background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     color: white;
@@ -77,12 +78,12 @@
     justify-content: center;
     font-size: 1.5rem;
     font-weight: 700;
-    border-bottom: 3px solid hsl(var(--primary));
-    color: hsl(var(--foreground));
+    border-bottom: 3px solid var(--primary);
+    color: var(--foreground);
 }
 
 .letterRevealed {
-    color: hsl(142 76% 45%);
+    color: #16a34a;
     animation: revealLetter 0.3s ease;
 }
 
@@ -99,9 +100,9 @@
     font-size: 0.8rem;
     font-weight: 600;
     border-radius: 0.5rem;
-    background: linear-gradient(135deg, hsl(0 85% 60% / 0.15), hsl(0 85% 60% / 0.1));
-    color: hsl(0 85% 55%);
-    border: 1px solid hsl(0 85% 60% / 0.3);
+    background: color-mix(in srgb, #ef4444, transparent 90%);
+    color: #ef4444;
+    border: 1px solid color-mix(in srgb, #ef4444, transparent 70%);
     text-decoration: line-through;
 }
 
@@ -115,16 +116,16 @@
 }
 
 .statusWon {
-    background: linear-gradient(135deg, hsl(142 76% 36% / 0.15), hsl(142 76% 36% / 0.1));
-    border: 1px solid hsl(142 76% 36% / 0.4);
-    color: hsl(142 76% 40%);
+    background: color-mix(in srgb, #16a34a, transparent 90%);
+    border: 1px solid color-mix(in srgb, #16a34a, transparent 70%);
+    color: #16a34a;
     animation: winPulse 2s ease-in-out infinite;
 }
 
 .statusLost {
-    background: linear-gradient(135deg, hsl(0 85% 60% / 0.15), hsl(0 85% 60% / 0.1));
-    border: 1px solid hsl(0 85% 60% / 0.4);
-    color: hsl(0 85% 55%);
+    background: color-mix(in srgb, #ef4444, transparent 90%);
+    border: 1px solid color-mix(in srgb, #ef4444, transparent 70%);
+    color: #ef4444;
 }
 
 /* Keyboard - Enhanced */
@@ -135,9 +136,9 @@
     justify-content: center;
     max-width: 400px;
     padding: 0.75rem;
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.2), hsl(var(--muted) / 0.1));
+    background: color-mix(in srgb, var(--muted), transparent 70%);
     border-radius: 1rem;
-    border: 1px solid hsl(var(--border) / 0.3);
+    border: 1px solid color-mix(in srgb, var(--border), transparent 70%);
 }
 
 .keyButton {
@@ -146,19 +147,18 @@
     font-size: 0.95rem;
     font-weight: 700;
     border-radius: 0.625rem;
-    border: 1px solid hsl(var(--border) / 0.5);
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--foreground);
     cursor: pointer;
     transition: all 0.15s ease;
-    box-shadow: 0 2px 4px hsl(var(--foreground) / 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .keyButton:hover:not(:disabled) {
-    background: linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--primary) / 0.1));
-    border-color: hsl(var(--primary) / 0.5);
+    background: color-mix(in srgb, var(--primary), transparent 90%);
+    border-color: color-mix(in srgb, var(--primary), transparent 50%);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px hsl(var(--foreground) / 0.1);
 }
 
 .keyButton:active:not(:disabled) {
@@ -172,16 +172,15 @@
 }
 
 .keyCorrect {
-    background: linear-gradient(135deg, hsl(142 76% 45%), hsl(142 70% 40%));
-    border-color: hsl(142 76% 45%);
-    color: white;
-    box-shadow: 0 2px 8px hsl(142 76% 45% / 0.3);
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
 }
 
 .keyWrong {
-    background: linear-gradient(135deg, hsl(0 85% 60% / 0.2), hsl(0 85% 60% / 0.15));
-    border-color: hsl(0 85% 60% / 0.4);
-    color: hsl(0 85% 55%);
+    background: color-mix(in srgb, var(--muted), transparent 50%);
+    border-color: var(--border);
+    color: var(--muted-foreground);
 }
 
 /* Restart Button */

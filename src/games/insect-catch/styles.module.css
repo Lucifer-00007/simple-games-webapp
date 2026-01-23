@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,11 +12,12 @@
 
 .gameCard {
     width: 100%;
-    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
     backdrop-filter: blur(20px);
     border-radius: 1.5rem;
     overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .cardContent {
@@ -37,6 +39,7 @@
 .selectionTitle {
     font-size: 1.25rem;
     font-weight: 600;
+    color: var(--foreground);
 }
 
 .insectGrid {
@@ -51,16 +54,16 @@
     align-items: center;
     gap: 0.25rem;
     padding: 1rem;
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
-    border: 2px solid hsl(var(--border) / 0.3);
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border: 2px solid color-mix(in srgb, var(--border), transparent 70%);
     border-radius: 1rem;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .insectOption:hover {
-    background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.1));
-    border-color: hsl(var(--primary) / 0.5);
+    background: color-mix(in srgb, var(--primary), transparent 85%);
+    border-color: color-mix(in srgb, var(--primary), transparent 50%);
     transform: scale(1.05);
 }
 
@@ -70,7 +73,8 @@
 
 .insectName {
     font-size: 0.7rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
+    font-weight: 500;
 }
 
 /* Stats Bar */
@@ -87,19 +91,22 @@
     align-items: center;
     flex: 1;
     padding: 0.5rem;
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
+    background: color-mix(in srgb, var(--muted), transparent 70%);
     border-radius: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--border), transparent 70%);
 }
 
 .statValue {
     font-size: 1.25rem;
     font-weight: 700;
+    color: var(--foreground);
 }
 
 .statLabel {
     font-size: 0.6rem;
     text-transform: uppercase;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
+    font-weight: 600;
 }
 
 /* Game Area */
@@ -107,9 +114,9 @@
     position: relative;
     width: 100%;
     height: 350px;
-    background: linear-gradient(180deg, hsl(120 40% 30% / 0.3), hsl(120 40% 20% / 0.4));
+    background: linear-gradient(180deg, color-mix(in srgb, #16a34a, transparent 85%), color-mix(in srgb, #16a34a, transparent 90%));
     border-radius: 1rem;
-    border: 2px solid hsl(var(--border) / 0.3);
+    border: 2px solid color-mix(in srgb, #16a34a, transparent 70%);
     overflow: hidden;
 }
 
@@ -135,13 +142,14 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    background: hsl(var(--background) / 0.9);
+    background: color-mix(in srgb, var(--background), transparent 10%);
     backdrop-filter: blur(8px);
 }
 
 .resultsTitle {
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--foreground);
 }
 
 .controlButton {

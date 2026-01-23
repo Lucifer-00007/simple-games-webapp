@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -10,9 +11,9 @@
 .gameCard {
     max-width: 700px;
     width: 100%;
-    background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.8) 100%);
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 10px 40px hsl(var(--primary) / 0.1);
+    background: linear-gradient(135deg, var(--card) 0%, color-mix(in srgb, var(--card), transparent 20%) 100%);
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .cardContent {
@@ -44,15 +45,15 @@
     gap: 1.5rem;
     min-width: 180px;
     padding: 1rem;
-    background: hsl(var(--muted) / 0.3);
+    background: color-mix(in srgb, var(--muted), transparent 70%);
     border-radius: 0.75rem;
-    border: 1px solid hsl(var(--border));
+    border: 1px solid var(--border);
 }
 
 .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.85);
+    background: color-mix(in srgb, var(--background), transparent 15%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,13 +66,13 @@
 .overlayTitle {
     font-size: 2rem;
     font-weight: 700;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: var(--foreground);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .overlaySubtitle {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--muted-foreground);
     margin-bottom: 0.5rem;
 }
 
@@ -99,14 +100,15 @@
 .statValue {
     font-size: 1.75rem;
     font-weight: 700;
-    color: hsl(var(--primary));
+    color: var(--primary);
 }
 
 .statLabel {
     font-size: 0.7rem;
     text-transform: uppercase;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     letter-spacing: 0.05em;
+    font-weight: 600;
 }
 
 .dpadContainer {
@@ -146,7 +148,7 @@
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     letter-spacing: 0.05em;
 }
 
@@ -164,6 +166,6 @@
 .instructions {
     text-align: center;
     font-size: 0.75rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     line-height: 1.4;
 }

@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,14 +12,14 @@
 
 .gameCard {
     width: 100%;
-    background: linear-gradient(145deg, hsl(var(--card) / 0.9), hsl(var(--card) / 0.5));
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
     backdrop-filter: blur(20px);
     border-radius: 1.5rem;
     overflow: hidden;
     box-shadow:
-        0 10px 40px hsl(var(--primary) / 0.1),
-        inset 0 1px 1px hsl(var(--background) / 0.5);
+        0 10px 40px rgba(0, 0, 0, 0.05),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .cardContent {
@@ -37,29 +38,30 @@
 
 .progress {
     font-size: 0.9rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
 }
 
 .score {
     padding: 0.25rem 0.75rem;
     border-radius: 2rem;
-    background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.1));
-    border: 1px solid hsl(var(--primary) / 0.3);
+    background: color-mix(in srgb, var(--primary), transparent 90%);
+    border: 1px solid color-mix(in srgb, var(--primary), transparent 70%);
     font-weight: 600;
     font-size: 0.9rem;
+    color: var(--primary);
 }
 
 /* Progress Bar */
 .progressBar {
     height: 6px;
-    background: hsl(var(--muted) / 0.3);
+    background: color-mix(in srgb, var(--muted), transparent 70%);
     border-radius: 1rem;
     overflow: hidden;
 }
 
 .progressFill {
     height: 100%;
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(280 70% 60%));
+    background: linear-gradient(90deg, var(--primary), hsl(280 70% 60%));
     border-radius: 1rem;
     transition: width 0.3s ease;
 }
@@ -67,7 +69,7 @@
 /* Question */
 .category {
     font-size: 0.75rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -76,7 +78,7 @@
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.4;
-    color: hsl(var(--foreground));
+    color: var(--foreground);
 }
 
 /* Options */
@@ -92,18 +94,19 @@
     gap: 0.75rem;
     padding: 1rem 1.25rem;
     border-radius: 0.75rem;
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
-    border: 2px solid hsl(var(--border) / 0.5);
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border: 2px solid color-mix(in srgb, var(--border), transparent 50%);
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: left;
     width: 100%;
     font-size: 1rem;
+    color: var(--foreground);
 }
 
 .option:hover:not(:disabled) {
-    background: linear-gradient(135deg, hsl(var(--muted) / 0.5), hsl(var(--muted) / 0.3));
-    border-color: hsl(var(--primary) / 0.5);
+    background: color-mix(in srgb, var(--muted), transparent 50%);
+    border-color: color-mix(in srgb, var(--primary), transparent 50%);
     transform: translateX(4px);
 }
 
@@ -118,29 +121,30 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: hsl(var(--background));
+    background: var(--background);
     font-weight: 600;
     font-size: 0.85rem;
     flex-shrink: 0;
+    color: var(--foreground);
 }
 
 .optionCorrect {
-    background: linear-gradient(135deg, hsl(142 76% 45% / 0.2), hsl(142 76% 45% / 0.1));
-    border-color: hsl(142 76% 45%);
+    background: color-mix(in srgb, #16a34a, transparent 90%);
+    border-color: #16a34a;
 }
 
 .optionCorrect .optionLetter {
-    background: hsl(142 76% 45%);
+    background: #16a34a;
     color: white;
 }
 
 .optionWrong {
-    background: linear-gradient(135deg, hsl(0 84% 60% / 0.2), hsl(0 84% 60% / 0.1));
-    border-color: hsl(0 84% 60%);
+    background: color-mix(in srgb, #ef4444, transparent 90%);
+    border-color: #ef4444;
 }
 
 .optionWrong .optionLetter {
-    background: hsl(0 84% 60%);
+    background: #ef4444;
     color: white;
 }
 
@@ -167,6 +171,7 @@
 .resultsTitle {
     font-size: 2rem;
     font-weight: 700;
+    color: var(--foreground);
 }
 
 .emoji {
@@ -175,21 +180,18 @@
 
 .finalScore {
     font-size: 1.5rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
 }
 
 .scoreHighlight {
     font-weight: 700;
-    color: hsl(var(--primary));
+    color: var(--primary);
 }
 
 .percentage {
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(280 70% 60%));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary);
 }
 
 /* Responsive */
