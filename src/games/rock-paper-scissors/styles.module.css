@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -21,8 +22,8 @@
 .scoreCard {
     flex: 1;
     max-width: 100px;
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 0.75rem;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -33,12 +34,12 @@
     flex-direction: column;
     align-items: center;
     padding: 0.6rem 0.75rem !important;
-    background: linear-gradient(180deg, hsl(var(--primary) / 0.05), transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--primary), transparent 95%), transparent);
 }
 
 .scoreLabel {
     font-size: 0.55rem;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     margin-bottom: 0.1rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -54,22 +55,10 @@
 .vs {
     font-size: 0.75rem;
     font-weight: 700;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     padding: 0.35rem 0.75rem;
-    background: hsl(var(--muted) / 0.4);
+    background: color-mix(in srgb, var(--muted), transparent 60%);
     border-radius: 1rem;
-}
-
-/* Dark Mode for Scoreboard */
-:global(.dark) .scoreCard,
-:global([data-theme="dark"]) .scoreCard {
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-:global(.dark) .scoreCardContent,
-:global([data-theme="dark"]) .scoreCardContent {
-    background: linear-gradient(180deg, hsl(var(--primary) / 0.1), transparent);
 }
 
 /* Battle Arena */
@@ -79,14 +68,14 @@
     justify-content: space-around;
     width: 100%;
     padding: 2rem;
-    background: linear-gradient(145deg, hsl(var(--muted) / 0.3), hsl(var(--muted) / 0.1));
-    border: 1px solid hsl(var(--border) / 0.3);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--muted), transparent 70%), color-mix(in srgb, var(--muted), transparent 90%));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 70%);
     backdrop-filter: blur(15px);
     border-radius: 1.5rem;
     gap: 2rem;
     box-shadow:
-        0 10px 40px hsl(var(--primary) / 0.05),
-        inset 0 1px 1px hsl(var(--background) / 0.5);
+        0 10px 40px color-mix(in srgb, var(--primary), transparent 95%),
+        inset 0 1px 1px color-mix(in srgb, var(--background), transparent 50%);
 }
 
 .playerSide,
@@ -103,26 +92,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(145deg, hsl(var(--background)), hsl(var(--card)));
-    border: 3px solid hsl(var(--border) / 0.5);
+    background: linear-gradient(145deg, var(--background), var(--card));
+    border: 3px solid color-mix(in srgb, var(--border), transparent 50%);
     border-radius: 50%;
     font-size: 2.75rem;
     box-shadow:
-        0 8px 32px hsl(var(--primary) / 0.15),
-        inset 0 2px 8px hsl(var(--background) / 0.5);
+        0 8px 32px color-mix(in srgb, var(--primary), transparent 85%),
+        inset 0 2px 8px color-mix(in srgb, var(--background), transparent 50%);
     transition: all 0.3s ease;
 }
 
 .questionMark {
     font-size: 2.5rem;
-    color: hsl(var(--muted-foreground) / 0.5);
+    color: color-mix(in srgb, var(--muted-foreground), transparent 50%);
     font-weight: bold;
 }
 
 .sideLabel {
     font-size: 0.8rem;
     font-weight: 600;
-    color: hsl(var(--muted-foreground));
+    color: var(--muted-foreground);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -172,21 +161,21 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1.25rem 1.75rem;
-    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--card) / 0.7));
-    border: 2px solid hsl(var(--border) / 0.4);
+    background: linear-gradient(145deg, var(--card), color-mix(in srgb, var(--card), transparent 30%));
+    border: 2px solid color-mix(in srgb, var(--border), transparent 60%);
     border-radius: 1.25rem;
     cursor: pointer;
     transition: all 0.25s ease;
-    box-shadow: 0 4px 20px hsl(var(--primary) / 0.05);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--primary), transparent 95%);
 }
 
 .choiceButton:hover:not(:disabled) {
-    border-color: hsl(var(--primary) / 0.7);
-    background: linear-gradient(145deg, hsl(var(--primary) / 0.1), hsl(var(--card)));
+    border-color: color-mix(in srgb, var(--primary), transparent 30%);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--primary), transparent 90%), var(--card));
     transform: translateY(-4px);
     box-shadow:
-        0 12px 30px hsl(var(--primary) / 0.2),
-        0 0 0 1px hsl(var(--primary) / 0.1);
+        0 12px 30px color-mix(in srgb, var(--primary), transparent 80%),
+        0 0 0 1px color-mix(in srgb, var(--primary), transparent 90%);
 }
 
 .choiceButton:disabled {
@@ -203,7 +192,7 @@
 .choiceLabel {
     font-size: 0.85rem;
     font-weight: 600;
-    color: hsl(var(--foreground));
+    color: var(--foreground);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -233,32 +222,4 @@
     .choiceIcon {
         font-size: 2.25rem;
     }
-}
-
-/* Dark Mode for Arena and Buttons */
-:global(.dark) .arena,
-:global([data-theme="dark"]) .arena {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-:global(.dark) .choiceDisplay,
-:global([data-theme="dark"]) .choiceDisplay {
-    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--background)));
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        inset 0 2px 8px rgba(255, 255, 255, 0.05);
-}
-
-:global(.dark) .choiceButton,
-:global([data-theme="dark"]) .choiceButton {
-    background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--card) / 0.8));
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-:global(.dark) .choiceButton:hover:not(:disabled),
-:global([data-theme="dark"]) .choiceButton:hover:not(:disabled) {
-    border-color: hsl(var(--primary) / 0.5);
-    background: linear-gradient(145deg, hsl(var(--primary) / 0.15), hsl(var(--card)));
 }

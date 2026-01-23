@@ -1,3 +1,4 @@
+
 .container {
     display: flex;
     flex-direction: column;
@@ -11,8 +12,8 @@
 
 .gameCard {
     width: 100%;
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 1.25rem;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -32,11 +33,13 @@
     justify-content: space-between;
     align-items: center;
     width: 30%;
+    min-width: 250px;
     gap: 0.75rem;
     padding: 0.75rem;
-    background: linear-gradient(135deg, #1e293b, #334155);
+    background: color-mix(in srgb, var(--card), var(--foreground) 10%);
+    border: 1px solid var(--border);
     border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .statBox {
@@ -45,65 +48,65 @@
     align-items: center;
     gap: 0.125rem;
     padding: 0.5rem 1rem;
-    background: linear-gradient(145deg, #334155, #1e293b);
+    background: color-mix(in srgb, var(--muted), transparent 50%);
     border-radius: 0.75rem;
-    border: 1px solid #475569;
+    border: 1px solid var(--border);
     min-width: 70px;
 }
 
 .statBox svg {
-    color: #94a3b8;
+    color: var(--muted-foreground);
 }
 
 .statValue {
     font-size: 1.5rem;
     font-weight: 800;
     font-variant-numeric: tabular-nums;
-    color: #f1f5f9;
+    color: var(--foreground);
 }
 
 .statLabel {
     font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #94a3b8;
+    color: var(--muted-foreground);
 }
 
 .statusButton {
     font-size: 2rem;
     padding: 0.5rem 0.75rem;
-    background: linear-gradient(145deg, #fbbf24, #f59e0b);
+    background: color-mix(in srgb, var(--primary), transparent 20%);
     border-radius: 0.75rem;
-    border: 2px solid #d97706;
+    border: 2px solid var(--primary);
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .statusButton:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: var(--primary);
 }
 
-/* Board - dark background that works in both modes */
+/* Board */
 .boardWrapper {
     overflow-x: auto;
     padding: 0.5rem;
-    background: #374151;
+    background: color-mix(in srgb, var(--muted), transparent 50%);
     border-radius: 0.75rem;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
     max-width: 100%;
 }
 
 .board {
     display: grid;
     gap: 2px;
-    background: #1f2937;
+    background: var(--border);
     padding: 2px;
     border-radius: 0.5rem;
 }
 
-/* Cells with hardcoded colors for visibility */
+/* Cells */
 .cell {
     width: 26px;
     height: 26px;
@@ -119,71 +122,50 @@
     flex-shrink: 0;
 }
 
-/* Hidden cell - gray with 3D effect */
+/* Hidden cell */
 .cellHidden {
-    background: linear-gradient(145deg, #9ca3af, #6b7280);
-    border: 1px solid #4b5563;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--muted), white 10%), color-mix(in srgb, var(--muted), black 10%));
+    border: 1px solid color-mix(in srgb, var(--muted-foreground), transparent 70%);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .cellHidden:hover {
-    background: linear-gradient(145deg, #d1d5db, #9ca3af);
+    filter: brightness(1.1);
     transform: scale(1.02);
+    z-index: 1;
 }
 
-/* Revealed cell - light background */
+/* Revealed cell */
 .cellRevealed {
-    background: #e5e7eb;
-    border: 1px solid #d1d5db;
+    background: color-mix(in srgb, var(--background), var(--muted) 30%);
+    border: 1px solid var(--border);
 }
 
-/* Flagged cell - yellow tint */
+/* Flagged cell */
 .cellFlagged {
     background: linear-gradient(145deg, #fbbf24, #f59e0b);
     border: 1px solid #d97706;
+    color: black;
 }
 
-/* Mine cell - red */
+/* Mine cell */
 .cellMine {
     background: linear-gradient(145deg, #ef4444, #dc2626);
     border: 1px solid #b91c1c;
     color: white;
 }
 
-/* Number colors - all visible on light revealed cell */
-.num1 {
-    color: #2563eb;
-}
-
-.num2 {
-    color: #16a34a;
-}
-
-.num3 {
-    color: #dc2626;
-}
-
-.num4 {
-    color: #7c3aed;
-}
-
-.num5 {
-    color: #ea580c;
-}
-
-.num6 {
-    color: #0891b2;
-}
-
-.num7 {
-    color: #1f2937;
-}
-
-.num8 {
-    color: #4b5563;
-}
+/* Number colors */
+.num1 { color: #2563eb; }
+.num2 { color: #16a34a; }
+.num3 { color: #dc2626; }
+.num4 { color: #7c3aed; }
+.num5 { color: #ea580c; }
+.num6 { color: #0891b2; }
+.num7 { color: var(--foreground); }
+.num8 { color: var(--muted-foreground); }
 
 /* Difficulty Select */
 .difficultySelect {
@@ -198,22 +180,22 @@
     font-size: 0.85rem;
     font-weight: 600;
     border-radius: 2rem;
-    border: 1px solid hsl(var(--border));
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--foreground);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .difficultyButton:hover {
-    background: hsl(var(--muted));
+    background: var(--muted);
 }
 
 .difficultyButton.active {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: white;
-    border-color: #3b82f6;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--primary), transparent 70%);
 }
 
 /* Game Over Overlay */
@@ -225,7 +207,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    background: rgba(255, 255, 255, 0.9);
+    background: color-mix(in srgb, var(--background), transparent 10%);
     backdrop-filter: blur(4px);
     border-radius: 0.5rem;
 }
@@ -249,15 +231,15 @@
     font-size: 0.9rem;
     font-weight: 600;
     border-radius: 2rem;
-    border: 1px solid hsl(var(--border));
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--foreground);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .resetButton:hover {
-    background: hsl(var(--muted));
+    background: var(--muted);
 }
 
 /* Responsive */
