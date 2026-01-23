@@ -42,11 +42,31 @@
 #### Priority Lv: P0
 - [x] In all the 2-player games add a feature to play like - Player VS the Computer.
 
-- [] Make all the games responsive and playable in mobile browser. Fix this following best practices.
+- [x] Make all the games responsive and playable in mobile browser. Fix this following best practices.
 
 - [x] 74 problems (31 errors, 43 warnings) 7 errors and 0 warnings potentially fixable with the `--fix` option. error: script "lint" exited with code 1
 
-- []
+- [] Enhance the UI in Light mode matching the light mode theme in the following games:
+- minesweeper         
+- memory-card         
+- rock-paper-scissors 
+- number-guessing     
+- tic-tac-toe         
+- snake        
+- connect-four        
+- insect-catch        
+- hangman             
+- crossy-road         
+- 2048                
+- dice-roll           
+- shape-clicker       
+- fruit-slicer         
+- quiz                
+- emoji-catcher        
+- whack-a-mole         
+- simon-says           
+
+
 - []
 - []
 - []

@@ -60,7 +60,7 @@ export function GameShell({ game, children, onRestart }: GameShellProps) {
             <Card className="overflow-hidden border-border/50 bg-card/50 backdrop-blur">
                 {/* Game Controls */}
                 <div className="flex items-center justify-between p-3 border-b border-border/50 bg-muted/30">
-                    <h2 className="font-semibold">{game.title}</h2>
+                    <h1 className="text-xl font-bold">{game.title}</h1>
                     <div className="flex items-center gap-1">
                         <Button
                             variant="ghost"
