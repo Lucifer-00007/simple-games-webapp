@@ -2,66 +2,71 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    justify-content: center;
+    min-height: 500px;
     width: 100%;
+    background: #e0f2fe;
+    border-radius: 2rem;
+    padding: 2rem;
 }
 
-.gameCard {
+.gameWrapper {
+    position: relative;
     width: 100%;
-    max-width: 640px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 1.5rem;
-    overflow: hidden;
-}
-
-.cardContent {
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding: 1.5rem !important;
+    gap: 1.5rem;
 }
 
-.statsBar {
+.scoreBoard {
+    background: white;
+    padding: 0.5rem 2rem;
+    border-radius: 9999px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: 3px solid #4CAF50;
+    z-index: 10;
+}
+
+.scoreValue {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #4CAF50;
+    font-family: 'Inter', sans-serif;
+    line-height: 1;
+}
+
+.wicketDisplay {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 1rem;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    justify-content: center;
 }
 
-.statItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.wicketDot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    border: 2px solid #cbd5e1;
 }
 
-.statLabel {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--muted-foreground);
-    text-transform: uppercase;
-}
-
-.statValue {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--primary);
+.wicketOut {
+    background: #ef4444;
+    border-color: #b91c1c;
 }
 
 .canvasContainer {
     position: relative;
     width: 100%;
     aspect-ratio: 3/2;
-    background: #f0fdf4;
-    border-radius: 1rem;
+    background: #4CAF50;
+    border-radius: 1.5rem;
     overflow: hidden;
-    cursor: crosshair;
-}
-
-:global(.dark) .canvasContainer {
-    background: #064e3b;
+    cursor: pointer;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    border: 8px solid white;
 }
 
 .canvas {
@@ -73,29 +78,79 @@
 .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(1px);
+}
+
+.playButton {
+    width: 100px;
+    height: 100px;
+    background: #FFD700;
+    color: white;
+    border: 6px solid white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.gameOverCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 1rem;
-    backdrop-filter: blur(2px);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    border: 4px solid #4CAF50;
 }
 
-.overlayTitle {
-    font-size: 2.5rem;
+.gameOverTitle {
+    font-size: 2rem;
     font-weight: 800;
-    color: white;
+    color: #1e293b;
 }
 
-.overlaySubtitle {
+.gameOverScore {
     font-size: 1.25rem;
-    color: white;
+    color: #64748b;
     font-weight: 600;
 }
 
+.gameOverScore span {
+    color: #4CAF50;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.controlsHelp {
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swingHint {
+    font-weight: 900;
+    color: #4CAF50;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    animation: pulse 1s infinite;
+}
+
 .instructions {
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    text-align: center;
+    color: #64748b;
+    font-weight: 600;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }

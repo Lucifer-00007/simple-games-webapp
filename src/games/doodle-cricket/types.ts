@@ -5,6 +5,7 @@ export interface Ball {
     y: number;
     vx: number;
     vy: number;
+    vz?: number; // Added for 3D-like depth if needed, but we'll stick to 2D for simplicity
     active: boolean;
 }
 
@@ -21,9 +22,11 @@ export interface GameState {
 export const CRICKET_CONFIG = {
     CANVAS_WIDTH: 600,
     CANVAS_HEIGHT: 400,
-    STUMPS_X: 500,
-    STUMPS_Y: 250,
-    BOWLER_X: 50,
-    BOWLER_Y: 200,
+    STUMPS_X: 300,
+    STUMPS_Y: 340,
+    BOWLER_X: 300,
+    BOWLER_Y: 160,
     GRAVITY: 0.15,
+    PITCH_TOP_Y: 150,
+    PITCH_BOTTOM_Y: 400,
 };

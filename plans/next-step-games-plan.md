@@ -67,9 +67,17 @@
 - simon-says           
 
 
+- [] Enhance the UI/UX and game play in the following games following best practices: 
+- Doodle Cricket 
+- Piano Tiles
+- Dino Run  
+
 - []
 - []
 - []
+- []
+- []
+
 
 #### Priority Lv: P1
 - []
