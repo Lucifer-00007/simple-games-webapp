@@ -98,6 +98,15 @@ const gameComponents: Record<string, ComponentType<GameComponentProps>> = {
     'chess': dynamic(() => import('@/games/chess/Chess').then((mod) => mod.Chess), {
         loading: () => <GameLoadingPlaceholder />,
     }),
+    'dino-run': dynamic(() => import('@/games/dino-run').then((mod) => mod.DinoRun), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'piano-tiles': dynamic(() => import('@/games/piano-tiles').then((mod) => mod.PianoTiles), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
+    'doodle-cricket': dynamic(() => import('@/games/doodle-cricket').then((mod) => mod.DoodleCricket), {
+        loading: () => <GameLoadingPlaceholder />,
+    }),
     // Add more games here as they are implemented
 };
 

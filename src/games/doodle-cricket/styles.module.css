@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+}
+
+.gameCard {
+    width: 100%;
+    max-width: 640px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem !important;
+}
+
+.statsBar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.canvasContainer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/2;
+    background: #f0fdf4;
+    border-radius: 1rem;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+:global(.dark) .canvasContainer {
+    background: #064e3b;
+}
+
+.canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    backdrop-filter: blur(2px);
+}
+
+.overlayTitle {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+}
+
+.overlaySubtitle {
+    font-size: 1.25rem;
+    color: white;
+    font-weight: 600;
+}
+
+.instructions {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    text-align: center;
+}

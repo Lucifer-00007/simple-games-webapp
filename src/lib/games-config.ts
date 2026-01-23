@@ -345,6 +345,37 @@ export const GAMES: Game[] = [
         controls: ['Click/tap to select piece', 'Click destination to move'],
         featured: true,
     },
+    {
+        id: 32,
+        slug: 'dino-run',
+        title: 'Dino Run',
+        description: 'Infinite runner where you jump over obstacles as a dinosaur.',
+        category: 'arcade',
+        difficulty: 3,
+        thumbnail: '/thumbnails/dino-run.png',
+        controls: ['Space or Click to jump', 'Avoid obstacles'],
+        featured: true,
+    },
+    {
+        id: 33,
+        slug: 'piano-tiles',
+        title: 'Piano Tiles',
+        description: 'Tap the black tiles as they fall to play the melody.',
+        category: 'skill',
+        difficulty: 4,
+        thumbnail: '/thumbnails/piano-tiles.png',
+        controls: ['Tap black tiles', 'Don’t miss any!'],
+    },
+    {
+        id: 34,
+        slug: 'doodle-cricket',
+        title: 'Doodle Cricket',
+        description: 'Classic cricket game where you bat against a fast bowler.',
+        category: 'action',
+        difficulty: 3,
+        thumbnail: '/thumbnails/doodle-cricket.png',
+        controls: ['Click or Space to swing bat', 'Don’t get out!'],
+    },
 ];
 
 // Helper functions
