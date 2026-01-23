@@ -46,10 +46,9 @@
 
 - [x] 74 problems (31 errors, 43 warnings) 7 errors and 0 warnings potentially fixable with the `--fix` option. error: script "lint" exited with code 1
 
-- [] Enhance the UI in Light mode matching the light mode theme in the following games:
+- [x] Enhance the UI in Light mode matching the light mode theme in the following games:
 - minesweeper         
 - memory-card         
-
 - rock-paper-scissors
 - number-guessing     
 - tic-tac-toe         
