@@ -127,26 +127,29 @@ export function RockPaperScissors({ onScoreUpdate }: RockPaperScissorsProps) {
                 </div>
             </div>
 
-            {/* Result Message */}
-            <AnimatePresence>
-                {gameState.lastRound && showResult && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className={`${styles.result} ${gameState.lastRound.result === 'win'
-                                ? styles.resultWin
-                                : gameState.lastRound.result === 'lose'
-                                    ? styles.resultLose
-                                    : styles.resultTie
-                            }`}
-                    >
-                        {gameState.lastRound.result === 'win' && '🎉 '}
-                        {gameState.lastRound.message}
-                        {gameState.lastRound.result === 'lose' && ' 😢'}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Result Message Area (Fixed height to prevent flickering) */}
+            <div className="h-16 flex items-center justify-center w-full">
+                <AnimatePresence mode="wait">
+                    {gameState.lastRound && showResult && (
+                        <motion.div
+                            key={gameState.lastRound.message}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className={`${styles.result} ${gameState.lastRound.result === 'win'
+                                    ? styles.resultWin
+                                    : gameState.lastRound.result === 'lose'
+                                        ? styles.resultLose
+                                        : styles.resultTie
+                                }`}
+                        >
+                            {gameState.lastRound.result === 'win' && '🎉 '}
+                            {gameState.lastRound.message}
+                            {gameState.lastRound.result === 'lose' && ' 😢'}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
 
             {/* Choice Buttons */}
             <div className={styles.choices}>
