@@ -345,17 +345,6 @@ export const GAMES: Game[] = [
         controls: ['Click/tap to select piece', 'Click destination to move'],
         featured: true,
     },
-    {
-        id: 32,
-        slug: 'car-racing',
-        title: 'Turbo Racing 3D',
-        description: 'Classic arcade racing experience. Race through the track and set the best lap time.',
-        category: 'arcade',
-        difficulty: 3,
-        thumbnail: '/thumbnails/car-racing.png', // Placeholder
-        controls: ['Arrow keys to steer and accelerate', 'Select car color in menu', 'Complete 3 laps'],
-        featured: true,
-    },
 ];
 
 // Helper functions

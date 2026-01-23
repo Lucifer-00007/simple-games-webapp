@@ -98,9 +98,6 @@ const gameComponents: Record<string, ComponentType<GameComponentProps>> = {
     'chess': dynamic(() => import('@/games/chess/Chess').then((mod) => mod.Chess), {
         loading: () => <GameLoadingPlaceholder />,
     }),
-    'car-racing': dynamic(() => import('@/games/car-racing').then((mod) => mod.CarRacing), {
-        loading: () => <GameLoadingPlaceholder />,
-    }),
     // Add more games here as they are implemented
 };
 
