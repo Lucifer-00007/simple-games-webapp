@@ -27,17 +27,17 @@ export default function GamesPage() {
     }, [searchQuery, selectedCategory]);
 
     return (
-        <div className="container py-12 px-4 md:px-6">
+        <div className="container mx-auto py-12 px-4 md:px-6">
             <div className="flex flex-col gap-8">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
+                <div className="flex flex-col items-center text-center gap-6">
+                    <div className="flex flex-col items-center gap-3">
                         <div className="p-3 rounded-xl bg-primary/10 text-primary">
                             <Gamepad2 className="w-8 h-8" />
                         </div>
                         <div>
-                            <h1 className="text-3xl font-bold tracking-tight">Game Arcade</h1>
-                            <p className="text-muted-foreground">
+                            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Game Arcade</h1>
+                            <p className="text-muted-foreground text-lg max-w-2xl">
                                 Discover and play {GAMES.length} fun mini-games
                             </p>
                         </div>

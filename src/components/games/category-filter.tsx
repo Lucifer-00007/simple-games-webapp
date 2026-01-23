@@ -15,7 +15,7 @@ export function CategoryFilter({
     onCategoryChange,
 }: CategoryFilterProps) {
     return (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 justify-center">
             <Button
                 variant={selectedCategory === 'all' ? 'default' : 'outline'}
                 size="sm"
