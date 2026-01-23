@@ -1,124 +1,75 @@
 'use client';
 
 import * as React from 'react';
-import { Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { Gamepad2 } from 'lucide-react';
+import { GAMES } from '@/lib/games-config';
+import { Game, GameCategory } from '@/types/game';
 import { GameGrid } from '@/components/games/game-grid';
 import { CategoryFilter } from '@/components/games/category-filter';
 import { SearchBar } from '@/components/games/search-bar';
-import { GAMES, getGamesByCategory, searchGames } from '@/lib/games-config';
-import { GameCategory } from '@/types/game';
 
-function GamesContent() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-
-    const categoryParam = searchParams.get('category') as GameCategory | null;
-    const searchParam = searchParams.get('search') || '';
-
-    const [search, setSearch] = React.useState(searchParam);
-    const [category, setCategory] = React.useState<GameCategory | 'all'>(
-        categoryParam || 'all'
-    );
-
-    // Debounced search
-    const [debouncedSearch, setDebouncedSearch] = React.useState(search);
-
-    React.useEffect(() => {
-        const timer = setTimeout(() => {
-            setDebouncedSearch(search);
-        }, 300);
-
-        return () => clearTimeout(timer);
-    }, [search]);
-
-    // Update URL when filters change
-    React.useEffect(() => {
-        const params = new URLSearchParams();
-        if (category !== 'all') params.set('category', category);
-        if (debouncedSearch) params.set('search', debouncedSearch);
-
-        const queryString = params.toString();
-        router.replace(`/games${queryString ? `?${queryString}` : ''}`, {
-            scroll: false,
-        });
-    }, [category, debouncedSearch, router]);
+export default function GamesPage() {
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [selectedCategory, setSelectedCategory] = React.useState<GameCategory | 'all'>('all');
 
     // Filter games
     const filteredGames = React.useMemo(() => {
-        let games = category === 'all' ? GAMES : getGamesByCategory(category);
+        return GAMES.filter((game) => {
+            const matchesSearch =
+                game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                game.description.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesCategory =
+                selectedCategory === 'all' || game.category === selectedCategory;
 
-        if (debouncedSearch) {
-            const searchResults = searchGames(debouncedSearch);
-            games = games.filter((g) => searchResults.some((s) => s.id === g.id));
-        }
-
-        return games;
-    }, [category, debouncedSearch]);
-
-    const handleCategoryChange = (newCategory: GameCategory | 'all') => {
-        setCategory(newCategory);
-    };
+            return matchesSearch && matchesCategory;
+        });
+    }, [searchQuery, selectedCategory]);
 
     return (
-        <div className="min-h-screen py-12">
-            <div className="text-center container mx-auto px-4">
+        <div className="container py-12 px-4 md:px-6">
+            <div className="flex flex-col gap-8">
                 {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-8"
-                >
-                    <h1 className="text-4xl font-bold mb-2">
-                        All <span className="text-primary">Games</span>
-                    </h1>
-                    <p className="text-muted-foreground">
-                        Browse our collection of {GAMES.length} games
-                    </p>
-                </motion.div>
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                        <div className="p-3 rounded-xl bg-primary/10 text-primary">
+                            <Gamepad2 className="w-8 h-8" />
+                        </div>
+                        <div>
+                            <h1 className="text-3xl font-bold tracking-tight">Game Arcade</h1>
+                            <p className="text-muted-foreground">
+                                Discover and play {GAMES.length} fun mini-games
+                            </p>
+                        </div>
+                    </div>
+                    <SearchBar value={searchQuery} onChange={setSearchQuery} />
+                </div>
 
                 {/* Filters */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
-                >
-                    <SearchBar value={search} onChange={setSearch} />
+                <div className="flex flex-col gap-4">
                     <CategoryFilter
-                        selectedCategory={category}
-                        onCategoryChange={handleCategoryChange}
+                        selectedCategory={selectedCategory}
+                        onCategoryChange={setSelectedCategory}
                     />
-                </motion.div>
-
-                {/* Results count */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-sm text-muted-foreground mb-6"
-                >
-                    {filteredGames.length} {filteredGames.length === 1 ? 'game' : 'games'}{' '}
-                    found
-                    {category !== 'all' && ` in ${category}`}
-                    {debouncedSearch && ` matching "${debouncedSearch}"`}
-                </motion.p>
+                </div>
 
                 {/* Games Grid */}
-                <GameGrid
-                    games={filteredGames}
-                    emptyMessage="Try adjusting your search or filters"
-                />
+                <motion.div
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <GameGrid
+                        games={filteredGames}
+                        emptyMessage={
+                            searchQuery
+                                ? `No games found matching "${searchQuery}"`
+                                : 'No games found in this category'
+                        }
+                    />
+                </motion.div>
             </div>
         </div>
-    );
-}
-
-export default function GamesPage() {
-    return (
-        <Suspense fallback={<div className="min-h-screen py-12 text-center">Loading...</div>}>
-            <GamesContent />
-        </Suspense>
     );
 }

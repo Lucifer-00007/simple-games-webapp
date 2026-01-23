@@ -1,152 +1,62 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
-import { ArrowLeft, Star, Construction } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { getCategoryInfo, getGamesByCategory } from '@/lib/games-config';
-import { getGameComponent, isGameImplemented } from '@/lib/games-registry';
-import { GameCard } from '@/components/games/game-card';
+import { notFound } from 'next/navigation';
 import { Game } from '@/types/game';
+import { getGameComponent } from '@/lib/games-registry';
+import { GameShell } from '@/components/games/game-shell';
 
 interface GameClientPageProps {
     game: Game;
 }
 
 export function GameClientPage({ game }: GameClientPageProps) {
-    const category = getCategoryInfo(game.category);
-    const relatedGames = getGamesByCategory(game.category)
-        .filter((g) => g.id !== game.id)
-        .slice(0, 3);
+    // Dynamically load the game component
+    const GameComponent = getGameComponent(game.slug);
 
-    const gameComponent = getGameComponent(game.slug);
-    const isImplemented = isGameImplemented(game.slug);
+    if (!GameComponent) {
+        // Fallback if registry is missing the game but config has it
+        // This shouldn't happen if maintained correctly
+        return (
+            <div className="container py-24 text-center">
+                <h2 className="text-2xl font-bold mb-4">Game Component Not Found</h2>
+                <p className="text-muted-foreground">
+                    The game "{game.title}" is listed but not yet implemented.
+                </p>
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-screen py-8">
-            <div className="container mx-auto px-4">
-                {/* Back Button */}
-                <Link href="/games" className="inline-block mb-6">
-                    <Button variant="ghost" className="gap-2">
-                        <ArrowLeft className="h-4 w-4" />
-                        Back to Games
-                    </Button>
-                </Link>
-
-                <div className="grid gap-8 lg:grid-cols-[1fr_300px]">
-                    {/* Main Content */}
-                    <div className="space-y-6">
-                        {/* Game Title */}
-                        <div>
-                            <div className="flex flex-wrap items-center gap-3 mb-4">
-                                <h1 className="text-3xl font-bold">{game.title}</h1>
-                                <Badge variant="outline" className="text-sm">
-                                    {category?.icon} {category?.name}
-                                </Badge>
-                                {isImplemented && (
-                                    <Badge className="bg-green-500/10 text-green-500 border-green-500/20">
-                                        ✓ Playable
-                                    </Badge>
-                                )}
+        <div className="container py-8 px-4 md:px-6 max-w-5xl mx-auto">
+            <GameShell game={game}>
+                <GameComponent />
+            </GameShell>
+            
+            {/* Game Description / Footer Content */}
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+                <div className="md:col-span-2 space-y-4">
+                    <h2 className="text-2xl font-bold">About {game.title}</h2>
+                    <p className="text-muted-foreground leading-relaxed">
+                        {game.description}
+                    </p>
+                </div>
+                
+                <div className="space-y-4">
+                    <div className="bg-card border border-border rounded-xl p-4">
+                        <h3 className="font-semibold mb-3">Game Details</h3>
+                        <div className="space-y-2 text-sm">
+                            <div className="flex justify-between">
+                                <span className="text-muted-foreground">Category</span>
+                                <span className="capitalize font-medium">{game.category}</span>
                             </div>
-                            <p className="text-lg text-muted-foreground">{game.description}</p>
+                            <div className="flex justify-between">
+                                <span className="text-muted-foreground">Difficulty</span>
+                                <span className="text-yellow-500">{'★'.repeat(game.difficulty)}</span>
+                            </div>
                         </div>
-
-                        {/* Game Container */}
-                        <Card className="overflow-hidden">
-                            {isImplemented && gameComponent ? (
-                                <div className="p-4 bg-gradient-to-br from-muted/30 to-muted/10">
-                                    {React.createElement(gameComponent)}
-                                </div>
-                            ) : (
-                                <div
-                                    className={`aspect-video bg-gradient-to-br ${category?.color || 'from-gray-500 to-gray-700'} flex items-center justify-center relative`}
-                                >
-                                    <span className="text-9xl opacity-30">{category?.icon}</span>
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                                        <Card className="bg-card/95 backdrop-blur border-border/50 max-w-md mx-4">
-                                            <CardContent className="p-6 text-center">
-                                                <Construction className="h-12 w-12 mx-auto mb-4 text-yellow-500" />
-                                                <h3 className="text-xl font-semibold mb-2">Coming Soon</h3>
-                                                <p className="text-muted-foreground">
-                                                    The React version of {game.title} is being migrated. Check back soon!
-                                                </p>
-                                            </CardContent>
-                                        </Card>
-                                    </div>
-                                </div>
-                            )}
-                        </Card>
-                    </div>
-
-                    {/* Sidebar */}
-                    <div className="space-y-6">
-                        {/* Controls */}
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-lg">How to Play</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <ul className="space-y-2">
-                                    {game.controls.map((control, i) => (
-                                        <li
-                                            key={i}
-                                            className="flex items-start gap-2 text-sm text-muted-foreground"
-                                        >
-                                            <span className="text-primary mt-1">•</span>
-                                            {control}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </CardContent>
-                        </Card>
-
-                        {/* Difficulty */}
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-lg">Difficulty</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center gap-1">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            className={`h-5 w-5 ${i < game.difficulty
-                                                    ? 'text-yellow-500 fill-yellow-500'
-                                                    : 'text-muted-foreground/30'
-                                                }`}
-                                        />
-                                    ))}
-                                </div>
-                                <p className="text-sm text-muted-foreground mt-2">
-                                    {game.difficulty <= 2
-                                        ? 'Easy - Great for beginners!'
-                                        : game.difficulty <= 3
-                                            ? 'Medium - A fair challenge'
-                                            : 'Hard - For experienced players'}
-                                </p>
-                            </CardContent>
-                        </Card>
                     </div>
                 </div>
-
-                {/* Related Games */}
-                {relatedGames.length > 0 && (
-                    <div className="mt-16">
-                        <Separator className="mb-8" />
-                        <h2 className="text-2xl font-bold mb-6">
-                            More {category?.name} Games
-                        </h2>
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {relatedGames.map((relatedGame, index) => (
-                                <GameCard key={relatedGame.id} game={relatedGame} index={index} />
-                            ))}
-                        </div>
-                    </div>
-                )}
             </div>
         </div>
     );
