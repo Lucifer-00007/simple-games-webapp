@@ -44,6 +44,22 @@
     border-radius: 0.5rem;
     overflow: hidden;
     cursor: default;
+    --tile-bg: #111;
+}
+
+:global(.dark) .gameArea {
+    --tile-bg: #f8fafc;
+}
+
+.ripple {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: color-mix(in srgb, var(--primary), transparent 50%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 5;
+    transform: translate(-50%, -50%);
 }
 
 .columnLine {
@@ -56,20 +72,16 @@
 
 .tile {
     position: absolute;
-    background: #111;
-    border: 1px solid #333;
+    background: var(--tile-bg);
+    border: 1px solid color-mix(in srgb, var(--tile-bg), var(--foreground) 20%);
     cursor: pointer;
-    transition: background 0.1s ease;
-}
-
-:global(.dark) .tile {
-    background: #f8fafc;
-    border-color: #e2e8f0;
+    z-index: 10;
 }
 
 .tile.tapped {
     background: color-mix(in srgb, var(--muted), transparent 50%);
     pointer-events: none;
+    z-index: 9;
 }
 
 .overlay {
