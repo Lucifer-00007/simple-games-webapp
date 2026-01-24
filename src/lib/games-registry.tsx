@@ -104,9 +104,6 @@ const gameComponents: Record<string, ComponentType<GameComponentProps>> = {
     'piano-tiles': dynamic(() => import('@/games/piano-tiles').then((mod) => mod.PianoTiles), {
         loading: () => <GameLoadingPlaceholder />,
     }),
-    'doodle-cricket': dynamic(() => import('@/games/doodle-cricket').then((mod) => mod.DoodleCricket), {
-        loading: () => <GameLoadingPlaceholder />,
-    }),
     // Add more games here as they are implemented
 };
 

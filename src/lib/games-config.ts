@@ -366,16 +366,6 @@ export const GAMES: Game[] = [
         thumbnail: '/thumbnails/piano-tiles.png',
         controls: ['Tap black tiles', 'Don’t miss any!'],
     },
-    {
-        id: 34,
-        slug: 'doodle-cricket',
-        title: 'Doodle Cricket',
-        description: 'Classic cricket game where you bat against a fast bowler.',
-        category: 'action',
-        difficulty: 3,
-        thumbnail: '/thumbnails/doodle-cricket.png',
-        controls: ['Click or Space to swing bat', 'Don’t get out!'],
-    },
 ];
 
 // Helper functions
