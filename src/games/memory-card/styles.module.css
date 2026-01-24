@@ -1,0 +1,234 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.statCard {
+    flex: 1;
+    max-width: 120px;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), transparent 10%), color-mix(in srgb, var(--card), transparent 30%));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
+    backdrop-filter: blur(15px);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.statContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem !important;
+    position: relative;
+}
+
+.statContent::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), hsl(280 80% 60%));
+    opacity: 0.6;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+
+.statValue {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+/* Win Message */
+.winMessage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background: linear-gradient(145deg, hsl(142 76% 36% / 0.15), hsl(142 76% 36% / 0.05));
+    border: 1px solid hsl(142 76% 36% / 0.4);
+    border-radius: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 0 40px hsl(142 76% 36% / 0.2),
+        inset 0 1px 2px hsl(142 76% 36% / 0.1);
+    animation: winGlow 2s ease-in-out infinite;
+}
+
+.winIcon {
+    width: 3.5rem;
+    height: 3.5rem;
+    color: hsl(38 92% 50%);
+    margin-bottom: 0.75rem;
+    filter: drop-shadow(0 0 15px hsl(38 92% 50% / 0.5));
+}
+
+.winTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, hsl(142 76% 40%), hsl(142 76% 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.25rem;
+}
+
+.winText {
+    color: var(--muted-foreground);
+    font-size: 1rem;
+}
+
+/* Card Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+    perspective: 2000px;
+}
+
+.cardContainer {
+    perspective: 1000px;
+}
+
+.cardContainer.matched {
+    opacity: 0.6;
+}
+
+.cardContainer.matched .card {
+    transform: rotateY(180deg) scale(0.95);
+}
+
+/* Card Flip */
+.card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    backface-visibility: hidden;
+    border: 2px solid color-mix(in srgb, var(--border), transparent 50%);
+}
+
+/* Card Front (face down - shows ?) */
+.cardFront {
+    background: linear-gradient(145deg, var(--primary), hsl(280 80% 55%));
+    box-shadow:
+        0 6px 20px color-mix(in srgb, var(--primary), transparent 70%),
+        inset 0 1px 2px color-mix(in srgb, var(--background), transparent 70%);
+    transition: all 0.25s ease;
+}
+
+.cardFront::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    height: 30%;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--background), transparent 75%), transparent);
+    border-radius: 0.75rem 0.75rem 50% 50%;
+    pointer-events: none;
+}
+
+.card:not(.flipped):hover .cardFront {
+    transform: scale(1.05);
+    box-shadow:
+        0 10px 30px color-mix(in srgb, var(--primary), transparent 60%),
+        inset 0 1px 2px color-mix(in srgb, var(--background), transparent 70%);
+}
+
+/* Card Back (face up - shows emoji) */
+.cardBack {
+    background: var(--card);
+    transform: rotateY(180deg);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.cardQuestion {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cardEmoji {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.restartButton {
+    margin-top: 0.5rem;
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+@keyframes winGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 40px hsl(142 76% 36% / 0.2),
+            inset 0 1px 2px hsl(142 76% 36% / 0.1);
+    }
+
+    50% {
+        box-shadow:
+            0 0 60px hsl(142 76% 36% / 0.35),
+            inset 0 1px 2px hsl(142 76% 36% / 0.2);
+    }
+}
+
+@media (max-width: 400px) {
+    .grid {
+        gap: 0.5rem;
+    }
+
+    .cardQuestion {
+        font-size: 1.5rem;
+    }
+
+    .cardEmoji {
+        font-size: 1.75rem;
+    }
+}

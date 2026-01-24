@@ -1,0 +1,196 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), transparent 5%), color-mix(in srgb, var(--card), transparent 30%));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 60%);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem !important;
+}
+
+/* Stats Bar */
+.statsBar {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--muted), transparent 60%), color-mix(in srgb, var(--muted), transparent 80%));
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--border), transparent 60%);
+    min-width: 80px;
+}
+
+.statValue {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--foreground);
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted-foreground);
+}
+
+/* Text Display */
+.textDisplay {
+    position: relative; /* Context for absolute input */
+    font-size: 1.2rem;
+    line-height: 1.8;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--muted), transparent 80%), color-mix(in srgb, var(--muted), transparent 90%));
+    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--border), transparent 60%);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 200px;
+    color: var(--foreground); /* Ensure base text color is visible */
+}
+
+.charCorrect {
+    color: hsl(142 76% 40%);
+    background: hsl(142 76% 36% / 0.1);
+}
+
+.charIncorrect {
+    color: hsl(0 85% 55%);
+    background: hsl(0 85% 55% / 0.2);
+    text-decoration: underline;
+}
+
+.charCurrent {
+    background: color-mix(in srgb, var(--primary), transparent 70%);
+    border-left: 2px solid var(--primary);
+    animation: blink 1s infinite;
+}
+
+.charPending {
+    color: var(--muted-foreground);
+}
+
+/* Hidden Input */
+.hiddenInput {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: default;
+    z-index: 10;
+}
+
+/* Start Screen */
+.startScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.startTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.startSubtitle {
+    color: var(--muted-foreground);
+}
+
+/* Results */
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.resultsTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.resultsEmoji {
+    font-size: 3rem;
+}
+
+/* Button */
+.controlButton {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    width: 150px;
+}
+
+/* Instructions */
+.instructions {
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    text-align: center;
+}
+
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0.3;
+    }
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .textDisplay {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    .statsBar {
+        gap: 0.75rem;
+    }
+
+    .statItem {
+        min-width: 70px;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .statValue {
+        font-size: 1.5rem;
+    }
+}

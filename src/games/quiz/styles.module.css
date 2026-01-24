@@ -1,0 +1,207 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.05),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem !important;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress {
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+}
+
+.score {
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    background: color-mix(in srgb, var(--primary), transparent 90%);
+    border: 1px solid color-mix(in srgb, var(--primary), transparent 70%);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--primary);
+}
+
+/* Progress Bar */
+.progressBar {
+    height: 6px;
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), hsl(280 70% 60%));
+    border-radius: 1rem;
+    transition: width 0.3s ease;
+}
+
+/* Question */
+.category {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.question {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--foreground);
+}
+
+/* Options */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border: 2px solid color-mix(in srgb, var(--border), transparent 50%);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+    font-size: 1rem;
+    color: var(--foreground);
+}
+
+.option:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--muted), transparent 50%);
+    border-color: color-mix(in srgb, var(--primary), transparent 50%);
+    transform: translateX(4px);
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.optionLetter {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--background);
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    color: var(--foreground);
+}
+
+.optionCorrect {
+    background: color-mix(in srgb, #16a34a, transparent 90%);
+    border-color: #16a34a;
+}
+
+.optionCorrect .optionLetter {
+    background: #16a34a;
+    color: white;
+}
+
+.optionWrong {
+    background: color-mix(in srgb, #ef4444, transparent 90%);
+    border-color: #ef4444;
+}
+
+.optionWrong .optionLetter {
+    background: #ef4444;
+    color: white;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+.nextButton {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+/* Results */
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.resultsTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.emoji {
+    font-size: 4rem;
+}
+
+.finalScore {
+    font-size: 1.5rem;
+    color: var(--muted-foreground);
+}
+
+.scoreHighlight {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.percentage {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .question {
+        font-size: 1.1rem;
+    }
+
+    .option {
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+    }
+}

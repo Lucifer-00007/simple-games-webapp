@@ -1,0 +1,230 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    touch-action: none;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.05),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem !important;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.scores {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.scoreBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border: 1px solid color-mix(in srgb, var(--border), transparent 70%);
+    min-width: 70px;
+}
+
+.scoreLabel {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted-foreground);
+    font-weight: 600;
+}
+
+.scoreValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+/* Board */
+.boardWrapper {
+    position: relative;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 10px;
+    background: color-mix(in srgb, var(--muted), #776e65 20%);
+    border-radius: 8px;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.cell {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    transition: all 0.15s ease;
+}
+
+.cellEmpty {
+    background: color-mix(in srgb, var(--muted), transparent 50%);
+}
+
+.cellSmall {
+    font-size: 1.75rem;
+}
+
+.cellMedium {
+    font-size: 1.5rem;
+}
+
+.cellLarge {
+    font-size: 1.25rem;
+}
+
+.cellXlarge {
+    font-size: 1rem;
+}
+
+/* Overlay */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--background), transparent 10%);
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.overlayTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--foreground);
+}
+
+.wonText {
+    color: #f59e0b;
+    text-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+}
+
+.lostText {
+    color: var(--muted-foreground);
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.controlButton {
+    border-radius: 2rem;
+}
+
+/* Instructions */
+.instructions {
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+    text-align: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.cellNew {
+    animation: pop 0.2s ease;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .cell {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cellSmall {
+        font-size: 1.5rem;
+    }
+
+    .cellMedium {
+        font-size: 1.25rem;
+    }
+
+    .board {
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}

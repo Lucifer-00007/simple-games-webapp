@@ -1,0 +1,225 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+/* Scoreboard */
+.scoreboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.scoreCard {
+    flex: 1;
+    max-width: 100px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.scoreCardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.6rem 0.75rem !important;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--primary), transparent 95%), transparent);
+}
+
+.scoreLabel {
+    font-size: 0.55rem;
+    color: var(--muted-foreground);
+    margin-bottom: 0.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+}
+
+.scoreValue {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #8b5cf6;
+}
+
+.vs {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    padding: 0.35rem 0.75rem;
+    background: color-mix(in srgb, var(--muted), transparent 30%);
+    border-radius: 1rem;
+    border-color: #fff;
+}
+
+/* Battle Arena */
+.arena {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    padding: 2rem;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--muted), transparent 70%), color-mix(in srgb, var(--muted), transparent 90%));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 30%);
+    backdrop-filter: blur(15px);
+    border-radius: 1.5rem;
+    gap: 2rem;
+    box-shadow:
+        0 10px 40px color-mix(in srgb, var(--primary), transparent 95%),
+        inset 0 1px 1px color-mix(in srgb, var(--background), transparent 50%);
+}
+
+.playerSide,
+.computerSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.choiceDisplay {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, var(--background), var(--card));
+    border: 3px solid color-mix(in srgb, var(--border), transparent 20%);
+    border-radius: 50%;
+    font-size: 2.75rem;
+    box-shadow:
+        0 8px 32px color-mix(in srgb, var(--primary), transparent 85%),
+        inset 0 2px 8px color-mix(in srgb, var(--background), transparent 50%);
+    transition: all 0.3s ease;
+}
+
+.questionMark {
+    font-size: 2.5rem;
+    color: color-mix(in srgb, var(--muted-foreground), transparent 50%);
+    font-weight: bold;
+}
+
+.sideLabel {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Result Message */
+.result {
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.resultWin {
+    background: linear-gradient(135deg, hsl(142 76% 36% / 0.2), hsl(142 76% 36% / 0.1));
+    color: hsl(142 76% 40%);
+    border: 1px solid hsl(142 76% 36% / 0.4);
+    box-shadow: 0 0 30px hsl(142 76% 36% / 0.2);
+}
+
+.resultLose {
+    background: linear-gradient(135deg, hsl(0 84% 60% / 0.2), hsl(0 84% 60% / 0.1));
+    color: hsl(0 84% 60%);
+    border: 1px solid hsl(0 84% 60% / 0.4);
+    box-shadow: 0 0 30px hsl(0 84% 60% / 0.2);
+}
+
+.resultTie {
+    background: linear-gradient(135deg, hsl(38 92% 50% / 0.2), hsl(38 92% 50% / 0.1));
+    color: hsl(38 92% 50%);
+    border: 1px solid hsl(38 92% 50% / 0.4);
+    box-shadow: 0 0 30px hsl(38 92% 50% / 0.2);
+}
+
+/* Choice Buttons */
+.choices {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.choiceButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.25rem 1.75rem;
+    background: linear-gradient(145deg, var(--card), color-mix(in srgb, var(--card), transparent 30%));
+    border: 2px solid color-mix(in srgb, var(--border), transparent 30%);
+    border-radius: 1.25rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--primary), transparent 95%);
+}
+
+.choiceButton:hover:not(:disabled) {
+    border-color: color-mix(in srgb, var(--primary), transparent 30%);
+    background: linear-gradient(145deg, color-mix(in srgb, var(--primary), transparent 90%), var(--card));
+    transform: translateY(-4px);
+    box-shadow:
+        0 12px 30px color-mix(in srgb, var(--primary), transparent 80%),
+        0 0 0 1px color-mix(in srgb, var(--primary), transparent 90%);
+}
+
+.choiceButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.choiceIcon {
+    font-size: 3rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.choiceLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.resetButton {
+    margin-top: 0.5rem;
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+@media (max-width: 400px) {
+    .arena {
+        gap: 1rem;
+        padding: 1.25rem;
+    }
+
+    .choiceDisplay {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .choiceButton {
+        padding: 1rem 1.25rem;
+    }
+
+    .choiceIcon {
+        font-size: 2.25rem;
+    }
+}

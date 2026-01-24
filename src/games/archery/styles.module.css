@@ -1,0 +1,243 @@
+/* Archery game styles */
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    background-color: var(--background);
+    overflow: hidden;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--muted);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    color: var(--muted-foreground);
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+}
+
+.svg {
+    width: 100%;
+    height: auto;
+    cursor: crosshair;
+    border-radius: var(--radius-md);
+    background-color: var(--muted);
+    border: 1px solid var(--border);
+    touch-action: none;
+}
+
+.messageText {
+    font-weight: 800;
+    font-family: var(--font-sans);
+    stroke: var(--background);
+    stroke-width: 4px;
+    paint-order: stroke fill;
+    animation: messagePopIn 0.5s ease-out;
+}
+
+@keyframes messagePopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-5deg);
+        transform-origin: center;
+    }
+
+    50% {
+        transform: scale(1.1);
+        transform-origin: center;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        transform-origin: center;
+    }
+}
+
+.instruction {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Game Over Overlay */
+.gameOverOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    border-radius: var(--radius-lg);
+    animation: fadeIn 0.3s ease-out;
+}
+
+:global(.dark) .gameOverOverlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.gameOverBanner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 400px;
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.gameOverTitle {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--foreground);
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.gameOverScore {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    background: var(--muted);
+    border-radius: var(--radius-lg);
+}
+
+.gameOverLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground);
+}
+
+.gameOverValue {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.newHighScore {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--accent-foreground);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .stats {
+        gap: 1rem;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .statValue {
+        font-size: 1.25rem;
+    }
+
+    .gameOverTitle {
+        font-size: 1.75rem;
+    }
+
+    .gameOverValue {
+        font-size: 2.5rem;
+    }
+}

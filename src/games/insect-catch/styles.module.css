@@ -1,0 +1,170 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem !important;
+}
+
+/* Selection Screen */
+.selectionScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.selectionTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.insectGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.insectOption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border: 2px solid color-mix(in srgb, var(--border), transparent 70%);
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.insectOption:hover {
+    background: color-mix(in srgb, var(--primary), transparent 85%);
+    border-color: color-mix(in srgb, var(--primary), transparent 50%);
+    transform: scale(1.05);
+}
+
+.insectEmoji {
+    font-size: 2rem;
+}
+
+.insectName {
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+    font-weight: 500;
+}
+
+/* Stats Bar */
+.statsBar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    padding: 0.5rem;
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border-radius: 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--border), transparent 70%);
+}
+
+.statValue {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.statLabel {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    font-weight: 600;
+}
+
+/* Game Area */
+.gameArea {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    background: linear-gradient(180deg, color-mix(in srgb, #16a34a, transparent 85%), color-mix(in srgb, #16a34a, transparent 90%));
+    border-radius: 1rem;
+    border: 2px solid color-mix(in srgb, #16a34a, transparent 70%);
+    overflow: hidden;
+}
+
+.insect {
+    position: absolute;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    animation: wiggle 0.5s ease-in-out infinite;
+}
+
+.insect:hover {
+    transform: scale(1.2);
+}
+
+/* Results Overlay */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--background), transparent 10%);
+    backdrop-filter: blur(8px);
+}
+
+.resultsTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.controlButton {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+}

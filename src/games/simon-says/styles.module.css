@@ -1,0 +1,164 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    width: 100%;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--card), white 5%), var(--card));
+    border: 1px solid color-mix(in srgb, var(--border), transparent 50%);
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem !important;
+}
+
+/* Stats */
+.statsBar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.statLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground);
+    font-weight: 600;
+}
+
+/* Game Board */
+.board {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 20px;
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border-radius: 50%;
+    width: 280px;
+    height: 280px;
+    border: 4px solid var(--border);
+}
+
+.colorButton {
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.colorButton:disabled {
+    cursor: not-allowed;
+}
+
+.colorRed {
+    background: linear-gradient(145deg, #ef4444, #dc2626);
+    border-radius: 100% 0 0 0;
+}
+
+.colorGreen {
+    background: linear-gradient(145deg, #22c55e, #16a34a);
+    border-radius: 0 100% 0 0;
+}
+
+.colorBlue {
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    border-radius: 0 0 0 100%;
+}
+
+.colorYellow {
+    background: linear-gradient(145deg, #eab308, #ca8a04);
+    border-radius: 0 0 100% 0;
+}
+
+/* Active state */
+.colorButton.active {
+    filter: brightness(1.5);
+    transform: scale(1.02);
+}
+
+.colorRed.active {
+    box-shadow: 0 0 40px #ef4444, inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.colorGreen.active {
+    box-shadow: 0 0 40px #22c55e, inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.colorBlue.active {
+    box-shadow: 0 0 40px #3b82f6, inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.colorYellow.active {
+    box-shadow: 0 0 40px #eab308, inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.colorButton:hover:not(:disabled):not(.active) {
+    filter: brightness(1.1);
+}
+
+/* Status Message */
+.status {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2rem;
+    background: color-mix(in srgb, var(--muted), transparent 70%);
+    border: 1px solid color-mix(in srgb, var(--border), transparent 70%);
+    text-align: center;
+    color: var(--foreground);
+}
+
+.statusGameOver {
+    background: linear-gradient(135deg, color-mix(in srgb, #ef4444, transparent 90%), color-mix(in srgb, #ef4444, transparent 95%));
+    border-color: color-mix(in srgb, #ef4444, transparent 70%);
+    color: #ef4444;
+}
+
+/* Controls */
+.controlButton {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .board {
+        width: 240px;
+        height: 240px;
+        gap: 8px;
+        padding: 16px;
+    }
+}
