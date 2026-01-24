@@ -14,8 +14,8 @@ export function createInitialState(): GameState {
 
 export function startNewBall(state: GameState): GameState {
     // Variable speed and spin based on difficulty
-    const vx = (Math.random() - 0.5) * 2; // Slight side to side
-    const vy = 4 + Math.random() * 2 + (state.difficulty * 0.5);
+    const vx = (Math.random() - 0.5) * 1.5; 
+    const vy = 5 + Math.random() * 1.5 + (state.difficulty * 0.4);
     
     return {
         ...state,
@@ -44,46 +44,50 @@ export function updateCricket(state: GameState): GameState {
 
     // Bounce (Perspective bounce)
     // The ball should bounce roughly halfway through the pitch
-    if (newState.status === 'bowling' && ball.y > 250 && ball.y < 260 && ball.vy > 0) {
-        ball.vy *= 0.8; // Small energy loss on bounce
+    if (newState.status === 'bowling' && ball.y > 240 && ball.y < 255 && ball.vy > 0) {
+        ball.vy *= 0.85; 
+        ball.vx += (Math.random() - 0.5) * 0.5; // Slight deviation after bounce
     }
 
     // Hit Detection
-    // Batter is around Y=340. 
-    if (newState.isSwinging && ball.y > 300 && ball.y < 380 && newState.status === 'bowling') {
-        const timingBonus = 1 - Math.abs(ball.y - 340) / 40;
+    // Forgiving hit zone (Y=320 to 380)
+    if (newState.isSwinging && ball.y > 310 && ball.y < 380 && newState.status === 'bowling') {
+        const distFromCenter = Math.abs(ball.y - 345);
+        const timingBonus = 1 - distFromCenter / 35; // 0 to 1
+        
         if (timingBonus > 0) {
             // Successful hit!
-            ball.vx = (Math.random() - 0.5) * 20;
-            ball.vy = -10 - Math.random() * 10;
+            ball.vx = (Math.random() - 0.5) * 30;
+            ball.vy = -12 - Math.random() * 12;
             
             // Scoring
             let runs = 1;
-            if (timingBonus > 0.8) runs = 6;
-            else if (timingBonus > 0.6) runs = 4;
+            if (timingBonus > 0.85) runs = 6;
+            else if (timingBonus > 0.65) runs = 4;
             else if (timingBonus > 0.4) runs = 2;
+            else if (timingBonus > 0.2) runs = 1;
             
             newState.score += runs;
             newState.status = 'playing';
-            newState.difficulty += 0.1;
+            newState.difficulty += 0.08;
         }
     }
 
     // Out (Missed and hit stumps)
-    if (newState.status === 'bowling' && ball.y > 360) {
-        if (Math.abs(ball.x - CRICKET_CONFIG.STUMPS_X) < 20) {
+    if (newState.status === 'bowling' && ball.y > 370) {
+        if (Math.abs(ball.x - CRICKET_CONFIG.STUMPS_X) < 25) {
             newState.wickets += 1;
             newState.status = newState.wickets >= 3 ? 'gameOver' : 'idle';
             ball.active = false;
         } else {
-            // Missed but didn't hit stumps (Wide/Passed)
+            // Missed but didn't hit stumps
             newState.status = 'idle';
             ball.active = false;
         }
     }
 
     // Ball out of play (after being hit)
-    if (newState.status === 'playing' && (ball.y < 0 || ball.y > 400 || ball.x < 0 || ball.x > 600)) {
+    if (newState.status === 'playing' && (ball.y < -50 || ball.y > 450 || ball.x < -50 || ball.x > 650)) {
         newState.status = 'idle';
         ball.active = false;
     }
