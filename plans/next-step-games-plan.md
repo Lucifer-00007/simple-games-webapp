@@ -47,32 +47,31 @@
 - [x] 74 problems (31 errors, 43 warnings) 7 errors and 0 warnings potentially fixable with the `--fix` option. error: script "lint" exited with code 1
 
 - [x] Enhance the UI in Light mode matching the light mode theme in the following games:
-- minesweeper         
-- memory-card         
-- rock-paper-scissors
-- number-guessing     
-- tic-tac-toe         
-- snake        
-- connect-four        
-- insect-catch        
-- hangman             
-- crossy-road         
-- 2048                
-- dice-roll           
-- shape-clicker       
-- fruit-slicer         
-- quiz                
-- emoji-catcher        
-- whack-a-mole         
-- simon-says           
+	- minesweeper         
+	- memory-card         
+	- rock-paper-scissors
+	- number-guessing     
+	- tic-tac-toe         
+	- snake        
+	- connect-four        
+	- insect-catch        
+	- hangman             
+	- crossy-road         
+	- 2048                
+	- dice-roll           
+	- shape-clicker       
+	- fruit-slicer         
+	- quiz                
+	- emoji-catcher        
+	- whack-a-mole         
+	- simon-says           
 
+- [x] Enhance the UI/UX and game play in the following games following best practices: 
+	- Piano Tiles
+	- Dino Run  
 
-- [] Enhance the UI/UX and game play in the following games following best practices: 
-- Doodle Cricket 
-- Piano Tiles
-- Dino Run  
+- [] Referring the static code in ./doodleGames/2048-cricket/ add Doodle Cricket in my codebase following best practices. Make the UI/UX enhanced in light and dark mode in this game.
 
-- []
 - []
 - []
 - []
