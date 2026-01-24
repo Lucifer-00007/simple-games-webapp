@@ -6,11 +6,12 @@ import { Play, RotateCcw, Trophy, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { createInitialState, updateGame } from './game-logic';
-import { GameState, DINO_CONFIG } from './types';
+import { GameState, DINO_CONFIG, Difficulty } from './types';
 import styles from './styles.module.css';
 
 export function DinoRun({ onScoreUpdate }: { onScoreUpdate?: (score: number) => void }) {
-    const [state, setState] = React.useState<GameState>(createInitialState());
+    const [selectedDifficulty, setSelectedDifficulty] = React.useState<Difficulty>('medium');
+    const [state, setState] = React.useState<GameState>(createInitialState('medium'));
     const [frame, setFrame] = React.useState(0);
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const requestRef = React.useRef<number>(0);
@@ -25,9 +26,9 @@ export function DinoRun({ onScoreUpdate }: { onScoreUpdate?: (score: number) => 
                 dino: { ...prev.dino, velocity: DINO_CONFIG.JUMP_FORCE, isJumping: true }
             }));
         } else if (state.status !== 'playing') {
-            setState(prev => ({ ...createInitialState(), status: 'playing', highScore: prev.highScore }));
+            setState(prev => ({ ...createInitialState(selectedDifficulty), status: 'playing', highScore: prev.highScore }));
         }
-    }, [state.status, state.dino.isJumping]);
+    }, [state.status, state.dino.isJumping, selectedDifficulty]);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,7 +168,7 @@ export function DinoRun({ onScoreUpdate }: { onScoreUpdate?: (score: number) => 
                     </div>
 
                     <div className={styles.canvasContainer} onClick={handleJump}>
-                        <canvas ref={canvasRef} width={600} height={200} className={styles.canvas} />
+                        <canvas ref={canvasRef} width={600} height={300} className={styles.canvas} />
                         
                         <AnimatePresence>
                             {state.status !== 'playing' && (
@@ -185,6 +186,23 @@ export function DinoRun({ onScoreUpdate }: { onScoreUpdate?: (score: number) => 
                                         <h2 className={styles.overlayTitle}>
                                             {state.status === 'gameOver' ? 'WASTED' : 'Dino Run'}
                                         </h2>
+                                        
+                                        {state.status === 'idle' && (
+                                            <div className="flex gap-2 mb-2">
+                                                {(['easy', 'medium', 'hard'] as Difficulty[]).map((d) => (
+                                                    <Button
+                                                        key={d}
+                                                        variant={selectedDifficulty === d ? "default" : "outline"}
+                                                        size="sm"
+                                                        onClick={(e) => { e.stopPropagation(); setSelectedDifficulty(d); }}
+                                                        className="capitalize"
+                                                    >
+                                                        {d}
+                                                    </Button>
+                                                ))}
+                                            </div>
+                                        )}
+
                                         {state.status === 'gameOver' && (
                                             <div className="flex flex-col gap-1">
                                                 <p className="text-muted-foreground">You survived for {state.score} points!</p>
@@ -193,6 +211,9 @@ export function DinoRun({ onScoreUpdate }: { onScoreUpdate?: (score: number) => 
                                                         <Trophy className="w-4 h-4" /> New High Score!
                                                     </span>
                                                 )}
+                                                <div className="mt-2 text-sm text-muted-foreground">
+                                                    Difficulty: <span className="capitalize font-bold text-foreground">{state.difficulty}</span>
+                                                </div>
                                             </div>
                                         )}
                                         <Button onClick={(e) => { e.stopPropagation(); handleJump(); }} size="lg" className="w-full font-bold px-8">

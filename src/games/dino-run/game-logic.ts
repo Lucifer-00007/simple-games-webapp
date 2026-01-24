@@ -1,10 +1,11 @@
-import { GameState, DINO_CONFIG, Obstacle } from './types';
+import { GameState, DINO_CONFIG, Obstacle, Difficulty, DIFFICULTY_SETTINGS } from './types';
 
-export function createInitialState(): GameState {
+export function createInitialState(difficulty: Difficulty = 'medium'): GameState {
     return {
         status: 'idle',
         score: 0,
         highScore: 0,
+        difficulty,
         dino: {
             x: 50,
             y: DINO_CONFIG.GROUND_Y,
@@ -14,7 +15,7 @@ export function createInitialState(): GameState {
             isJumping: false,
         },
         obstacles: [],
-        gameSpeed: DINO_CONFIG.INITIAL_SPEED,
+        gameSpeed: DIFFICULTY_SETTINGS[difficulty].speed,
         lastObstacleTime: 0,
     };
 }
@@ -24,9 +25,10 @@ export function updateGame(state: GameState, deltaTime: number): GameState {
 
     const newState = { ...state };
     const { dino, obstacles } = newState;
+    const difficultySettings = DIFFICULTY_SETTINGS[state.difficulty];
 
     // Update Speed
-    newState.gameSpeed += DINO_CONFIG.SPEED_INCREMENT;
+    newState.gameSpeed += difficultySettings.acceleration;
 
     // Dino Physics
     if (dino.isJumping) {
@@ -42,9 +44,11 @@ export function updateGame(state: GameState, deltaTime: number): GameState {
 
     // Spawn Obstacles
     const now = Date.now();
+    // Adjust spawn interval based on speed to keep gameplay consistent
     if (now - state.lastObstacleTime > DINO_CONFIG.SPAWN_INTERVAL / (newState.gameSpeed / 5)) {
         const type = Math.random() > 0.3 ? 'cactus' : 'bird';
         const height = type === 'cactus' ? 30 + Math.random() * 30 : 30;
+        // Adjust bird height to be jumpable or duckable (if ducking existed, but here just jumpable)
         const y = type === 'cactus' ? DINO_CONFIG.GROUND_Y + (40 - height) : DINO_CONFIG.GROUND_Y - 50;
         
         obstacles.push({

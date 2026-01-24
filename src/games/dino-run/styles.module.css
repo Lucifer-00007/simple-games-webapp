@@ -59,7 +59,7 @@
 .canvasContainer {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/1;
+    aspect-ratio: 2/1;
     background: #f8fafc;
     border: 2px solid var(--border);
     border-radius: 1rem;
